@@ -58,7 +58,8 @@ exports.commandesDisponibles = async (req, res) => {
               c.date_creation, com.nom as commerce_nom,
               com.adresse as commerce_adresse,
               u.nom as client_nom, u.prenom as client_prenom,
-              u.telephone as client_telephone
+              u.telephone as client_telephone,
+              com.utilisateur_id as commerce_utilisateur_id
        FROM commandes c
        JOIN commerces com ON c.commerce_id = com.id
        JOIN utilisateurs u ON c.client_id = u.id

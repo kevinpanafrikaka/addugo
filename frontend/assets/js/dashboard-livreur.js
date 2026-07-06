@@ -116,10 +116,18 @@ async function chargerCommandesDisponibles() {
             <span><strong>Téléphone :</strong> ${c.client_telephone || '—'}</span>
           </div>
         </div>
-        <button class="btn btn-orange btn-sm" style="border-radius:10px; font-weight:700; width:100%; padding:10px; margin-top:4px;"
-          onclick="accepterLivraison(${c.id})">
-          <i class="fas fa-motorcycle"></i> Accepter cette livraison
-        </button>
+        <div style="display: flex; gap: 10px; margin-top: 4px;">
+          ${c.commerce_utilisateur_id ? `
+          <a href="../client/messages.html?user=${c.commerce_utilisateur_id}"
+             class="btn btn-contour-orange btn-sm"
+             style="border-radius:10px; font-weight:700; flex:1; padding:10px; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none;">
+            <i class="fas fa-comment-dots"></i> Contacter
+          </a>` : ''}
+          <button class="btn btn-orange btn-sm" style="border-radius:10px; font-weight:700; flex:2; padding:10px;"
+            onclick="accepterLivraison(${c.id})">
+            <i class="fas fa-motorcycle"></i> Accepter cette livraison
+          </button>
+        </div>
       </div>`).join('');
 
   } catch (err) {

@@ -14,12 +14,25 @@ const pool = mariadb.createPool({
   allowPublicKeyRetrieval: true
 });
 
-// Test de connexion
+// Test de connexion + migration automatique
 async function testerConnexion() {
   let conn;
   try {
     conn = await pool.getConnection();
     console.log('Connexion à la base de données AdduGo réussie !');
+    
+    // Migration automatique : ajouter la colonne derniere_activite si absente
+    try {
+      await conn.query(
+        'ALTER TABLE utilisateurs ADD COLUMN derniere_activite DATETIME NULL DEFAULT NULL'
+      );
+      console.log('Migration : colonne derniere_activite ajoutée.');
+    } catch (migErr) {
+      if (migErr.errno !== 1060) { // 1060 = colonne déjà existante
+        console.warn('Migration derniere_activite :', migErr.message);
+      }
+    }
+
     return true;
   } catch (err) {
     console.error('Erreur de connexion à la base de données :', err.message);

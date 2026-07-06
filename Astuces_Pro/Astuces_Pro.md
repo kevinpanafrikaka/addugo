@@ -335,5 +335,66 @@ Un piège très courant en développement web : **écrire du contenu en dur (sta
 document.getElementById('messages-dropdown-liste').innerHTML = vraiContenu;
 ```
 
+---
 
+### Astuce #19 : La migration de base de données "sans danger" — `ALTER TABLE IF NOT EXISTS`
+*Date : 6 Juillet 2026*
 
+Quand tu ajoutes une nouvelle colonne à une table qui existe déjà en production, tu ne peux pas juste faire `ALTER TABLE` sans précautions. Si la colonne existe déjà, la requête va planter et bloquer ton serveur !
+
+**La solution :** Utilise un bloc `try/catch` qui ignore l'erreur `errno 1060` (colonne déjà existante) :
+
+```javascript
+// Dans db.js — Migration automatique au démarrage
+try {
+  await conn.query('ALTER TABLE utilisateurs ADD COLUMN derniere_activite DATETIME NULL');
+  console.log('Migration OK: colonne ajoutée');
+} catch (migErr) {
+  if (migErr.errno !== 1060) throw migErr; // 1060 = colonne déjà existante, c'est OK
+}
+```
+
+**Bonne pratique :** Place cette migration dans ta fonction `testerConnexion()` dans `db.js`. Ainsi, à chaque démarrage du serveur, la migration s'applique si nécessaire — sans jamais bloquer si elle a déjà été faite.
+
+---
+
+### Astuce #20 : Le statut "En ligne" basé sur `derniere_activite`
+*Date : 6 Juillet 2026*
+
+Montrer "En ligne" en permanence à tout le monde crée une fausse impression. La bonne approche est de stocker `derniere_activite` en base de données et de calculer le statut côté frontend.
+
+**Backend :** Mettre à jour `derniere_activite = NOW()` à chaque action de l'utilisateur (envoyer un message, se connecter, etc.)
+
+**Frontend :** Calculer la différence de temps et afficher un message humanisé :
+
+```javascript
+function getStatutEnLigne(derniereActivite) {
+  if (!derniereActivite) return 'Hors ligne';
+  const diffMin = Math.floor((Date.now() - new Date(derniereActivite)) / 60000);
+  if (diffMin < 5)   return 'En ligne'; // Point vert
+  if (diffMin < 60)  return `Vu il y a ${diffMin} min`;
+  if (diffMin < 1440) return `Vu il y a ${Math.floor(diffMin/60)}h`;
+  return `Vu il y a ${Math.floor(diffMin/1440)}j`;
+}
+```
+
+Ce pattern est utilisé par WhatsApp, Facebook Messenger, etc.
+
+---
+
+### Astuce #21 : Concevoir un flux multi-acteurs (Client → Commerçant → Livreur)
+*Date : 6 Juillet 2026*
+
+Les applications marketplace comme AdduGo impliquent plusieurs rôles. La clé pour bien les modéliser est de définir clairement **qui peut faire quoi à chaque étape**, avec un **statut de commande** qui évolue.
+
+| Statut | Acteur | Action |
+|--------|--------|--------|
+| `en_attente` | Client | Passe la commande |
+| `confirmee` | Commerçant | Confirme et prépare |
+| `prete` | Commerçant | Annonce que c'est prêt |
+| `assignee` | Livreur | Accepte la livraison |
+| `en_livraison` | Livreur | En route vers le client |
+| `livree` | Client | Confirme la réception |
+| `cloturee` | Commerçant | Clôture la commande |
+
+**Règle d'or :** Chaque transition de statut doit être **validée côté backend** (middleware d'autorisation). Par exemple, seul un livreur peut passer de `assignee` à `en_livraison`. Jamais le client ou le commerçant.

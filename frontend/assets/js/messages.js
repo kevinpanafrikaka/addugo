@@ -1,3 +1,25 @@
+// ── STATUT EN LIGNE ──
+function getStatutEnLigne(derniereActivite) {
+  if (!derniereActivite) return '<span style="color:#9CA3AF;">Hors ligne</span>';
+  
+  const maintenant = new Date();
+  const activite = new Date(derniereActivite);
+  const diffMs = maintenant - activite;
+  const diffMin = Math.floor(diffMs / 60000);
+  
+  if (diffMin < 5) {
+    return '<span style="color:#10B981; display:flex; align-items:center; gap:5px;"><span style="display:inline-block;width:8px;height:8px;background:#10B981;border-radius:50%;"></span>En ligne</span>';
+  } else if (diffMin < 60) {
+    return `<span style="color:#9CA3AF;">Vu il y a ${diffMin} min</span>`;
+  } else if (diffMin < 1440) {
+    const h = Math.floor(diffMin / 60);
+    return `<span style="color:#9CA3AF;">Vu il y a ${h}h</span>`;
+  } else {
+    const j = Math.floor(diffMin / 1440);
+    return `<span style="color:#9CA3AF;">Vu il y a ${j}j</span>`;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const token = localStorage.getItem('addugo_token');
   const userStr = localStorage.getItem('addugo_user');
@@ -225,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <img src="${avatarUrl}" alt="${autreUtilisateur.nom}" class="chat-header-avatar">
         <div class="chat-header-info">
           <h3>${autreUtilisateur.prenom || ''} ${autreUtilisateur.nom || ''}</h3>
-          <p>En ligne</p>
+          <p>${getStatutEnLigne(autreUtilisateur.derniere_activite)}</p>
         </div>
       </div>
       <div class="chat-actions">

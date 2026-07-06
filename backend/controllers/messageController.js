@@ -108,7 +108,7 @@ exports.getMessages = async (req, res) => {
 
     // Infos sur l'autre utilisateur
     const autre = await conn.query(
-      `SELECT id, nom, prenom, photo_profil FROM utilisateurs WHERE id = ?`,
+      `SELECT id, nom, prenom, photo_profil, derniere_activite FROM utilisateurs WHERE id = ?`,
       [autre_utilisateur_id]
     );
 
@@ -171,10 +171,14 @@ exports.sendMessage = async (req, res) => {
       [conversation_id, userId, contenu]
     );
 
-    // 3. Mettre à jour la date de la conversation
+    // 3. Mettre à jour la date de la conversation et la derniere_activite de l'expéditeur
     await conn.query(
       `UPDATE conversations SET date_mise_a_jour = CURRENT_TIMESTAMP WHERE id = ?`,
       [conversation_id]
+    );
+    await conn.query(
+      `UPDATE utilisateurs SET derniere_activite = NOW() WHERE id = ?`,
+      [userId]
     );
 
     return res.status(201).json({

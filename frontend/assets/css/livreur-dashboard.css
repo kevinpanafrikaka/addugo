@@ -145,17 +145,23 @@
   border: 1px solid var(--bordure);
   margin-bottom: 10px;
   width: 100%;
+  box-sizing: border-box;
+  gap: 8px;
+  overflow: hidden;
 }
 
 .commande-info {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: 1;
+  min-width: 0;
 }
 
 .commande-icone {
   width: 40px;
   height: 40px;
+  min-width: 40px;
   border-radius: 10px;
   background: rgba(255,107,0,0.1);
   color: var(--orange);
@@ -169,6 +175,9 @@
   font-weight: 700;
   font-family: var(--police-titre);
   font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .commande-date {
@@ -180,7 +189,9 @@
   font-weight: 800;
   font-family: var(--police-titre);
   color: var(--orange);
-  font-size: 1.05rem;
+  font-size: 1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* BARRE DE FILTRES DATES - STYLE 1 (PILULES ÉPURÉES) */
