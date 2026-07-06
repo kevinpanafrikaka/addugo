@@ -294,7 +294,46 @@ Sur un fil d'accueil Marketplace (Home feed), deux contraintes d'expérience uti
 
 
 
+---
 
+### Astuce #18 : Le "Cold Start" des serveurs gratuits (Railway, Render, etc.)
+*Date : 6 Juillet 2026*
+
+Quand ton application semble "lente" au chargement, la cause est souvent le **Cold Start** (démarrage à froid). Voici ce qui se passe :
+
+Les serveurs gratuits (Railway gratuit, Render gratuit, Heroku Eco) **mettent ton serveur en veille** quand personne ne l'utilise pendant 15–30 minutes, pour économiser des ressources. La prochaine fois qu'un utilisateur arrive, le serveur doit "se réveiller" — ce réveil peut prendre **2 à 10 secondes**. Pendant ce temps, toutes les requêtes API attendent.
+
+**Solutions selon ton niveau :**
+- **Simple (gratuit)** : Ajouter un service de ping régulier comme UptimeRobot qui appelle ton URL Railway toutes les 5 minutes pour garder le serveur éveillé.
+- **Moyen** : Passer sur le plan payant de Railway (~5$/mois) qui ne met jamais en veille.
+- **Pro** : Afficher un écran de "Chargement..." élégant à l'utilisateur pendant ce temps, pour que l'attente ne soit pas frustrante.
+
+---
+
+### Astuce #19 : HTML statique vs. Contenu Dynamique — Un piège classique
+*Date : 6 Juillet 2026*
+
+Un piège très courant en développement web : **écrire du contenu en dur (statique) dans le HTML alors que ce contenu devrait être dynamique**.
+
+**Exemple typique :** Un dropdown de notifications qui dit "Aucune notification" dans le HTML, alors qu'on a un badge JavaScript qui compte les vraies notifications. Le badge se met à jour, mais le contenu du dropdown affiche toujours la phrase figée dans le fichier `.html`.
+
+**La règle d'or :** Tout contenu qui **dépend de données utilisateur** (messages, notifications, panier, profil) ne doit **jamais** être écrit en dur dans le HTML. Il doit avoir :
+1. Un **id unique** sur l'élément conteneur (`id="messages-dropdown-liste"`)
+2. Un **texte de chargement temporaire** comme placeholder (`Chargement...`)
+3. Une **fonction JavaScript** qui remplace ce contenu dès que les vraies données arrivent
+
+```html
+<!-- ❌ MAUVAIS : Contenu figé -->
+<div>Aucun nouveau message.</div>
+
+<!-- ✅ BON : Conteneur dynamique avec ID -->
+<div id="messages-dropdown-liste">Chargement...</div>
+```
+
+```javascript
+// Le JS injecte le vrai contenu après l'appel API
+document.getElementById('messages-dropdown-liste').innerHTML = vraiContenu;
+```
 
 
 

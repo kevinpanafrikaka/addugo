@@ -280,30 +280,95 @@ async function initialiserNavbar() {
       `;
     }
 
-    // ── GESTION DU BADGE DES MESSAGES NON LUS ──
+    // ── GESTION DU BADGE ET DU DROPDOWN DES MESSAGES ──
     async function updateUnreadMessagesBadge() {
       try {
         const msgRes = await apiFetch('/messages/conversations');
         const msgData = await msgRes.json();
-        if (msgData.success && msgData.data) {
-          // Additionner les non lus (si c'est un nombre, ou au moins 1 par conversation non lue)
-          const nbNonLus = msgData.data.reduce((sum, conv) => {
-            const nb = Number(conv.non_lu);
-            return sum + (isNaN(nb) || nb === 0 ? (conv.non_lu ? 1 : 0) : nb);
-          }, 0);
-          
-          const badgeMessages = document.getElementById('badge-messages-home');
-          if (badgeMessages) {
-            if (nbNonLus > 0) {
-              badgeMessages.textContent = nbNonLus;
-              badgeMessages.style.display = 'flex';
-              badgeMessages.style.alignItems = 'center';
-              badgeMessages.style.justifyContent = 'center';
-            } else {
-              badgeMessages.style.display = 'none';
-            }
+        if (!msgData.success || !msgData.data) return;
+
+        const conversations = msgData.data;
+
+        // Comptage des non lus
+        const nbNonLus = conversations.reduce((sum, conv) => {
+          const nb = Number(conv.non_lu);
+          return sum + (isNaN(nb) || nb === 0 ? (conv.non_lu ? 1 : 0) : nb);
+        }, 0);
+
+        // Mise à jour du badge
+        const badgeMessages = document.getElementById('badge-messages-home');
+        if (badgeMessages) {
+          if (nbNonLus > 0) {
+            badgeMessages.textContent = nbNonLus;
+            badgeMessages.style.display = 'flex';
+            badgeMessages.style.alignItems = 'center';
+            badgeMessages.style.justifyContent = 'center';
+          } else {
+            badgeMessages.style.display = 'none';
           }
         }
+
+        // Mise à jour du contenu du dropdown
+        const dropdownListe = document.getElementById('messages-dropdown-liste');
+        if (dropdownListe) {
+          const isClientPage = window.location.pathname.includes('/client/') || window.location.pathname.includes('/commerce/') || window.location.pathname.includes('/livreur/') || window.location.pathname.includes('/admin/');
+          const basePath = isClientPage ? '' : 'client/';
+
+          if (conversations.length === 0) {
+            dropdownListe.innerHTML = `<div style="padding: 20px; text-align: center; color: var(--texte-clair); font-size: 0.9rem;">Aucun message.</div>`;
+          } else {
+            // Afficher les 5 conversations les plus récentes, les non-lues en premier
+            const sorted = [...conversations].sort((a, b) => b.non_lu - a.non_lu);
+            const toShow = sorted.slice(0, 5);
+
+            dropdownListe.innerHTML = toShow.map(conv => {
+              const nom = `${conv.prenom || ''} ${conv.nom || ''}`.trim();
+              let apercu = conv.dernier_message || '';
+              if (apercu.startsWith('[PRODUIT]||')) apercu = 'Demande d\'info produit...';
+              if (apercu.length > 40) apercu = apercu.substring(0, 40) + '...';
+
+              const avatarUrl = conv.photo_profil
+                ? (conv.photo_profil.startsWith('http') ? conv.photo_profil : `https://addugo.up.railway.app${conv.photo_profil}`)
+                : '../../assets/img/default-avatar.png';
+
+              const nonLuStyle = conv.non_lu
+                ? `background: #FFF7ED; border-left: 3px solid var(--orange);`
+                : `border-left: 3px solid transparent;`;
+              const dotNonLu = conv.non_lu
+                ? `<span style="width:8px;height:8px;background:var(--orange);border-radius:50%;flex-shrink:0;"></span>`
+                : '';
+
+              return `
+                <a href="${basePath}messages.html?user=${conv.autre_id}"
+                   style="display:flex; align-items:center; gap:10px; padding:10px 14px; text-decoration:none; color:var(--texte); ${nonLuStyle} border-bottom: 1px solid var(--bordure);">
+                  <img src="${avatarUrl}" alt="${nom}"
+                       style="width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;"
+                       onerror="this.src='../../assets/img/default-avatar.png'"/>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-size:0.85rem;font-weight:${conv.non_lu ? '700' : '500'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${nom}</div>
+                    <div style="font-size:0.78rem;color:${conv.non_lu ? '#1A1A2E' : 'var(--texte-clair)'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:${conv.non_lu ? '600' : '400'}">${apercu}</div>
+                  </div>
+                  ${dotNonLu}
+                </a>`;
+            }).join('');
+          }
+        }
+
+        // Bouton "Tout marquer lu"
+        const btnToutLu = document.getElementById('btn-tout-marquer-lu');
+        if (btnToutLu && !btnToutLu.dataset.bound) {
+          btnToutLu.dataset.bound = '1';
+          btnToutLu.addEventListener('click', async () => {
+            // Ouvrir et fermer chaque conversation pour les marquer lues (hack simple)
+            for (const conv of conversations) {
+              if (conv.non_lu) {
+                await apiFetch(`/messages/${conv.autre_id}`);
+              }
+            }
+            await updateUnreadMessagesBadge();
+          });
+        }
+
       } catch (e) {
         console.error('Erreur badges messages:', e);
       }
