@@ -1,0 +1,304 @@
+/* =================================================================
+   AdduGo — Mes Commandes Client (client-commandes.css)
+   Design Premium, Responsive & Dynamique
+   ================================================================= */
+
+/* ── ZONE ENTÊTE MES COMMANDES ── */
+.client-titre-zone {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.client-titre-gauche {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.client-titre-accent {
+  width: 5px;
+  height: 52px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--orange) 0%, #FF9940 100%);
+  flex-shrink: 0;
+}
+
+.client-titre {
+  font-family: var(--police-titre);
+  font-size: 1.85rem;
+  color: var(--texte);
+  margin: 0 0 4px 0;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.client-titre .orange {
+  color: var(--orange);
+}
+
+.client-sous-titre {
+  color: var(--texte-gris);
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+/* ── BARRE DE FILTRES ── */
+.filtres-barre {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.filtres-gauche {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filtre-btn {
+  padding: 8px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--bordure);
+  background: var(--blanc);
+  color: var(--texte-gris);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filtre-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.filtre-btn.actif {
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+  box-shadow: none;
+}
+
+/* ── GRILLE ET CARTES DE COMMANDES ── */
+.commandes-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.commande-carte {
+  background: var(--blanc);
+  border-radius: 18px;
+  border: 1px solid var(--bordure);
+  padding: 22px 24px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.commande-carte:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+
+.commande-carte-entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--bordure-claire, #F3F4F6);
+  margin-bottom: 14px;
+}
+
+.commande-carte-commerce {
+  font-family: var(--police-titre);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--texte);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.commande-carte-id {
+  font-size: 0.8rem;
+  color: var(--texte-gris);
+  font-weight: 600;
+}
+
+.commande-carte-corps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.commande-carte-infos {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.commande-carte-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--texte-doux);
+}
+
+.commande-carte-info i {
+  color: var(--orange);
+  width: 16px;
+}
+
+.commande-carte-montant {
+  font-family: var(--police-titre);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--orange);
+}
+
+.commande-carte-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--bordure-claire, #F3F4F6);
+}
+
+/* ── BADGES STATUT ── */
+.badge-statut {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statut-attente {
+  background: #FFF8E7;
+  color: #D97706;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+}
+
+.statut-livraison {
+  background: #EFF6FF;
+  color: #2563EB;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.statut-livree {
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+.statut-annulee {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+/* ── ETAT VIDE ── */
+.commande-vide {
+  text-align: center;
+  padding: 50px 20px;
+  background: var(--blanc);
+  border-radius: 18px;
+  border: 1px solid var(--bordure);
+}
+
+.commande-vide i {
+  font-size: 3rem;
+  color: var(--texte-clair);
+  margin-bottom: 12px;
+}
+
+.commande-vide p {
+  color: var(--texte-gris);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .client-titre-zone {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .client-titre-accent {
+    height: 40px;
+  }
+
+  .client-titre {
+    font-size: 1.4rem;
+  }
+
+  .commande-carte {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .commande-carte-corps {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .commande-carte-actions {
+    justify-content: stretch;
+  }
+
+  .commande-carte-actions .btn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* ── RANGEMENT FLUIDE DES 5 BOUTONS DE FILTRE (SANS GLOW & ZÉRO RUPTURE) ── */
+  .filtres-barre {
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .filtres-gauche {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    padding-bottom: 6px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .filtres-gauche::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filtres-gauche .filtre-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 8px 14px !important;
+    font-size: 0.83rem !important;
+    border-radius: 20px !important;
+  }
+}

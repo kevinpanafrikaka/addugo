@@ -1,0 +1,89 @@
+/* Styles spécifiques pour produits.html */
+
+.entete-produits-v2 {
+  transition: all 0.25s ease;
+}
+
+@media (max-width: 768px) {
+  .entete-produits-v2 {
+    padding: 16px !important;
+    border-radius: 16px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .entete-boutons-groupe {
+    width: 100%;
+  }
+
+  .entete-boutons-groupe .btn {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .filtres-produits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .filtres-produits .filtre-btn {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* Modale d'ajout transformée en Dropdown sous le bouton */
+.dropdown-modal-container {
+  display: none;
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 650px;
+  max-width: 90vw;
+  z-index: 2000;
+  animation: dropdownFadeIn 0.2s ease forwards;
+  background: var(--blanc);
+  border-radius: 16px;
+}
+
+.dropdown-modal-container.ouvert {
+  display: block;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Grille des produits sur Ma Boutique : cartes moins larges */
+.grille-produits {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .grille-produits {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .grille-produits {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}

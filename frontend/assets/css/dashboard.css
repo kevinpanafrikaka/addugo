@@ -1,0 +1,938 @@
+/* ============================================================
+   AdduGo — Styles Dashboard (commun à tous les espaces)
+   ============================================================ */
+
+/* ── LAYOUT DASHBOARD ── */
+.dashboard-body {
+  background: var(--fond);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 70px);
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--blanc);
+  border-right: 1px solid var(--bordure);
+  padding: var(--espace-lg) 0;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-profil {
+  padding: var(--espace-lg) var(--espace-lg);
+  border-bottom: 1px solid var(--bordure);
+  margin-bottom: var(--espace-md);
+  text-align: center;
+}
+
+.sidebar-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--rayon-rond);
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--blanc);
+  margin: 0 auto var(--espace-sm);
+  font-family: var(--police-titre);
+}
+
+.sidebar-nom {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--texte);
+  font-family: var(--police-titre);
+}
+
+.sidebar-role {
+  font-size: 0.75rem;
+  color: var(--texte-gris);
+  font-family: var(--police);
+  margin-top: 4px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 0 var(--espace-md);
+}
+
+.sidebar-section-titre {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--texte-clair);
+  padding: var(--espace-md) var(--espace-sm) var(--espace-xs);
+  font-family: var(--police);
+}
+
+.sidebar-lien {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+  padding: 10px var(--espace-sm);
+  border-radius: var(--rayon-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--texte-doux);
+  transition: var(--transition);
+  margin-bottom: 4px;
+  font-family: var(--police);
+  cursor: pointer;
+}
+
+.sidebar-lien i {
+  width: 20px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--texte-gris);
+  transition: var(--transition);
+}
+
+.sidebar-lien:hover,
+.sidebar-lien.actif {
+  background: var(--orange-bg);
+  color: var(--orange);
+}
+
+.sidebar-lien:hover i,
+.sidebar-lien.actif i {
+  color: var(--orange);
+}
+
+.sidebar-lien.actif {
+  font-weight: 600;
+}
+
+.sidebar-pied {
+  padding: var(--espace-md);
+  border-top: 1px solid var(--bordure);
+  margin-top: auto;
+}
+
+.btn-deconnexion {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+  padding: 10px var(--espace-sm);
+  border-radius: var(--rayon-md);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--erreur);
+  transition: var(--transition);
+  cursor: pointer;
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: var(--police);
+}
+
+.btn-deconnexion:hover {
+  background: var(--erreur-bg);
+}
+
+.btn-deconnexion i {
+  width: 20px;
+  text-align: center;
+}
+
+/* ── CONTENU PRINCIPAL ── */
+.dashboard-contenu {
+  padding: var(--espace-xl);
+  overflow-y: auto;
+}
+
+.dashboard-entete {
+  background: linear-gradient(135deg, var(--noir), #1a1a1a);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: var(--espace-xl);
+  color: var(--blanc);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-entete::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,107,0,0.25) 0%, rgba(255,107,0,0) 70%);
+  border-radius: 50%;
+}
+
+.dashboard-entete h1 {
+  font-size: 2.2rem;
+  color: var(--blanc);
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard-entete p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.05rem;
+  font-family: var(--police);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── STATS GRILLE ── */
+.stats-grille {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--espace-lg);
+  margin-bottom: var(--espace-xl);
+}
+
+/* ── SECTION DASHBOARD ── */
+.dashboard-section {
+  background: var(--blanc);
+  border-radius: 20px;
+  padding: var(--espace-xl);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: var(--espace-xl);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-section-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--espace-lg);
+  padding-bottom: var(--espace-md);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.dashboard-section-entete h3 {
+  font-size: 1.1rem;
+  color: var(--texte);
+}
+
+/* ── COMMANDE ITEM ── */
+.commande-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--espace-md) 0;
+  border-bottom: 1px solid var(--bordure);
+  gap: var(--espace-md);
+}
+
+.commande-item:last-child {
+  border-bottom: none;
+}
+
+.commande-info {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-md);
+}
+
+.commande-icone {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--rayon-md);
+  background: var(--orange-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.commande-nom {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--texte);
+  font-family: var(--police);
+}
+
+.commande-date {
+  font-size: 0.8rem;
+  color: var(--texte-gris);
+  font-family: var(--police);
+  margin-top: 2px;
+}
+
+.commande-montant {
+  font-family: var(--police-mono);
+  font-weight: 700;
+  color: var(--orange);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+/* ── NAVBAR DASHBOARD ── */
+.navbar-dashboard {
+  background: var(--blanc);
+  border-bottom: 1px solid var(--bordure);
+  padding: 0 var(--espace-xl);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--ombre-sm);
+}
+
+.navbar-dashboard-logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  font-family: var(--police-titre);
+}
+
+.navbar-dashboard-logo span:first-child { color: var(--orange); }
+.navbar-dashboard-logo span:last-child  { color: var(--orange);   }
+
+.navbar-dashboard-droite {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-lg);
+}
+
+.notif-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--rayon-rond);
+  background: var(--fond);
+  border: 1px solid var(--bordure);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--texte-gris);
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.notif-btn:hover {
+  background: var(--orange-bg);
+  color: var(--orange);
+  border-color: var(--orange);
+}
+
+.notif-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--erreur);
+  color: var(--blanc);
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--rayon-xl);
+  border: 1px solid var(--bordure);
+  transition: var(--transition);
+}
+
+.user-menu:hover {
+  background: var(--orange-bg);
+  border-color: var(--orange);
+}
+
+.user-menu-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--blanc);
+  font-family: var(--police-titre);
+}
+
+.user-menu-nom {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--texte);
+  font-family: var(--police);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .stats-grille { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout { grid-template-columns: 1fr; }
+  .sidebar { 
+    display: none; 
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 70px);
+    z-index: 1000;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  }
+  .sidebar.mobile-active {
+    display: flex;
+  }
+  .dashboard-contenu { padding: var(--espace-md); }
+  .stats-grille { grid-template-columns: 1fr; }
+}
+
+/* ── DISPONIBILITÉ LIVREUR ── */
+.disponibilite-carte {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--blanc);
+  border-radius: var(--rayon-lg);
+  padding: var(--espace-lg);
+  margin-bottom: var(--espace-xl);
+  border: 2px solid var(--succes);
+  box-shadow: var(--ombre-sm);
+  gap: var(--espace-md);
+}
+
+.disponibilite-carte.indisponible {
+  border-color: var(--erreur);
+}
+
+.disponibilite-info {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-md);
+}
+
+.disponibilite-icone {
+  font-size: 2.5rem;
+}
+
+.disponibilite-titre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--texte);
+  font-family: var(--police-titre);
+}
+
+.disponibilite-desc {
+  font-size: 0.875rem;
+  color: var(--texte-gris);
+  font-family: var(--police);
+  margin-top: 4px;
+}
+
+/* ── LIVRAISON DISPONIBLE CARTE ── */
+.livraison-dispo-carte {
+  background: var(--fond);
+  border-radius: var(--rayon-md);
+  padding: var(--espace-md);
+  margin-bottom: var(--espace-sm);
+  border: 2px solid var(--bordure);
+  transition: var(--transition);
+}
+
+.livraison-dispo-carte:hover {
+  border-color: var(--orange);
+  background: var(--orange-bg);
+}
+
+.livraison-dispo-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--espace-sm);
+}
+
+.livraison-dispo-commerce {
+  font-weight: 700;
+  color: var(--texte);
+  font-family: var(--police-titre);
+}
+
+.livraison-dispo-infos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espace-sm);
+  margin-bottom: var(--espace-md);
+}
+
+.livraison-dispo-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--texte-gris);
+  font-family: var(--police);
+}
+
+.livraison-dispo-info i {
+  color: var(--orange);
+  width: 14px;
+}
+
+/* ============================================================
+   BOTTOM NAVIGATION BAR (MOBILE)
+   ============================================================ */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--blanc);
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+  z-index: 1000;
+  border-top: 1px solid var(--bordure);
+  padding: 8px 16px;
+  padding-bottom: env(safe-area-inset-bottom, 8px); /* Support encoche iPhone */
+}
+
+.bottom-nav-liste {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--texte-clair);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  gap: 4px;
+  transition: var(--transition);
+  padding: 8px 12px;
+  border-radius: var(--rayon-md);
+}
+
+.bottom-nav-item i {
+  font-size: 1.25rem;
+  margin-bottom: 2px;
+}
+
+.bottom-nav-item:hover,
+.bottom-nav-item.actif {
+  color: var(--orange);
+}
+
+.bottom-nav-item.actif {
+  background: var(--orange-bg);
+}
+
+/* Ajustement du layout mobile pour ne pas être caché par la bottom bar */
+@media (max-width: 768px) {
+  body.dashboard-body {
+    padding-bottom: 70px; /* Espace pour la bottom bar */
+  }
+  .bottom-nav {
+    display: block;
+  }
+}
+/* Upload Zone Styling (Sans Animation) */
+.upload-zone {
+  position: relative;
+  width: 100%;
+  padding: 40px 20px;
+  border: 2px dashed var(--bordure);
+  border-radius: 12px;
+  background-color: var(--fond-tres-clair);
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.upload-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.upload-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+  position: relative;
+  z-index: 2;
+}
+
+.upload-icon {
+  font-size: 3rem;
+  color: var(--texte-clair);
+}
+
+.upload-text {
+  font-size: 1rem;
+  color: var(--texte-gris);
+  font-family: var(--police-texte);
+  font-weight: 500;
+}
+
+.upload-text strong {
+  color: var(--orange);
+}
+
+/* ── NOUVELLE GRILLE DE PRODUITS (STYLE E-COMMERCE) ── */
+.grille-produits-commerce {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 12px;
+  margin-top: var(--espace-md);
+}
+
+@media (max-width: 768px) {
+  .grille-produits-commerce {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .grille-produits-commerce {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+}
+
+.carte-produit-pro {
+  background: #F5F0E8; /* Beige chaleureux */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  border: 1px solid #E8DFD0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  height: 100%;
+}
+
+.carte-produit-pro:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.carte-produit-image {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Format carré */
+  background-color: #f1f3f5;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carte-produit-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carte-produit-zoom {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: var(--blanc);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  color: var(--texte);
+}
+
+.carte-produit-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--succes);
+  color: var(--blanc);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.carte-produit-badge.indisponible {
+  background: var(--erreur);
+}
+
+.carte-produit-infos {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.carte-produit-titre {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--texte);
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-family: var(--police-titre);
+  line-height: 1.3;
+}
+
+.carte-produit-prix {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--orange);
+  margin-bottom: 6px;
+  font-family: var(--police-titre);
+  white-space: nowrap;
+}
+
+.carte-produit-boutique {
+  font-size: 0.75rem;
+  color: var(--texte-gris);
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: underline;
+}
+
+.carte-produit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.btn-carte {
+  flex: 1;
+  padding: 8px 5px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.btn-carte-principal {
+  flex: 1;
+  background: var(--blanc);
+  border: 2px solid var(--texte);
+  color: var(--texte);
+}
+.btn-carte-principal:hover {
+  background: var(--texte);
+  color: var(--blanc);
+}
+
+.btn-carte-secondaire {
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: var(--blanc);
+  border: 2px solid var(--erreur);
+  color: var(--erreur);
+}
+.btn-carte-secondaire:hover {
+  background: var(--erreur);
+  color: var(--blanc);
+}
+
+/* ==========================================================
+   RESPONSIVE LAYOUT : EN-TÊTE PRODUITS
+   ========================================================== */
+.entete-produits {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid var(--bordure);
+  padding-bottom: 15px;
+}
+
+.compteur-style {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texte-gris);
+  padding-right: 15px;
+  margin-right: 15px;
+  border-right: 1px solid var(--bordure);
+}
+
+.actions-produits {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+}
+.actions-produits #btn-ajouter-produit {
+  margin-left: 25px;
+}
+
+.filtres-produits {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .entete-produits {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .actions-produits {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .compteur-style {
+    order: 1;
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+  }
+  
+  .actions-produits #btn-ajouter-produit {
+    order: 2;
+    margin-left: 15px;
+    flex: 1;
+  }
+  
+  .filtres-produits {
+    order: 3;
+    width: 100%;
+    margin-top: 15px;
+    
+    /* Make it a swipeable row */
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 5px;
+  }
+  
+  .filtres-produits::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Placer les icônes du haut (Messages, Stats...) en bas de l'écran sur mobile (Nouvelle Bottom Nav) */
+  .navbar-home-droite {
+    display: flex !important;
+    align-items: center !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: var(--blanc) !important;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1) !important;
+    justify-content: space-between !important;
+    padding: 15px 5px !important; /* Réduit au maximum pour coller au bord */
+    border-top: 1px solid var(--bordure) !important;
+    border-radius: 0 !important;
+    z-index: 1000 !important;
+    gap: 0 !important;
+  }
+
+  .navbar-home-droite .icon-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .navbar-home-droite .nav-icone {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Cacher l'ancienne bottom-nav avec texte */
+  .bottom-nav {
+    display: none !important;
+  }
+  
+  /* Cacher uniquement le bouton profil à droite sur mobile, pas tout le wrapper (sinon le menu ne s'affichera pas) */
+  #profil-wrapper {
+    position: absolute !important;
+  }
+  #btn-profil-toggle {
+    display: none !important;
+  }
+}
+
+/* OPTIMISATION MODALE EDIT LIVREUR SUR MOBILE */
+@media (max-width: 768px) {
+  #modal-edit-livreur .grille-2 {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  
+  #modal-edit-livreur .modal {
+    width: 96% !important;
+    max-height: 92vh !important;
+    margin: 10px auto !important;
+    border-radius: 18px !important;
+  }
+}

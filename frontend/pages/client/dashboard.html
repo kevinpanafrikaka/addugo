@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo — Mon Espace Client</title>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/navbar.css" />
+  <link rel="stylesheet" href="../../assets/css/dashboard.css" />
+  <link rel="stylesheet" href="../../assets/css/client-dashboard.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="dashboard-body">
+
+  <!-- NAVBAR UNIFIÉE -->
+  <nav class="navbar-home">
+    <div class="navbar-home-gauche">
+      <!-- Avatar profil au lieu du bouton hamburger -->
+      <button class="btn-mobile-menu" id="btn-mobile-menu-home" style="padding: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 2px solid var(--orange); cursor: pointer; flex-shrink: 0;">
+        <img src="../../assets/img/default-avatar.png" alt="Profil" id="mobile-top-avatar" style="width: 100%; height: 100%; object-fit: cover;" />
+      </button>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="../home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
+          <img src="../../../images/AdduGo_Logo.png" alt="AdduGo" style="height: 38px; width: auto; object-fit: contain;" />
+        </a>
+        <!-- Ligne de séparation verticale symétrique -->
+        <div style="height: 22px; width: 2px; background-color: var(--bordure-dark, #d1d5db); border-radius: 2px; margin: 0 6px; flex-shrink: 0;"></div>
+        <!-- Titre Espace Client -->
+        <div class="navbar-titre-page">
+          <span>Mon Espace</span><span style="color: var(--orange);">Client</span> 
+          <i class="fas fa-user-circle" style="color:var(--orange);"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ICONES DE NAVIGATION DU HAUT -->
+    <div class="navbar-home-droite">
+      <!-- 1. Icône Accueil (Teal #0D9488) -->
+      <a href="../home.html" class="nav-icone icone-accueil" title="Accueil" id="nav-premiere-icone">
+        <i class="fas fa-house-user" style="color: #0D9488;"></i>
+      </a>
+
+      <!-- 2. Icône Ma Boutique (Vert #10B981) ou Mon Espace Livraison (Bleu #3B82F6) selon le rôle -->
+      <div id="nav-seconde-icone" style="display: flex; align-items: center;"></div>
+
+      <!-- 3. Icône Messages (Bleu #3B82F6) -->
+      <div class="icon-wrapper" style="position: relative;" title="Messages">
+        <a href="messages.html" class="nav-icone icone-messages">
+          <i class="fas fa-envelope" style="color: #3B82F6;"></i>
+          <span class="nav-badge" id="badge-messages" style="display: none;">0</span>
+        </a>
+      </div>
+      
+      <!-- Profil Wrapper -->
+      <div class="profil-wrapper" id="profil-wrapper">
+        <div class="navbar-profil-btn" id="btn-profil-toggle">
+          <img src="../../assets/img/default-avatar.png" alt="Profil" id="navbar-top-avatar" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+        
+        <div class="profil-dropdown" id="profil-dropdown">
+          <div class="dropdown-header">
+            <img src="../../assets/img/default-avatar.png" alt="Profil" id="dropdown-avatar" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+            <div class="dropdown-infos">
+              <div class="dropdown-nom" id="dropdown-nom">Chargement...</div>
+              <div class="dropdown-role" id="dropdown-roles-badges">Client</div>
+            </div>
+          </div>
+          
+          <div class="dropdown-menu-container">
+            <a href="profil.html" class="sidebar-lien" style="margin-top: 8px;">
+              <i class="fas fa-user"></i> Mon profil
+            </a>
+            
+            <a href="dashboard.html" class="sidebar-lien actif">
+              <i class="fas fa-user-circle"></i> Mon Espace Client
+            </a>
+            
+            <div id="conteneur-mes-espaces">
+              <!-- Rempli par navbar.js selon les rôles (Ma Boutique, Livreur...) -->
+            </div>
+            
+            <div style="border-top: 1px solid var(--bordure); margin-top: 8px; padding-top: 8px;">
+              <a href="#" class="sidebar-lien btn-deconnexion" id="btn-logout" style="color: #dc3545;">
+                <i class="fas fa-sign-out-alt"></i> Se déconnecter
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- LAYOUT SANS SIDEBAR -->
+  <div class="home-layout" style="background-color: var(--fond-tres-clair); min-height: calc(100vh - 70px);">
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="dashboard-contenu anime-slide-up" style="max-width: 1200px; margin: 0 auto; padding: 30px 25px 25px 25px;">
+
+      <!-- ZONE TITRE ACCUEIL -->
+      <div class="client-titre-zone">
+        <div class="client-titre-gauche">
+          <div class="client-titre-accent"></div>
+          <div>
+            <h1 class="client-titre">Bonjour <span class="orange" id="prenom-utilisateur">...</span></h1>
+            <p class="client-sous-titre">Bienvenue dans votre espace client AdduGo</p>
+          </div>
+        </div>
+        <div>
+          <a href="commandes.html" class="btn btn-orange" style="border-radius: 12px; font-weight: 700; padding: 10px 20px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; box-shadow: 0 4px 14px rgba(255,107,0,0.25); transition: transform 0.2s ease;">
+            <i class="fas fa-shopping-bag"></i> Voir mes commandes
+          </a>
+        </div>
+      </div>
+
+      <!-- CARTES STATISTIQUES CLIENT (COULEURS DOUCES & COHÉRENTES) -->
+      <div class="client-stats-grid">
+        <div class="client-stat-card card-total">
+          <div class="client-stat-icon icon-orange">
+            <i class="fas fa-shopping-bag"></i>
+          </div>
+          <div class="client-stat-info">
+            <span class="client-stat-valeur" id="stat-total-commandes">0</span>
+            <span class="client-stat-label">Total commandes</span>
+          </div>
+        </div>
+
+        <div class="client-stat-card card-encours">
+          <div class="client-stat-icon icon-blue">
+            <i class="fas fa-hourglass-half"></i>
+          </div>
+          <div class="client-stat-info">
+            <span class="client-stat-valeur" id="stat-en-cours">0</span>
+            <span class="client-stat-label">En cours</span>
+          </div>
+        </div>
+
+        <div class="client-stat-card card-livrees">
+          <div class="client-stat-icon icon-green">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="client-stat-info">
+            <span class="client-stat-valeur" id="stat-livrees">0</span>
+            <span class="client-stat-label">Livrées</span>
+          </div>
+        </div>
+
+        <div class="client-stat-card card-annulees">
+          <div class="client-stat-icon icon-red">
+            <i class="fas fa-times-circle"></i>
+          </div>
+          <div class="client-stat-info">
+            <span class="client-stat-valeur" id="stat-annulees">0</span>
+            <span class="client-stat-label">Annulées</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÉVOLUTION DU COMPTE (BOUTIQUE & LIVREUR) -->
+      <div class="action-cards-grid" id="section-evolution">
+        <!-- Rempli dynamiquement par JS selon l'état et les rôles de l'utilisateur -->
+      </div>
+
+      <!-- COMMANDES RÉCENTES -->
+      <div class="client-section">
+        <div class="client-section-header">
+          <h3><i class="fas fa-history" style="color:var(--orange);"></i> Commandes récentes</h3>
+          <a href="commandes.html" class="btn btn-contour-orange btn-sm" style="border-radius: 10px;">
+            Voir tout
+          </a>
+        </div>
+        <div id="liste-commandes">
+          <div class="chargement">
+            <div class="skeleton skeleton-carte" style="width:100%"></div>
+            <div class="skeleton skeleton-carte" style="width:100%"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODALE CRÉATION BOUTIQUE (STYLE INSPIRÉ DE PRODUITS.HTML) -->
+  <div id="modal-boutique" class="modal-overlay" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
+    <div class="modal anime-slide-up" style="background-color: var(--blanc); margin: 3% auto; border-radius: 20px; width: 92%; max-width: 680px; overflow: hidden; box-shadow: 0 12px 35px rgba(0,0,0,0.15);">
+      
+      <!-- ENTÊTE MODALE -->
+      <div style="padding: 20px 24px; border-bottom: 1px solid var(--bordure); display: flex; justify-content: space-between; align-items: center; background: var(--blanc);">
+        <h3 style="margin: 0; font-family: var(--police-titre); font-size: 1.25rem; font-weight: 800; color: var(--texte);">
+          <i class="fas fa-store" style="color: var(--orange); margin-right: 8px;"></i>Créer ma boutique
+        </h3>
+        <button class="modal-fermer" id="btn-fermer-modal-boutique" style="background: none; border: none; font-size: 1.3rem; color: var(--texte-clair); cursor: pointer;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- CORPS MODALE (2 COLONNES) -->
+      <form id="form-creation-boutique">
+        <div style="padding: 24px;">
+          <div class="grille grille-2" style="gap: 20px; align-items: start;">
+            
+            <!-- COLONNE GAUCHE (LOGO & DESCRIPTION) -->
+            <div>
+              <div class="form-groupe" style="margin-bottom: 14px;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.88rem;">
+                  <i class="fas fa-camera" style="color: var(--orange);"></i> Logo de la boutique <span class="rouge">*</span>
+                </label>
+                <div class="modal-upload-dropzone" id="dropzone-creation">
+                  <img id="preview-logo-creation" src="" alt="Aperçu" style="display: none; width: 100%; max-height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 8px;" />
+                  <label for="boutique-logo" style="cursor: pointer; display: inline-block; padding: 8px 18px; background: var(--orange); color: #fff; border-radius: 10px; font-size: 0.85rem; font-weight: 700;">
+                    <i class="fas fa-cloud-upload-alt"></i> Choisir une photo
+                  </label>
+                  <p id="nom-fichier-creation" style="margin: 6px 0 0 0; font-size: 0.76rem; color: var(--texte-clair);">Aucun fichier sélectionné</p>
+                  <input type="file" id="boutique-logo" accept="image/*" required style="display: none;" />
+                </div>
+              </div>
+
+              <div class="form-groupe" style="margin-bottom: 0;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.88rem;">
+                  <i class="fas fa-align-left" style="color: var(--orange);"></i> Description
+                </label>
+                <textarea id="boutique-description" class="form-controle" rows="3" placeholder="Présentez votre boutique..." style="padding: 10px; border-radius: 10px; resize: vertical; min-height: 80px;"></textarea>
+              </div>
+            </div>
+
+            <!-- COLONNE DROITE (NOM & CATÉGORIE) -->
+            <div>
+              <div class="form-groupe" style="margin-bottom: 14px;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.88rem;">
+                  <i class="fas fa-tag" style="color: var(--orange);"></i> Nom de la boutique <span class="rouge">*</span>
+                </label>
+                <input type="text" id="boutique-nom" class="form-controle" required placeholder="Ex: Kaba Électroniques" style="padding: 10px; border-radius: 10px;" />
+              </div>
+
+              <div class="form-groupe" style="margin-bottom: 0;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.88rem;">
+                  <i class="fas fa-list" style="color: var(--orange);"></i> Catégorie de vente <span class="rouge">*</span>
+                </label>
+                <select id="boutique-categorie" class="form-controle" required style="padding: 10px; border-radius: 10px; background: var(--blanc); cursor: pointer;">
+                  <option value="" disabled selected>-- Sélectionnez une catégorie --</option>
+                  <option value="Électroménagers">Électroménagers</option>
+                  <option value="Électroniques">Électroniques</option>
+                  <option value="Modes & Accessoires">Modes & Accessoires</option>
+                  <option value="Cosmétiques & Beauté">Cosmétiques & Beauté</option>
+                  <option value="Sport & Loisirs">Sport & Loisirs</option>
+                  <option value="Meubles">Meubles</option>
+                  <option value="Jouets & Enfants">Jouets & Enfants</option>
+                  <option value="Fournitures & Papeterie">Fournitures & Papeterie</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PIED DE MODALE -->
+        <div style="padding: 16px 24px; border-top: 1px solid var(--bordure); display: flex; justify-content: flex-end; gap: 12px; background: var(--fond-tres-clair);">
+          <button type="button" class="btn btn-contour-orange" id="btn-annuler-creation" style="border-radius: 10px; padding: 9px 18px;">
+            Annuler
+          </button>
+          <button type="submit" id="btn-submit-boutique" class="btn btn-orange" style="border-radius: 10px; padding: 9px 22px; font-weight: 800;">
+            <i class="fas fa-save"></i> Créer la boutique
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- MODALE MODIFICATION BOUTIQUE (STYLE INSPIRÉ DE PRODUITS.HTML) -->
+  <div id="modal-edit-boutique" class="modal-overlay" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
+    <div class="modal anime-slide-up" style="background-color: var(--blanc); margin: 3% auto; border-radius: 20px; width: 92%; max-width: 680px; overflow: hidden; box-shadow: 0 12px 35px rgba(0,0,0,0.15);">
+      
+      <!-- ENTÊTE MODALE -->
+      <div style="padding: 20px 24px; border-bottom: 1px solid var(--bordure); display: flex; justify-content: space-between; align-items: center; background: var(--blanc);">
+        <h3 style="margin: 0; font-family: var(--police-titre); font-size: 1.25rem; font-weight: 800; color: var(--texte);">
+          <i class="fas fa-edit" style="color: var(--orange); margin-right: 8px;"></i>Modifier ma boutique
+        </h3>
+        <button class="modal-fermer" id="btn-fermer-modal-edit-boutique" style="background: none; border: none; font-size: 1.3rem; color: var(--texte-clair); cursor: pointer;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- CORPS MODALE (2 COLONNES) -->
+      <form id="form-edit-boutique">
+        <input type="hidden" id="boutique-id-edit" />
+        <div style="padding: 24px;">
+          <div class="grille grille-2" style="gap: 20px; align-items: start;">
+            
+            <!-- COLONNE GAUCHE (LOGO & DESCRIPTION) -->
+            <div>
+              <div class="form-groupe" style="margin-bottom: 14px;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.88rem;">
+                  <i class="fas fa-camera" style="color: var(--orange);"></i> Logo de la boutique
+                </label>
+                <div class="modal-upload-dropzone" id="dropzone-edit">
+                  <img id="preview-logo-edit" src="" alt="Aperçu" style="display: none; width: 100%; max-height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 8px;" />
+                  <label for="boutique-logo-edit" style="cursor: pointer; display: inline-block; padding: 8px 18px; background: var(--orange); color: #fff; border-radius: 10px; font-size: 0.85rem; font-weight: 700;">
+                    <i class="fas fa-cloud-upload-alt"></i> Changer la photo
+                  </label>
+                  <p id="nom-fichier-edit" style="margin: 6px 0 0 0; font-size: 0.76rem; color: var(--texte-clair);">Fichier actuel conservé</p>
+                  <input type="file" id="boutique-logo-edit" accept="image/*" style="display: none;" />
+                </div>
+              </div>
+
+              <div class="form-groupe" style="margin-bottom: 0;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.88rem;">
+                  <i class="fas fa-align-left" style="color: var(--orange);"></i> Description
+                </label>
+                <textarea id="boutique-description-edit" class="form-controle" rows="3" style="padding: 10px; border-radius: 10px; resize: vertical; min-height: 80px;"></textarea>
+              </div>
+            </div>
+
+            <!-- COLONNE DROITE (NOM & CATÉGORIE) -->
+            <div>
+              <div class="form-groupe" style="margin-bottom: 14px;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.88rem;">
+                  <i class="fas fa-tag" style="color: var(--orange);"></i> Nom de la boutique <span class="rouge">*</span>
+                </label>
+                <input type="text" id="boutique-nom-edit" class="form-controle" required style="padding: 10px; border-radius: 10px;" />
+              </div>
+
+              <div class="form-groupe" style="margin-bottom: 0;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.88rem;">
+                  <i class="fas fa-list" style="color: var(--orange);"></i> Catégorie de vente <span class="rouge">*</span>
+                </label>
+                <select id="boutique-categorie-edit" class="form-controle" required style="padding: 10px; border-radius: 10px; background: var(--blanc); cursor: pointer;">
+                  <option value="Électroménagers"><i class="fas fa-home" style="color:var(--orange);margin-right:4px;"></i>Électroménagers</option>
+                  <option value="Électroniques"><i class="fas fa-mobile-alt" style="color:var(--orange);margin-right:4px;"></i>Électroniques</option>
+                  <option value="Modes & Accessoires"><i class="fas fa-tshirt" style="color:var(--orange);margin-right:4px;"></i>Modes & Accessoires</option>
+                  <option value="Cosmétiques & Beauté"><i class="fas fa-spa" style="color:var(--orange);margin-right:4px;"></i>Cosmétiques & Beauté</option>
+                  <option value="Sport & Loisirs"><i class="fas fa-futbol" style="color:var(--orange);margin-right:4px;"></i>Sport & Loisirs</option>
+                  <option value="Meubles"><i class="fas fa-couch" style="color:var(--orange);margin-right:4px;"></i>Meubles</option>
+                  <option value="Jouets & Enfants"><i class="fas fa-child" style="color:var(--orange);margin-right:4px;"></i>Jouets & Enfants</option>
+                  <option value="Fournitures & Papeterie"><i class="fas fa-pencil-alt" style="color:var(--orange);margin-right:4px;"></i>Fournitures & Papeterie</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PIED DE MODALE -->
+        <div style="padding: 16px 24px; border-top: 1px solid var(--bordure); display: flex; justify-content: flex-end; gap: 12px; background: var(--fond-tres-clair);">
+          <button type="button" class="btn btn-contour-orange" id="btn-annuler-edit" style="border-radius: 10px; padding: 9px 18px;">
+            Annuler
+          </button>
+          <button type="submit" id="btn-submit-edit-boutique" class="btn btn-orange" style="border-radius: 10px; padding: 9px 22px; font-weight: 800;">
+            <i class="fas fa-save"></i> Enregistrer les modifications
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- MODALE MODIFICATION ESPACE LIVREUR - DESIGN PREMIUM DEFILABLE SUR-MESURE -->
+  <div id="modal-edit-livreur" class="modal-overlay" style="display: none; position: fixed; z-index: 100000 !important; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(8px); overflow-y: auto; padding: 75px 10px 85px 10px; box-sizing: border-box;">
+    <div class="modal anime-slide-up" style="background-color: var(--blanc); margin: auto; border-radius: 24px; width: 92%; max-width: 700px; max-height: calc(100vh - 160px); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.3); border: 1px solid rgba(255,96,0,0.2);">
+      
+      <!-- ENTÊTE MODALE STYLISÉE (FIXÉE EN HAUT) -->
+      <div style="padding: 20px 24px; border-bottom: 1px solid #F3F4F6; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #FFF3EE 0%, #FFFFFF 100%); flex-shrink: 0;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 14px; background: var(--orange); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; box-shadow: 0 4px 14px rgba(255,96,0,0.3); flex-shrink: 0;">
+            <i class="fas fa-motorcycle"></i>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-family: var(--police-titre); font-size: 1.2rem; font-weight: 800; color: var(--texte); line-height: 1.2;">
+              Modifier mon Espace Livreur
+            </h3>
+            <p style="margin: 3px 0 0 0; font-size: 0.82rem; color: var(--texte-gris); font-weight: 500;">
+              Mettez à jour vos véhicules, votre zone d'activité et vos coordonnées directes.
+            </p>
+          </div>
+        </div>
+        <button class="modal-fermer" id="btn-fermer-modal-edit-livreur" style="background: #F3F4F6; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem; color: #6B7280; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- CORPS FORMULAIRE (ZONE DÉFILABLE ÉPURÉE) -->
+      <form id="form-edit-livreur" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; margin: 0;">
+        <div style="padding: 22px 24px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1;">
+          
+          <!-- SECTION PHOTO DE PROFIL MOTARD -->
+          <div style="background: #FAFAFA; border: 1px solid #F3F4F6; border-radius: 16px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="position: relative;">
+                <div id="preview-avatar-livreur-container" style="width: 58px; height: 58px; border-radius: 50%; background: #FFF3EE; border: 2.5px solid var(--orange); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; color: var(--orange); overflow: hidden; box-shadow: 0 4px 12px rgba(255,96,0,0.15);">
+                  <span id="initiales-avatar-livreur">?</span>
+                  <img id="img-preview-livreur" src="" alt="Aperçu" style="display: none; width: 100%; height: 100%; object-fit: cover;" />
+                </div>
+              </div>
+              <div>
+                <h4 style="margin: 0; font-size: 0.92rem; font-weight: 700; color: var(--texte);">Photo de Profil Livreur</h4>
+                <p style="margin: 2px 0 0 0; font-size: 0.76rem; color: var(--texte-gris);">Visible par vos clients et partenaires lors des livraisons.</p>
+              </div>
+            </div>
+            <label for="livreur-photo-input" style="cursor: pointer; padding: 8px 16px; background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; font-size: 0.82rem; font-weight: 700; color: var(--texte); display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: all 0.2s ease;">
+              <i class="fas fa-camera" style="color: var(--orange);"></i> Changer la photo
+            </label>
+            <input type="file" id="livreur-photo-input" accept="image/*" style="display: none;" />
+          </div>
+
+          <!-- GRILLE FORMULAIRE -->
+          <div class="grille grille-2" style="gap: 18px; align-items: start;">
+            
+            <!-- COLONNE GAUCHE (PRÉNOM & NOM & TÉLÉPHONE) -->
+            <div>
+              <div class="form-groupe" style="margin-bottom: 14px;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.85rem; color: var(--texte);">
+                  <i class="fas fa-user" style="color: var(--orange); margin-right: 6px;"></i> Prénom
+                </label>
+                <input type="text" id="livreur-prenom-edit" class="form-controle" required style="padding: 10px 14px; border-radius: 12px; border: 1px solid #E5E7EB; background: #FAFAFA; font-size: 0.9rem;" />
+              </div>
+
+              <div class="form-groupe" style="margin-bottom: 14px;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.85rem; color: var(--texte);">
+                  <i class="fas fa-user-tag" style="color: var(--orange); margin-right: 6px;"></i> Nom
+                </label>
+                <input type="text" id="livreur-nom-edit" class="form-controle" required style="padding: 10px 14px; border-radius: 12px; border: 1px solid #E5E7EB; background: #FAFAFA; font-size: 0.9rem;" />
+              </div>
+
+              <div class="form-groupe" style="margin-bottom: 0;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.85rem; color: var(--texte);">
+                  <i class="fas fa-phone-alt" style="color: var(--orange); margin-right: 6px;"></i> Téléphone
+                </label>
+                <input type="text" id="livreur-telephone-edit" class="form-controle" required placeholder="+224 620 00 00 00" style="padding: 10px 14px; border-radius: 12px; border: 1px solid #E5E7EB; background: #FAFAFA; font-size: 0.9rem;" />
+              </div>
+            </div>
+
+            <!-- COLONNE DROITE (SÉLECTEUR GENRE & VÉHICULE & ZONE/ADRESSE) -->
+            <div>
+              <div class="form-groupe" style="margin-bottom: 14px;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 8px; font-size: 0.85rem; color: var(--texte); display: block;">
+                  <i class="fas fa-venus-mars" style="color: var(--orange); margin-right: 6px;"></i> Genre
+                </label>
+                <input type="hidden" id="livreur-genre-edit" value="M" />
+                <div class="genre-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                  <div class="genre-btn-card actif" data-genre="M" style="padding: 9px 12px; border-radius: 12px; border: 2px solid var(--orange); background: #FFF3EE; color: var(--orange); font-weight: 700; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease;">
+                    <i class="fas fa-male" style="margin-right:4px;"></i>Homme
+                  </div>
+                  <div class="genre-btn-card" data-genre="F" style="padding: 9px 12px; border-radius: 12px; border: 1.5px solid #E5E7EB; background: #FAFAFA; color: #4B5563; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease;">
+                    <i class="fas fa-female" style="margin-right:4px;"></i>Femme
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-groupe" style="margin-bottom: 14px;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 8px; font-size: 0.85rem; color: var(--texte); display: block;">
+                  <i class="fas fa-motorcycle" style="color: var(--orange); margin-right: 6px;"></i> Moyen de Transport
+                </label>
+                <input type="hidden" id="livreur-vehicule-edit" value="Moto" />
+                <div class="vehicules-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                  <div class="vehicule-btn-card actif" data-val="Moto" style="padding: 10px; border-radius: 12px; border: 2px solid var(--orange); background: #FFF3EE; color: var(--orange); font-weight: 700; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease;">
+                    <span style="font-size: 1.1rem;"><i class="fas fa-motorcycle" style="color:var(--orange);margin-right:4px;"></i></span> Moto
+                  </div>
+                  <div class="vehicule-btn-card" data-val="Bombonna" style="padding: 10px; border-radius: 12px; border: 1.5px solid #E5E7EB; background: #FAFAFA; color: #4B5563; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease;">
+                    <span style="font-size: 1.1rem;"><i class="fas fa-taxi" style="color:var(--orange);margin-right:4px;"></i></span> Bombonna
+                  </div>
+                  <div class="vehicule-btn-card" data-val="Vélo" style="padding: 10px; border-radius: 12px; border: 1.5px solid #E5E7EB; background: #FAFAFA; color: #4B5563; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease;">
+                    <span style="font-size: 1.1rem;"><i class="fas fa-bicycle" style="color:var(--orange);margin-right:4px;"></i></span> Vélo
+                  </div>
+                  <div class="vehicule-btn-card" data-val="Voiture" style="padding: 10px; border-radius: 12px; border: 1.5px solid #E5E7EB; background: #FAFAFA; color: #4B5563; font-weight: 600; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease;">
+                    <span style="font-size: 1.1rem;"><i class="fas fa-car" style="color:var(--orange);margin-right:4px;"></i></span> Voiture
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-groupe" style="margin-bottom: 0;">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 6px; font-size: 0.85rem; color: var(--texte);">
+                  <i class="fas fa-map-marker-alt" style="color: var(--orange); margin-right: 6px;"></i> Zone d'activité
+                </label>
+                <input type="text" id="livreur-adresse-edit" class="form-controle" placeholder="Ex: Conakry (Kaloum, Dixinn, Ratoma...)" style="padding: 10px 14px; border-radius: 12px; border: 1px solid #E5E7EB; background: #FAFAFA; font-size: 0.9rem;" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PIED DE MODALE (FIXÉ EN BAS) -->
+        <div style="padding: 16px 24px; border-top: 1px solid #F3F4F6; display: flex; justify-content: flex-end; gap: 12px; background: #FAFAFA; flex-shrink: 0;">
+          <button type="button" class="btn btn-contour-orange" id="btn-annuler-edit-livreur" style="border-radius: 12px; padding: 9px 18px; font-weight: 700;">
+            Annuler
+          </button>
+          <button type="submit" id="btn-submit-edit-livreur" class="btn btn-orange" style="border-radius: 12px; padding: 9px 22px; font-weight: 800; box-shadow: 0 4px 14px rgba(255,96,0,0.3);">
+            <i class="fas fa-save"></i> Enregistrer les modifications
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/navbar.js"></script>
+  <script src="../../assets/js/dashboard-client.js"></script>
+</body>
+</html>

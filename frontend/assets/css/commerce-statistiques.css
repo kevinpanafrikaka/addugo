@@ -1,0 +1,475 @@
+/* =================================================================
+   AdduGo — Statistiques Boutique (commerce-statistiques.css)
+   Responsive & Premium
+   ================================================================= */
+
+/* =========================================
+   LAYOUT PRINCIPAL
+========================================= */
+.stats-main {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* =========================================
+   HEADER & FILTRES
+========================================= */
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stats-titre {
+  font-family: var(--police-titre);
+  font-size: 2rem;
+  color: var(--texte);
+  margin: 0 0 5px 0;
+}
+
+.stats-sous-titre {
+  color: var(--texte-gris);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.stats-filtres {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+  /* Masquer la scrollbar sur webkit */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.stats-filtres::-webkit-scrollbar { display: none; }
+
+/* =========================================
+   BOUTONS DE FILTRE
+========================================= */
+.btn-filtre-date {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid var(--bordure);
+  background: var(--blanc);
+  color: var(--texte-gris);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  white-space: nowrap;
+  font-family: var(--police);
+  font-size: 0.9rem;
+}
+.btn-filtre-date:hover {
+  background: rgba(255, 107, 0, 0.08);
+  color: var(--orange);
+  border-color: var(--orange);
+}
+.btn-filtre-date.actif {
+  background: var(--orange);
+  color: white;
+  border-color: var(--orange);
+  box-shadow: none;
+}
+
+/* =========================================
+   GRILLE KPIs
+========================================= */
+.stats-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* =========================================
+   CARTES KPIs (Couleurs Vibrantes)
+========================================= */
+.kpi-card {
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+}
+.kpi-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+}
+
+/* 1. Chiffre d'Affaires (Orange) */
+.kpi-card-ca {
+  background: linear-gradient(135deg, #ff9b00 0%, #ff5722 100%);
+  color: white;
+}
+.kpi-card-ca .kpi-label { color: rgba(255,255,255,0.9); }
+.kpi-card-ca .kpi-valeur { color: white; }
+.kpi-card-ca .kpi-icon-bg { color: white; opacity: 0.15; }
+
+/* 2. Commandes Livrées (Bleu) */
+.kpi-card-livrees {
+  background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+  color: white;
+}
+.kpi-card-livrees .kpi-label { color: rgba(255,255,255,0.9); }
+.kpi-card-livrees .kpi-valeur { color: white; }
+.kpi-card-livrees .kpi-icon-bg { color: white; opacity: 0.15; }
+
+/* 3. En Attente (Ambre/Or) */
+.kpi-card-attente {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+.kpi-card-attente .kpi-label { color: rgba(0,0,0,0.65); }
+.kpi-card-attente .kpi-valeur { color: #222; }
+.kpi-card-attente .kpi-icon-bg { color: #000; opacity: 0.05; }
+
+/* 4. Produits Actifs (Vert) */
+.kpi-card-produits {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+}
+.kpi-card-produits .kpi-label { color: rgba(255,255,255,0.9); }
+.kpi-card-produits .kpi-valeur { color: white; }
+.kpi-card-produits .kpi-icon-bg { color: white; opacity: 0.15; }
+
+/* =========================================
+   GRILLE GRAPHIQUES
+========================================= */
+.stats-charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* =========================================
+   CARTES GRAPHIQUES
+========================================= */
+.card-chart-revenus,
+.card-chart-categories,
+.card-top-produits {
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.card-chart-revenus {
+  background: linear-gradient(to right bottom, #fffdfa, #fff3e6);
+  border: 1px solid #ffe0b2;
+}
+.card-chart-categories {
+  background: linear-gradient(to right bottom, #f8fbff, #eef5ff);
+  border: 1px solid #cce0ff;
+}
+.card-top-produits {
+  background: linear-gradient(to right bottom, #f7fdf9, #e6f7ec);
+  border: 1px solid #bfe8cb;
+}
+
+/* Titres des cartes */
+.card-chart-titre {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--police-titre);
+  font-size: 1.1rem;
+  margin: 0 0 20px 0;
+  color: var(--texte);
+}
+
+.card-chart-titre-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Canvas wrappers */
+.card-chart-canvas-wrapper {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+.card-chart-canvas-donut {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================================
+   TOP PRODUITS
+========================================= */
+.top-produits-liste {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.top-produits-loading {
+  text-align: center;
+  color: var(--texte-gris);
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.top-produits-loading i {
+  font-size: 2rem;
+  color: var(--orange);
+}
+.top-produits-loading p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Etat vide stylisé */
+.top-produits-vide {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--texte-gris);
+}
+.top-produits-vide-icon {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #f0f8f4, #d4edda);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: #1e7e34;
+  margin-bottom: 5px;
+}
+.top-produits-vide h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--texte);
+  font-family: var(--police-titre);
+}
+.top-produits-vide p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* Hover Top Produits items */
+#liste-top-produits > div:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+  background: rgba(255,255,255,0.9) !important;
+}
+
+/* =========================================
+   RESPONSIVE — TABLETTE (max 1024px)
+========================================= */
+@media (max-width: 1024px) {
+  .stats-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stats-charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   RESPONSIVE — MOBILE (max 768px)
+========================================= */
+@media (max-width: 768px) {
+
+  /* ── LAYOUT : zéro débordement horizontal ── */
+  .stats-main {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 12px 100px 12px;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .stats-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .stats-header-text {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .stats-titre {
+    font-size: 1.35rem;
+    line-height: 1.2;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .stats-sous-titre {
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .stats-header-actions {
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .btn-voir-commandes-stats {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    justify-content: center !important;
+    display: flex !important;
+    padding: 12px 16px !important;
+    font-size: 0.92rem !important;
+  }
+
+  /* ── FILTRES : grille 2×2 verrouillée ── */
+  .stats-filtres {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  .btn-filtre-date {
+    width: 100%;
+    padding: 9px 6px;
+    font-size: 0.82rem;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 12px;
+    box-sizing: border-box;
+  }
+
+  /* ── KPIs : 2 colonnes compactes ── */
+  .stats-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .kpi-card {
+    border-radius: 14px;
+    padding: 14px 12px;
+    min-height: 100px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .kpi-label {
+    font-size: 0.78rem !important;
+    line-height: 1.2;
+  }
+  .kpi-valeur {
+    font-size: 1.2rem !important;
+    margin-top: 4px;
+    word-break: break-all;
+  }
+  .kpi-icon-bg {
+    font-size: 3rem !important;
+    bottom: -8px !important;
+    right: -8px !important;
+  }
+
+  /* ── GRAPHIQUES : 1 colonne ── */
+  .stats-charts-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .card-chart-revenus,
+  .card-chart-categories,
+  .card-top-produits {
+    padding: 14px;
+    border-radius: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .card-chart-canvas-wrapper {
+    height: 190px;
+  }
+  .card-chart-canvas-donut {
+    height: 210px;
+  }
+
+  /* ── TITRES DES CARTES ── */
+  .card-chart-titre {
+    font-size: 0.9rem;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .card-chart-titre-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 0.78rem;
+    border-radius: 7px;
+    flex-shrink: 0;
+  }
+
+  /* ── TOP PRODUITS ── */
+  #liste-top-produits > div {
+    padding: 10px 10px;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+}
+
+/* =========================================
+   RESPONSIVE — PETIT MOBILE (max 480px)
+========================================= */
+@media (max-width: 480px) {
+
+  .stats-main {
+    padding: 12px 10px 100px 10px;
+  }
+
+  .stats-titre {
+    font-size: 1.15rem;
+  }
+
+  .stats-kpi-grid {
+    gap: 8px;
+  }
+  .kpi-card {
+    padding: 10px;
+    min-height: 85px;
+  }
+  .kpi-valeur {
+    font-size: 1rem !important;
+  }
+  .kpi-label {
+    font-size: 0.72rem !important;
+  }
+
+  .card-chart-canvas-wrapper {
+    height: 160px;
+  }
+}

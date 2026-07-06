@@ -1,0 +1,488 @@
+/* ============================================================
+   AdduGo — Styles Authentification (Login & Register)
+   ============================================================ */
+
+.auth-body {
+  background: var(--fond);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAVBAR (Spécifique auth) */
+.navbar {
+  padding: 16px 0;
+  background: var(--blanc);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-contenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-actions {
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-actions span {
+  font-family: var(--police);
+  font-weight: 500;
+  color: var(--texte-doux);
+  font-size: 1rem;
+}
+
+.auth-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espace-xl) 0;
+}
+
+.auth-conteneur {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 600px;
+  max-width: 1000px;
+  width: 90%;
+  border-radius: var(--rayon-xl);
+  overflow: hidden;
+  box-shadow: var(--ombre-lg);
+}
+
+/* ── GAUCHE ── */
+.auth-gauche {
+  background: linear-gradient(135deg, var(--noir) 0%, #0f0f1a 100%);
+  padding: 60px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-gauche::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,96,0,0.15) 0%, transparent 60%);
+  border-radius: 50%;
+}
+
+.auth-gauche::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,96,0,0.1) 0%, transparent 60%);
+  border-radius: 50%;
+}
+
+.auth-illustration {
+  position: relative;
+  z-index: 1;
+  color: var(--blanc);
+}
+
+.logo-image {
+  height: 70px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+  transform: scale(1.05);
+}
+
+.logo-inline {
+  height: 55px; /* Grand, mais optimisé pour tenir sur la ligne */
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.auth-intro-texte {
+  color: var(--blanc);
+  font-size: 1.4rem;
+  line-height: 1.5;
+  margin-bottom: 40px;
+  font-family: var(--police-titre);
+  font-weight: 600;
+  position: relative;
+  padding-left: 20px;
+  border-left: 4px solid var(--orange);
+}
+
+
+
+.auth-illustration p {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 40px;
+  font-family: var(--police);
+}
+
+.auth-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--police);
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.auth-feature i {
+  width: 40px;
+  height: 40px;
+  background: rgba(255,96,0,0.15);
+  border: 1px solid rgba(255,96,0,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* ── DROITE ── */
+.auth-droite {
+  background: #F5F1E7; /* Couleur Beige */
+  padding: 60px 48px;
+  display: flex;
+  align-items: center;
+}
+
+.auth-carte {
+  width: 100%;
+}
+
+.auth-entete {
+  margin-bottom: 32px;
+}
+
+.auth-entete h3 {
+  font-size: 1.4rem; /* Légèrement réduit pour laisser la place au grand logo */
+  color: var(--texte);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  white-space: nowrap; /* Empêche formellement le retour à la ligne du texte */
+}
+
+.auth-entete p {
+  color: var(--texte-gris);
+  font-size: 0.9rem;
+  font-family: var(--police);
+}
+
+/* ── INPUT GROUPE ── */
+.input-groupe {
+  position: relative;
+}
+
+.input-groupe .form-input {
+  padding-right: 48px;
+}
+
+.input-icone {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--texte-gris);
+  font-size: 0.95rem;
+  transition: var(--transition);
+  padding: 4px;
+}
+
+.input-icone:hover { color: var(--orange); }
+
+/* ── SÉPARATEUR ── */
+.auth-separateur {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+  color: var(--texte-gris);
+  font-size: 0.85rem;
+  font-family: var(--police);
+}
+
+.auth-separateur::before,
+.auth-separateur::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--bordure);
+}
+
+/* ── PIED ── */
+.auth-pied {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: var(--police);
+  font-size: 0.9rem;
+  color: var(--texte-gris);
+}
+
+.lien-orange {
+  color: var(--orange);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.lien-orange:hover {
+  color: var(--orange-dark);
+  text-decoration: underline;
+}
+
+.lien-retour {
+  color: var(--texte-gris);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.lien-retour:hover { color: var(--orange); }
+
+/* ── RÔLES (pour register) ── */
+.roles-grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.role-carte {
+  border: 2px solid var(--bordure);
+  border-radius: var(--rayon-md);
+  padding: 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.role-carte:hover {
+  border-color: var(--orange);
+  background: var(--orange-bg);
+}
+
+.role-carte.selectionne {
+  border-color: var(--orange);
+  background: var(--orange-bg);
+}
+
+.role-icone {
+  font-size: 1.75rem;
+  margin-bottom: 8px;
+}
+
+.role-nom {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texte);
+  font-family: var(--police);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .auth-conteneur {
+    grid-template-columns: 1fr;
+    width: 95%;
+  }
+  .auth-gauche  { display: none; }
+  .auth-droite  { padding: 40px 28px; }
+  .roles-grille { grid-template-columns: repeat(3, 1fr); }
+  .modal-role-carte { width: 95%; padding: 32px 20px; }
+}
+
+/* ============================================================
+   MODAL — SÉLECTEUR DE RÔLE
+   ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-role-carte {
+  background: var(--blanc);
+  border-radius: var(--rayon-xl);
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-role-entete {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.modal-role-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), var(--orange-light));
+  color: var(--blanc);
+  font-family: var(--police-titre);
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 16px rgba(255, 96, 0, 0.3);
+}
+
+.modal-role-entete h3 {
+  font-family: var(--police-titre);
+  font-size: 1.5rem;
+  color: var(--texte);
+  margin-bottom: 8px;
+}
+
+.modal-role-entete p {
+  font-family: var(--police);
+  font-size: 0.9rem;
+  color: var(--texte-gris);
+  line-height: 1.5;
+}
+
+.modal-role-grille {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-role-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 2px solid var(--bordure);
+  border-radius: var(--rayon-md);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.modal-role-item:hover {
+  border-color: var(--orange);
+  background: var(--orange-bg);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(255, 96, 0, 0.12);
+}
+
+.modal-role-icone {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--rayon-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blanc);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.modal-role-info {
+  flex: 1;
+}
+
+.modal-role-label {
+  font-family: var(--police-titre);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texte);
+  margin-bottom: 2px;
+}
+
+.modal-role-desc {
+  font-family: var(--police);
+  font-size: 0.8rem;
+  color: var(--texte-gris);
+}
+
+.modal-role-fleche {
+  color: var(--texte-clair);
+  font-size: 0.85rem;
+  transition: all 0.25s ease;
+}
+
+.modal-role-item:hover .modal-role-fleche {
+  color: var(--orange);
+  transform: translateX(4px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .navbar-actions span {
+    display: none;
+  }
+  
+  .auth-entete h3 {
+    font-size: 1.1rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    gap: 6px;
+  }
+  
+  .logo-inline {
+    height: 36px;
+  }
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo — Bienvenue</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
+  <link rel="stylesheet" href="../assets/css/onboarding.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .onboarding-conteneur {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: var(--rayon-lg);
+      box-shadow: var(--ombre-md);
+      padding: var(--espace-xl);
+    }
+    .onboarding-entete {
+      text-align: center;
+      margin-bottom: var(--espace-lg);
+    }
+    .onboarding-entete h2 {
+      font-size: 2rem;
+      margin-bottom: var(--espace-sm);
+    }
+    .onboarding-entete p {
+      color: var(--texte-gris);
+    }
+    
+    .upload-zone {
+      border: 2px dashed var(--bordure);
+      border-radius: var(--rayon-md);
+      padding: var(--espace-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: var(--espace-md);
+      position: relative;
+      background: var(--fond);
+    }
+    .upload-zone:hover {
+      border-color: var(--orange);
+      background: #FFF5EE;
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-icone {
+      font-size: 2.5rem;
+      color: var(--orange);
+      margin-bottom: var(--espace-sm);
+    }
+    .apercu-image {
+      max-width: 150px;
+      max-height: 150px;
+      border-radius: var(--rayon-md);
+      margin-top: var(--espace-sm);
+      display: none;
+      box-shadow: var(--ombre-sm);
+    }
+    .apercu-cercle {
+      border-radius: 50% !important;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+    }
+    .apercu-rectangle {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body class="auth-body">
+
+  <nav class="navbar">
+    <div class="conteneur">
+      <div class="navbar-contenu" style="justify-content: center;">
+        <a href="../index.html" class="navbar-logo">
+          <span>Addu</span><span>Go</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="auth-main">
+    <div class="conteneur">
+      <div class="onboarding-conteneur anime-slide-up">
+        <div class="onboarding-entete">
+          <h2>Bienvenue sur AdduGo ! </h2>
+          <p>Personnalisons votre profil pour commencer.</p>
+        </div>
+
+        <div id="alerte-onboarding"></div>
+
+        <form id="form-onboarding">
+          
+          <!-- Photo de profil -->
+          <div class="form-groupe">
+            <label class="form-label">
+              <i class="fas fa-user-circle"></i> Photo de profil <span class="badge badge-erreur" style="font-size:0.7rem">Requis</span>
+            </label>
+            <div class="upload-zone" id="zone-profil">
+              <div class="upload-icone"><i class="fas fa-camera"></i></div>
+              <p>Cliquez ou glissez une image ici</p>
+              <input type="file" id="input-profil" accept="image/*" required />
+              <img id="apercu-profil" class="apercu-image apercu-cercle" alt="Aperçu profil" />
+            </div>
+          </div>
+
+
+
+          <button type="submit" class="btn btn-orange btn-plein btn-lg" style="width: 100%; margin-top: var(--espace-lg);" id="btn-terminer">
+            <i class="fas fa-check"></i>
+            Terminer mon inscription
+          </button>
+          
+          <div style="text-align: center; margin-top: var(--espace-md);">
+            <button type="button" class="btn btn-contour" style="border: none; color: var(--texte-gris)" onclick="passerEtape()">
+              Passer cette étape pour l'instant
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/onboarding.js"></script>
+</body>
+</html>

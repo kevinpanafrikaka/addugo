@@ -1,0 +1,226 @@
+/* ============================================================
+   AdduGo — Styles Suivi de Livraison
+   ============================================================ */
+
+/* ── RECHERCHE ── */
+.suivi-recherche {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-md);
+  margin-bottom: var(--espace-xl);
+  flex-wrap: wrap;
+}
+
+/* ── CARTE SUIVI ── */
+.suivi-carte {
+  background: var(--blanc);
+  border-radius: var(--rayon-lg);
+  padding: var(--espace-xl);
+  box-shadow: var(--ombre-md);
+  border: 1px solid var(--bordure);
+  margin-bottom: var(--espace-lg);
+}
+
+.suivi-carte-entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--espace-xl);
+  padding-bottom: var(--espace-lg);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.suivi-carte-entete h3 {
+  font-size: 1.25rem;
+  color: var(--texte);
+}
+
+/* ── TIMELINE ── */
+.timeline {
+  position: relative;
+  padding: var(--espace-lg) 0;
+  margin-bottom: var(--espace-xl);
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--bordure);
+}
+
+.timeline-etape {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espace-lg);
+  padding: var(--espace-md) 0;
+  position: relative;
+  opacity: 0.4;
+  transition: var(--transition);
+}
+
+.timeline-etape.actif {
+  opacity: 1;
+}
+
+.timeline-etape.complete {
+  opacity: 1;
+}
+
+.timeline-icone {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--bordure);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--texte-gris);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: var(--transition);
+}
+
+.timeline-etape.complete .timeline-icone {
+  background: var(--succes);
+  color: var(--blanc);
+}
+
+.timeline-etape.actif .timeline-icone {
+  background: var(--orange);
+  color: var(--blanc);
+  box-shadow: var(--ombre-orange);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,96,0,0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(255,96,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,96,0,0); }
+}
+
+.timeline-contenu {
+  padding-top: 8px;
+}
+
+.timeline-titre {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--texte);
+  font-family: var(--police-titre);
+}
+
+.timeline-desc {
+  font-size: 0.8rem;
+  color: var(--texte-gris);
+  margin-top: 4px;
+  font-family: var(--police);
+}
+
+/* ── INFOS ── */
+.suivi-infos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espace-lg);
+  padding: var(--espace-lg);
+  background: var(--fond);
+  border-radius: var(--rayon-md);
+  margin-bottom: var(--espace-lg);
+}
+
+.suivi-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espace-sm);
+}
+
+.suivi-info-item > i {
+  color: var(--orange);
+  margin-top: 3px;
+  font-size: 1rem;
+}
+
+.suivi-info-label {
+  font-size: 0.75rem;
+  color: var(--texte-gris);
+  font-family: var(--police);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.suivi-info-val {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--texte);
+  font-family: var(--police);
+  margin-top: 2px;
+}
+
+/* ── ARTICLES ── */
+.suivi-articles {
+  border-top: 1px solid var(--bordure);
+  padding-top: var(--espace-lg);
+}
+
+.suivi-article-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--espace-sm) 0;
+  border-bottom: 1px solid var(--bordure);
+  font-family: var(--police);
+}
+
+.suivi-article-item:last-child {
+  border-bottom: none;
+}
+
+.suivi-article-nom {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--texte);
+}
+
+.suivi-article-qte {
+  font-size: 0.8rem;
+  color: var(--texte-gris);
+}
+
+.suivi-article-prix {
+  font-family: var(--police-mono);
+  font-weight: 700;
+  color: var(--orange);
+  font-size: 0.9rem;
+}
+
+/* ── COMMANDES EN COURS ── */
+.commande-en-cours-carte {
+  background: var(--blanc);
+  border-radius: var(--rayon-lg);
+  padding: var(--espace-lg);
+  margin-bottom: var(--espace-md);
+  border: 2px solid var(--bordure);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--ombre-sm);
+}
+
+.commande-en-cours-carte:hover {
+  border-color: var(--orange);
+  box-shadow: var(--ombre-orange);
+  transform: translateY(-2px);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .suivi-infos { grid-template-columns: 1fr; }
+  .suivi-recherche { flex-direction: column; align-items: flex-start; }
+}

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo — Mon Profil</title>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/navbar.css" />
+  <link rel="stylesheet" href="../../assets/css/dashboard.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ── PROFIL PREMIUM MOBILE-FIRST ── */
+
+    body.dashboard-body {
+      padding-bottom: 30px;
+    }
+
+    .profil-page-conteneur {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px 16px 50px 16px;
+    }
+
+    /* EN-TÊTE AVATAR */
+    .profil-header-card {
+      background: #fff;
+      border-radius: 20px;
+      border: 1px solid #E8EAED;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .profil-header-accent {
+      height: 5px;
+      background: linear-gradient(90deg, var(--orange), #FF9800);
+    }
+    .profil-header-body {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 22px 24px;
+    }
+    .profil-avatar-wrapper {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      cursor: pointer;
+      overflow: hidden;
+      border: 3px solid var(--orange);
+      box-shadow: 0 4px 16px rgba(255, 96, 0, 0.2);
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+    .profil-avatar-wrapper:active {
+      transform: scale(0.95);
+    }
+    .profil-avatar-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      font-size: 1.1rem;
+    }
+    .profil-avatar-wrapper:hover .profil-avatar-overlay {
+      opacity: 1;
+    }
+    .profil-avatar-overlay span {
+      font-size: 0.68rem;
+      margin-top: 2px;
+      font-weight: 700;
+    }
+    .profil-header-infos h1 {
+      font-family: var(--police-titre);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--texte);
+      margin: 0 0 4px 0;
+      line-height: 1.2;
+    }
+    .profil-roles-texte {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--texte-gris);
+      letter-spacing: 0.02em;
+    }
+
+    /* CARTES FORMULAIRE */
+    .profil-carte {
+      background: #fff;
+      border-radius: 20px;
+      border: 1px solid #E8EAED;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      padding: 24px 22px;
+      margin-bottom: 16px;
+    }
+    .profil-carte-titre-bloc {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #F0F2F5;
+    }
+    .profil-carte-icone {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .profil-carte h2 {
+      font-family: var(--police-titre);
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin: 0;
+      color: var(--texte);
+    }
+    .profil-carte p {
+      margin: 2px 0 0 0;
+      color: var(--texte-gris);
+      font-size: 0.82rem;
+    }
+
+    /* CHAMPS */
+    .form-label {
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--texte);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-controle {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1.5px solid #E5E7EB;
+      background: #F9FAFB;
+      font-size: 16px; /* empêche zoom iOS */
+      font-family: var(--police);
+      color: var(--texte);
+      transition: border-color 0.2s ease, background 0.2s ease;
+      outline: none;
+    }
+    .form-controle:focus {
+      border-color: var(--orange);
+      background: #fff;
+    }
+
+    /* GENRE */
+    .genre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .profil-genre-card {
+      padding: 11px 10px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+      user-select: none;
+    }
+    .profil-genre-card.actif {
+      border: 2px solid var(--orange);
+      background: #FFF3EE;
+      color: var(--orange);
+    }
+    .profil-genre-card:not(.actif) {
+      border: 1.5px solid #E5E7EB;
+      background: #FAFAFA;
+      color: #4B5563;
+    }
+
+    /* CHAMP AVEC ŒIL */
+    .input-with-eye {
+      position: relative;
+    }
+    .input-with-eye .form-controle {
+      padding-right: 44px;
+    }
+    .btn-toggle-mdp {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--texte-gris);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s ease;
+    }
+    .btn-toggle-mdp:hover { color: var(--orange); }
+
+    /* BOUTONS DE SOUMISSION */
+    .btn-profil-submit {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      margin-top: 6px;
+    }
+    .btn-profil-submit:active {
+      transform: scale(0.98);
+    }
+    .btn-orange-submit {
+      background: var(--orange);
+      color: white;
+      box-shadow: 0 4px 14px rgba(255, 96, 0, 0.25);
+    }
+    .btn-noir-submit {
+      background: #1A1A2E;
+      color: white;
+      box-shadow: 0 4px 14px rgba(26, 26, 46, 0.2);
+    }
+
+    /* ALERTE */
+    #alerte-profil {
+      margin-bottom: 16px;
+    }
+
+    /* MOBILE COMPACT */
+    @media (max-width: 480px) {
+      .navbar-home {
+        padding: 8px 12px !important;
+        height: 60px !important;
+      }
+      .navbar-home-logo img {
+        height: 28px !important;
+      }
+      .profil-header-body {
+        padding: 18px 16px;
+        gap: 14px;
+      }
+      .profil-header-infos h1 {
+        font-size: 1.2rem;
+      }
+      .profil-carte {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body class="dashboard-body" style="background-color: #F7F8FA;">
+
+  <!-- NAVBAR : Accueil + Messages + Mon Espace Client + Avatar -->
+  <nav class="navbar-home">
+    <div class="navbar-home-gauche">
+      <button class="btn-mobile-menu" id="btn-mobile-menu-home" style="padding: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 2px solid var(--orange); cursor: pointer; flex-shrink: 0;">
+        <img src="../../assets/img/default-avatar.png" alt="Profil" id="mobile-top-avatar" style="width: 100%; height: 100%; object-fit: cover;" />
+      </button>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="../home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
+          <img src="../../../images/AdduGo_Logo.png" alt="AdduGo" style="height: 38px; width: auto; object-fit: contain;" />
+        </a>
+        <!-- Ligne de séparation verticale symétrique -->
+        <div style="height: 22px; width: 2px; background-color: var(--bordure-dark, #d1d5db); border-radius: 2px; margin: 0 6px; flex-shrink: 0;"></div>
+        <!-- Titre Mon Profil -->
+        <div class="navbar-titre-page">
+          <span>Mon</span><span style="color: var(--orange);">Profil</span> 
+          <i class="fas fa-user-circle" style="color:var(--orange);"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-home-droite">
+      <!-- 1. Accueil -->
+      <a href="../home.html" class="nav-icone" title="Accueil">
+        <i class="fas fa-house-user" style="color: #00A88F; font-size: 1.25rem;"></i>
+      </a>
+
+      <!-- 2. Mes Messages -->
+      <div style="position: relative;">
+        <a href="messages.html" class="nav-icone" title="Messages">
+          <i class="fas fa-envelope" style="color: #3B82F6; font-size: 1.2rem;"></i>
+          <span class="nav-badge" id="badge-messages" style="display: none;">0</span>
+        </a>
+      </div>
+
+      <!-- 3. Mon Espace Client -->
+      <a href="dashboard.html" class="nav-icone" title="Mon Espace Client">
+        <i class="fas fa-user-circle" style="color: #7A3E1D; font-size: 1.25rem;"></i>
+      </a>
+
+      <!-- Avatar + Dropdown -->
+      <div class="profil-wrapper" id="profil-wrapper">
+        <div class="navbar-profil-btn" id="btn-profil-toggle">
+          <img src="../../assets/img/default-avatar.png" alt="Profil" id="navbar-top-avatar" />
+        </div>
+        <div class="profil-dropdown" id="profil-dropdown">
+          <div class="dropdown-header">
+            <img src="../../assets/img/default-avatar.png" alt="Profil" id="dropdown-avatar" style="width:50px;height:50px;border-radius:50%;object-fit:cover;" />
+            <div class="dropdown-infos">
+              <div class="dropdown-nom" id="dropdown-nom">Chargement...</div>
+              <div class="dropdown-role" id="dropdown-roles-badges">Client</div>
+            </div>
+          </div>
+          <div class="dropdown-menu-container">
+            <a href="profil.html" class="sidebar-lien actif" style="margin-top:6px;">
+              <i class="fas fa-user" style="color:var(--orange);"></i> Mon Profil
+            </a>
+            <a href="../home.html" class="sidebar-lien">
+              <i class="fas fa-home"></i> Home
+            </a>
+            <a href="dashboard.html" class="sidebar-lien">
+              <i class="fas fa-user-circle"></i> Mon Espace Client
+            </a>
+            <a href="../livreur/dashboard.html" class="sidebar-lien">
+              <i class="fas fa-motorcycle"></i> Mon Espace Livreur
+            </a>
+            <div style="border-top:1px solid var(--bordure);margin-top:6px;padding-top:6px;">
+              <a href="#" class="sidebar-lien btn-deconnexion" id="btn-logout" style="color:#dc3545;">
+                <i class="fas fa-sign-out-alt"></i> Se déconnecter
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE PROFIL -->
+  <div class="profil-page-conteneur">
+
+    <div id="alerte-profil"></div>
+
+    <!-- EN-TÊTE AVATAR + NOM -->
+    <div class="profil-header-card">
+      <div class="profil-header-accent"></div>
+      <div class="profil-header-body">
+        <label for="upload-photo" class="profil-avatar-wrapper" id="avatar-gros-conteneur" title="Changer ma photo">
+          <div id="avatar-gros-initiales" style="width:100%;height:100%;background:#FFF3EE;color:var(--orange);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.9rem;">?</div>
+          <div class="profil-avatar-overlay">
+            <i class="fas fa-camera"></i>
+            <span>Modifier</span>
+          </div>
+        </label>
+        <input type="file" id="upload-photo" accept="image/png,image/jpeg,image/jpg" style="display:none;" />
+
+        <div class="profil-header-infos">
+          <h1 id="banniere-nom">Chargement...</h1>
+          <div class="profil-roles-texte" id="banniere-role">Client</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTE INFORMATIONS PERSONNELLES -->
+    <div class="profil-carte">
+      <div class="profil-carte-titre-bloc">
+        <div class="profil-carte-icone" style="background:#FFF3EE;color:var(--orange);border:1px solid rgba(255,96,0,0.15);">
+          <i class="fas fa-id-card"></i>
+        </div>
+        <div>
+          <h2>Informations Personnelles</h2>
+          <p>Vos identifiants et coordonnées.</p>
+        </div>
+      </div>
+
+      <form id="form-profil">
+
+        <!-- Prénom & Nom -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;" class="grid-responsive">
+          <div class="form-groupe">
+            <label class="form-label">
+              <i class="fas fa-user" style="color:var(--orange);margin-right:5px;"></i> Prénom
+            </label>
+            <input type="text" id="profil-prenom" class="form-controle" required />
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">
+              <i class="fas fa-user-tag" style="color:var(--orange);margin-right:5px;"></i> Nom
+            </label>
+            <input type="text" id="profil-nom" class="form-controle" required />
+          </div>
+        </div>
+
+        <!-- Genre -->
+        <div class="form-groupe" style="margin-bottom:14px;">
+          <label class="form-label">
+            <i class="fas fa-venus-mars" style="color:var(--orange);margin-right:5px;"></i> Genre
+          </label>
+          <input type="hidden" id="profil-genre" value="M" />
+          <div class="genre-grid">
+            <div class="profil-genre-card actif" data-genre="M"><i class="fas fa-male" style="margin-right:4px;"></i>Homme</div>
+            <div class="profil-genre-card" data-genre="F"><i class="fas fa-female" style="margin-right:4px;"></i>Femme</div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-groupe" style="margin-bottom:14px;">
+          <label class="form-label">
+            <i class="fas fa-envelope" style="color:var(--orange);margin-right:5px;"></i> Adresse Email
+          </label>
+          <input type="email" id="profil-email" class="form-controle" required />
+        </div>
+
+        <!-- Téléphone & Adresse -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;" class="grid-responsive">
+          <div class="form-groupe">
+            <label class="form-label">
+              <i class="fas fa-phone-alt" style="color:var(--orange);margin-right:5px;"></i> Téléphone
+            </label>
+            <input type="text" id="profil-telephone" class="form-controle" placeholder="+224 620 00 00 00" />
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">
+              <i class="fas fa-map-marker-alt" style="color:var(--orange);margin-right:5px;"></i> Adresse / Zone
+            </label>
+            <input type="text" id="profil-adresse" class="form-controle" placeholder="ex: Conakry, Ratoma" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-profil-submit btn-orange-submit" id="btn-save-profil">
+          <i class="fas fa-save"></i> Enregistrer les modifications
+        </button>
+      </form>
+    </div>
+
+    <!-- CARTE SÉCURITÉ -->
+    <div class="profil-carte">
+      <div class="profil-carte-titre-bloc">
+        <div class="profil-carte-icone" style="background: rgba(26,26,46,0.08); color: #1A1A2E; border: 1px solid rgba(26,26,46,0.15);">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div>
+          <h2>Sécurité & Mot de Passe</h2>
+          <p>Modifiez votre mot de passe.</p>
+        </div>
+      </div>
+
+      <form id="form-securite">
+
+        <div class="form-groupe" style="margin-bottom:14px;">
+          <label class="form-label">
+            <i class="fas fa-key" style="color: #1A1A2E; margin-right: 5px;"></i> Mot de passe actuel
+          </label>
+          <div class="input-with-eye">
+            <input type="password" id="mdp-actuel" class="form-controle" required placeholder="••••••••" />
+            <button type="button" class="btn-toggle-mdp" data-target="mdp-actuel">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;" class="grid-responsive">
+          <div class="form-groupe">
+            <label class="form-label">
+              <i class="fas fa-lock" style="color: #1A1A2E; margin-right: 5px;"></i> Nouveau mot de passe
+            </label>
+            <div class="input-with-eye">
+              <input type="password" id="mdp-nouveau" class="form-controle" required placeholder="••••••••" />
+              <button type="button" class="btn-toggle-mdp" data-target="mdp-nouveau">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <div class="form-groupe">
+            <label class="form-label">
+              <i class="fas fa-check-double" style="color: #1A1A2E; margin-right: 5px;"></i> Confirmer
+            </label>
+            <div class="input-with-eye">
+              <input type="password" id="mdp-confirm" class="form-controle" required placeholder="••••••••" />
+              <button type="button" class="btn-toggle-mdp" data-target="mdp-confirm">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-profil-submit btn-noir-submit" id="btn-save-securite">
+          <i class="fas fa-key"></i> Changer le mot de passe
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Grilles responsives sur mobile -->
+  <style>
+    @media (max-width: 520px) {
+      .grid-responsive {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/navbar.js"></script>
+  <script src="../../assets/js/shared-profil.js"></script>
+</body>
+</html>

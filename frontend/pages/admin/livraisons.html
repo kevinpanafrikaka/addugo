@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo â€” Gestion des Livraisons</title>
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/css/dashboard.css" />
+  <link rel="stylesheet" href="../../assets/css/admin-livraisons.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="dashboard-body">
+
+  <!-- NAVBAR -->
+  <nav class="navbar-dashboard">
+    <a href="../../index.html" class="navbar-dashboard-logo">
+      <span>Addu</span><span>Go</span>
+    </a>
+    <div class="navbar-dashboard-droite">
+      <button class="notif-btn">
+        <i class="fas fa-bell"></i>
+        <span class="notif-badge">0</span>
+      </button>
+      <div class="user-menu">
+        <div class="user-menu-avatar" id="user-avatar">?</div>
+        <span class="user-menu-nom" id="user-nom">Chargement...</span>
+        <i class="fas fa-chevron-down" style="font-size:0.75rem; color:var(--texte-gris)"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- LAYOUT -->
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-profil">
+        <div class="sidebar-avatar" id="sidebar-avatar">?</div>
+        <div class="sidebar-nom" id="sidebar-nom">Chargement...</div>
+        <div class="sidebar-role">
+          <span class="badge badge-erreur">Admin</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-titre">Administration</div>
+        <a href="dashboard.html" class="sidebar-lien">
+          <i class="fas fa-home"></i> Tableau de bord
+        </a>
+        <a href="statistiques.html" class="sidebar-lien">
+          <i class="fas fa-chart-bar"></i> Statistiques
+        </a>
+        <div class="sidebar-section-titre">Gestion</div>
+        <a href="utilisateurs.html" class="sidebar-lien" id="lien-utilisateurs">
+          <i class="fas fa-users"></i> Utilisateurs
+        </a>
+        <a href="commerces.html" class="sidebar-lien" id="lien-commerces">
+          <i class="fas fa-store"></i> Commerces
+        </a>
+        <a href="commandes.html" class="sidebar-lien" id="lien-commandes">
+          <i class="fas fa-shopping-bag"></i> Commandes
+        </a>
+        <a href="livraisons.html" class="sidebar-lien actif" id="lien-livraisons">
+          <i class="fas fa-motorcycle"></i> Livraisons
+        </a>
+        <div class="sidebar-section-titre">Mon Compte</div>
+        <a href="../client/profil.html" class="sidebar-lien">
+          <i class="fas fa-user"></i> Mon profil
+        </a>
+      </nav>
+      <div class="sidebar-pied">
+        <button class="btn-deconnexion" id="btn-deconnexion">
+          <i class="fas fa-sign-out-alt"></i> Se dÃ©connecter
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTENU -->
+    <main class="dashboard-contenu anime-slide-up">
+
+      <div class="dashboard-entete" style="display:flex; justify-content:space-between; align-items:flex-end;">
+        <div>
+          <h1>Gestion des <span class="orange">Livraisons</span></h1>
+          <p>Consultez et gÃ©rez toutes les livraisons assignÃ©es aux coursiers.</p>
+        </div>
+        <div style="display:flex; gap:var(--espace-sm)">
+          <div class="form-groupe" style="margin:0; min-width:250px;">
+            <div class="input-icone">
+              <i class="fas fa-search"></i>
+              <input type="text" id="recherche-livraison" placeholder="ID, Client ou Livreur..." class="form-controle" />
+            </div>
+          </div>
+          <select id="filtre-statut" class="form-controle" style="width:auto; cursor:pointer;">
+            <option value="tous">Tous les statuts</option>
+            <option value="assignee">AssignÃ©e</option>
+            <option value="en_cours">En cours</option>
+            <option value="livree">LivrÃ©e</option>
+            <option value="echouee">Ã‰chouÃ©e</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="alerte-action" style="margin-bottom:var(--espace-md)"></div>
+
+      <!-- LISTE DES LIVRAISONS -->
+      <div class="dashboard-section">
+        <div id="liste-toutes-livraisons">
+          <div class="chargement">
+            <div class="spinner"></div>
+            <p>Chargement des livraisons...</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="../../assets/js/api.js"></script>
+  <script src="../../assets/js/admin-livraisons.js"></script>
+</body>
+</html>
+
