@@ -139,7 +139,7 @@ function afficherProduits() {
         if (p.images) {
           let imgs = p.images;
           if (typeof imgs === 'string') { try { imgs = JSON.parse(imgs); } catch(e) {} }
-          if (Array.isArray(imgs) && imgs.length > 0) imageUrl = 'http://localhost:3000' + imgs[0];
+          if (Array.isArray(imgs) && imgs.length > 0) imageUrl = 'https://addugo.up.railway.app' + imgs[0];
         }
 
         // Badge stock
@@ -282,7 +282,7 @@ function ouvrirModalEdition(produitId) {
     let imgs = p.images;
     if (typeof imgs === 'string') { try { imgs = JSON.parse(imgs); } catch(e) {} }
     if (Array.isArray(imgs) && imgs.length > 0) {
-      preview.src = 'http://localhost:3000' + imgs[0];
+      preview.src = 'https://addugo.up.railway.app' + imgs[0];
       preview.style.display = 'block';
       if (nomFichier) nomFichier.textContent = 'Image actuelle (choisissez-en une autre pour la remplacer)';
     } else {

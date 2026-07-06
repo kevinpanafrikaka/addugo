@@ -171,7 +171,7 @@ async function chargerBoutiques() {
       <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
         ${data.commerces.map(c => {
           const logoUrl = c.logo 
-            ? (c.logo.startsWith('http') ? c.logo : `http://localhost:3000${c.logo}`)
+            ? (c.logo.startsWith('http') ? c.logo : `https://addugo.up.railway.app${c.logo}`)
             : null;
           return `
           <div class="carte carte-orange" style="cursor:pointer; background:var(--blanc); border:1px solid var(--bordure); border-radius:16px; padding:18px; transition:transform 0.2s ease, box-shadow 0.2s ease;" onclick="window.location.href='../home.html'">
@@ -226,7 +226,7 @@ async function initEvolution() {
   if (aUneBoutique) {
     const b = commercesUtilisateur[0] || { id: null, nom: 'Ma Boutique', description: 'Votre boutique sur AdduGo' };
     const logoUrl = b.logo 
-      ? (b.logo.startsWith('http') ? b.logo : `http://localhost:3000${b.logo}`)
+      ? (b.logo.startsWith('http') ? b.logo : `https://addugo.up.railway.app${b.logo}`)
       : null;
 
     sectionEvolution.innerHTML = `
@@ -279,7 +279,7 @@ async function initEvolution() {
     if (photoProfil && !photoProfil.includes('default-avatar.png')) {
       avatarUrl = photoProfil.startsWith('http')
         ? photoProfil
-        : `http://localhost:3000${photoProfil.startsWith('/') ? '' : '/'}${photoProfil}`;
+        : `https://addugo.up.railway.app${photoProfil.startsWith('/') ? '' : '/'}${photoProfil}`;
     }
     const initiales = `${user.nom?.[0] || ''}${user.prenom?.[0] || ''}`.toUpperCase();
 
@@ -374,7 +374,7 @@ window.modifierBoutique = (id, nom, description, logo) => {
   if (elDesc) elDesc.value = descVal;
 
   if (preview && logo) {
-    preview.src = logo.startsWith('http') ? logo : `http://localhost:3000${logo}`;
+    preview.src = logo.startsWith('http') ? logo : `https://addugo.up.railway.app${logo}`;
     preview.style.display = 'block';
   } else if (preview) {
     preview.style.display = 'none';
@@ -471,7 +471,7 @@ window.modifierLivreur = () => {
 
   if (user.photo_profil && !user.photo_profil.includes('default-avatar.png')) {
     if (imgEl) {
-      imgEl.src = user.photo_profil.startsWith('http') ? user.photo_profil : `http://localhost:3000${user.photo_profil}`;
+      imgEl.src = user.photo_profil.startsWith('http') ? user.photo_profil : `https://addugo.up.railway.app${user.photo_profil}`;
       imgEl.style.display = 'block';
     }
     if (initialesEl) initialesEl.style.display = 'none';

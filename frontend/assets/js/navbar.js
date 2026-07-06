@@ -165,7 +165,7 @@ async function initialiserNavbar() {
     if (user.photo_profil && !user.photo_profil.includes('default-avatar.png')) {
       const fullUrl = user.photo_profil.startsWith('http')
         ? user.photo_profil
-        : `http://localhost:3000${user.photo_profil.startsWith('/') ? '' : '/'}${user.photo_profil}`;
+        : `https://addugo.up.railway.app${user.photo_profil.startsWith('/') ? '' : '/'}${user.photo_profil}`;
 
       if(dropdownAvatar) dropdownAvatar.src = fullUrl;
       if(topAvatar) topAvatar.src = fullUrl;

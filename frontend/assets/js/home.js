@@ -82,7 +82,7 @@ async function chargerProduits() {
           }
           
           if (image && typeof image === 'string' && !image.startsWith('http') && !image.includes('AdduGo_Logo.png')) {
-            image = `http://localhost:3000${image.startsWith('/') ? '' : '/'}${image}`;
+            image = `https://addugo.up.railway.app${image.startsWith('/') ? '' : '/'}${image}`;
           }
         }
 
@@ -90,7 +90,7 @@ async function chargerProduits() {
         let photoBoutique = '../../assets/img/default-avatar.png';
         const photoSource = p.commerce_logo || p.commercant_photo;
         if (photoSource && typeof photoSource === 'string' && !photoSource.includes('default-avatar.png')) {
-          photoBoutique = photoSource.startsWith('http') ? photoSource : `http://localhost:3000${photoSource.startsWith('/') ? '' : '/'}${photoSource}`;
+          photoBoutique = photoSource.startsWith('http') ? photoSource : `https://addugo.up.railway.app${photoSource.startsWith('/') ? '' : '/'}${photoSource}`;
         }
 
         const nomBoutique = p.commerce_nom || p.nom_boutique || `${p.commercant_prenom || ''} ${p.commercant_nom || ''}`.trim() || 'Boutique Partenaire';
@@ -155,7 +155,7 @@ async function chargerBoutiquesNav() {
     if (data.success && data.commerces && data.commerces.length > 0) {
       conteneur.innerHTML = data.commerces.map(c => {
         const logoUrl = c.logo 
-          ? (c.logo.startsWith('http') ? c.logo : `http://localhost:3000${c.logo.startsWith('/') ? '' : '/'}${c.logo}`)
+          ? (c.logo.startsWith('http') ? c.logo : `https://addugo.up.railway.app${c.logo.startsWith('/') ? '' : '/'}${c.logo}`)
           : null;
 
         return `

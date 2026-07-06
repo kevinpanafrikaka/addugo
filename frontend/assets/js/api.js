@@ -3,7 +3,7 @@
    Gestionnaire global des requêtes API
    ============================================================ */
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://addugo.up.railway.app/api';
 
 /**
  * Fonction globale pour effectuer des requêtes API
