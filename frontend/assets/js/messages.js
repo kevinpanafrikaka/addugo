@@ -104,7 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==== LOAD CONVERSATIONS ====
   async function loadConversations() {
     try {
-      const data = await apiCall('/messages/conversations');
+      const res = await apiFetch('/messages/conversations');
+      const data = await res.json();
       if (data.success) {
         conversationsList = data.data;
         renderConversations();
@@ -195,7 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadMessages(autreId) {
     try {
       chatMessages.innerHTML = `<div style="text-align:center; margin:auto; color:var(--texte-clair);">Chargement...</div>`;
-      const data = await apiCall(`/messages/${autreId}`);
+      const res = await apiFetch(`/messages/${autreId}`);
+      const data = await res.json();
       if (data.success) {
         renderChatArea(data.autre_utilisateur, data.data);
       }
@@ -207,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderChatArea(autreUtilisateur, messages) {
     const avatarUrl = autreUtilisateur.photo_profil 
-      ? (autreUtilisateur.photo_profil.startsWith('http') ? autreUtilisateur.photo_profil : `http://localhost:5000${autreUtilisateur.photo_profil}`)
+      ? (autreUtilisateur.photo_profil.startsWith('http') ? autreUtilisateur.photo_profil : `https://addugo.up.railway.app${autreUtilisateur.photo_profil}`)
       : '../../assets/img/default-avatar.png';
 
     chatHeader.innerHTML = `
@@ -309,10 +311,14 @@ document.addEventListener('DOMContentLoaded', () => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
-      const data = await apiCall('/messages', 'POST', {
-        destinataire_id: currentOtherUserId,
-        contenu: text
+      const res = await apiFetch('/messages', {
+        method: 'POST',
+        body: JSON.stringify({
+          destinataire_id: currentOtherUserId,
+          contenu: text
+        })
       });
+      const data = await res.json();
 
       if (data.success) {
         loadMessages(currentOtherUserId);
@@ -347,10 +353,13 @@ document.addEventListener('DOMContentLoaded', () => {
       window.history.replaceState({}, document.title, window.location.pathname + '?user=' + currentOtherUserId);
       const autoMsg = `[PRODUIT]||${pNom}||${pPrix}||${pImg}`;
       
-      apiCall('/messages', 'POST', {
-        destinataire_id: currentOtherUserId,
-        contenu: autoMsg
-      }).then((res) => {
+      apiFetch('/messages', {
+        method: 'POST',
+        body: JSON.stringify({
+          destinataire_id: currentOtherUserId,
+          contenu: autoMsg
+        })
+      }).then(r => r.json()).then((res) => {
         if (res.success) {
           loadMessages(currentOtherUserId);
           loadConversations();

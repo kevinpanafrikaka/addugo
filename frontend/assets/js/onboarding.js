@@ -1,5 +1,5 @@
 // ============================================================
-// AdduGo — Onboarding (Photos)
+// AdduGo — Onboarding (Photo de profil)
 // ============================================================
 
 const token = localStorage.getItem('addugo_token');
@@ -17,34 +17,24 @@ function afficherAlerte(message, type = 'erreur') {
       <i class="fas ${type === 'succes' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> 
       ${message}
     </div>`;
-  setTimeout(() => alerteBox.innerHTML = '', 4000);
+  if (type !== 'succes') {
+    setTimeout(() => alerteBox.innerHTML = '', 5000);
+  }
 }
 
-// ── APERCUS D'IMAGES ──
+// ── APERÇU IMAGE DE PROFIL ──
 const inputProfil = document.getElementById('input-profil');
 const apercuProfil = document.getElementById('apercu-profil');
-const inputCouverture = document.getElementById('input-couverture');
-const apercuCouverture = document.getElementById('apercu-couverture');
+const zoneProfil = document.getElementById('zone-profil');
 
 inputProfil.addEventListener('change', (e) => {
   const file = e.target.files[0];
   if (file) {
     const reader = new FileReader();
-    reader.onload = (e) => {
-      apercuProfil.src = e.target.result;
+    reader.onload = (evt) => {
+      apercuProfil.src = evt.target.result;
       apercuProfil.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-inputCouverture.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      apercuCouverture.src = e.target.result;
-      apercuCouverture.style.display = 'block';
+      zoneProfil.classList.add('a-une-image');
     };
     reader.readAsDataURL(file);
   }
@@ -53,50 +43,49 @@ inputCouverture.addEventListener('change', (e) => {
 // ── ENVOI DU FORMULAIRE ──
 document.getElementById('form-onboarding').addEventListener('submit', async (e) => {
   e.preventDefault();
-  
+
   const fileProfil = inputProfil.files[0];
-  const fileCouverture = inputCouverture.files[0];
-  
+
   if (!fileProfil) {
-    afficherAlerte('La photo de profil est requise.', 'erreur');
+    afficherAlerte('Veuillez choisir une photo de profil.', 'erreur');
     return;
   }
 
   const btn = document.getElementById('btn-terminer');
-  const originalText = btn.innerHTML;
+  const originalHTML = btn.innerHTML;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Téléchargement...';
   btn.disabled = true;
 
   try {
-    // 1. Upload Profil
-    const formProfil = new FormData();
-    formProfil.append('photo', fileProfil);
-    const resProfil = await apiFetch('/utilisateurs/photo', {
+    // Upload de la photo de profil
+    const formData = new FormData();
+    formData.append('photo', fileProfil);
+
+    const response = await apiFetch('/utilisateurs/photo', {
       method: 'POST',
-      body: formProfil
+      body: formData
     });
-    const dataProfil = await resProfil.json();
-    if (dataProfil.success) {
-      user.photo_profil = dataProfil.photoUrl;
-    } else {
-      throw new Error(dataProfil.message || "Erreur upload profil");
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || 'Erreur lors de l\'upload de la photo.');
     }
 
-
-
-    // Mise à jour de l'utilisateur local
+    // Mise à jour du localStorage
+    user.photo_profil = data.photoUrl;
     localStorage.setItem('addugo_user', JSON.stringify(user));
-    
-    // Redirection
-    afficherAlerte('Inscription finalisée ! Redirection...', 'succes');
+
+    // Succès → redirection
+    afficherAlerte('Profil configuré ! Redirection vers AdduGo...', 'succes');
     setTimeout(() => {
       window.location.href = 'home.html';
-    }, 1000);
+    }, 1200);
 
   } catch (err) {
-    console.error(err);
-    afficherAlerte(err.message || 'Erreur lors du téléchargement des images.');
-    btn.innerHTML = originalText;
+    console.error('Erreur onboarding:', err);
+    afficherAlerte(err.message || 'Une erreur s\'est produite. Veuillez réessayer.', 'erreur');
+    btn.innerHTML = originalHTML;
     btn.disabled = false;
   }
 });
