@@ -10,7 +10,8 @@ const pool = mariadb.createPool({
   connectionLimit: 10,
   acquireTimeout: 30000,
   connectTimeout: 10000,
-  charset: 'utf8mb4'
+  charset: 'utf8mb4',
+  allowPublicKeyRetrieval: true
 });
 
 // Test de connexion
