@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentUser = JSON.parse(userStr);
   let currentOtherUserId = null;
   let conversationsList = [];
+  let currentMessagesJson = '[]';
 
   const conversationsContainer = document.getElementById('conversations-list');
   const chatMessages = document.getElementById('chat-messages');
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
       div.className = `conversation-item ${currentOtherUserId === conv.autre_id ? 'active' : ''}`;
       
       const avatarUrl = conv.photo_profil 
-        ? (conv.photo_profil.startsWith('http') ? conv.photo_profil : `http://localhost:5000${conv.photo_profil}`)
+        ? (conv.photo_profil.startsWith('http') ? conv.photo_profil : `https://addugo.up.railway.app${conv.photo_profil}`)
         : '../../assets/img/default-avatar.png';
 
       const unreadBadge = conv.non_lu ? `<div class="unread-badge">Nouveau</div>` : '';
@@ -193,13 +194,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==== LOAD MESSAGES FOR SELECTED USER ====
-  async function loadMessages(autreId) {
+  async function loadMessages(autreId, silent = false) {
     try {
-      chatMessages.innerHTML = `<div style="text-align:center; margin:auto; color:var(--texte-clair);">Chargement...</div>`;
+      if (!silent) chatMessages.innerHTML = `<div style="text-align:center; margin:auto; color:var(--texte-clair);">Chargement...</div>`;
       const res = await apiFetch(`/messages/${autreId}`);
       const data = await res.json();
       if (data.success) {
-        renderChatArea(data.autre_utilisateur, data.data);
+        renderChatArea(data.autre_utilisateur, data.data, silent);
       }
     } catch (err) {
       console.error(err);
@@ -207,7 +208,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function renderChatArea(autreUtilisateur, messages) {
+  function renderChatArea(autreUtilisateur, messages, silent = false) {
+    const messagesJson = JSON.stringify(messages);
+    if (silent && messagesJson === currentMessagesJson) {
+      return; // Évite le scintillement si rien n'a changé
+    }
+    currentMessagesJson = messagesJson;
+
     const avatarUrl = autreUtilisateur.photo_profil 
       ? (autreUtilisateur.photo_profil.startsWith('http') ? autreUtilisateur.photo_profil : `https://addugo.up.railway.app${autreUtilisateur.photo_profil}`)
       : '../../assets/img/default-avatar.png';
@@ -372,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   setInterval(() => {
     if (currentOtherUserId) {
-      loadMessages(currentOtherUserId);
+      loadMessages(currentOtherUserId, true);
     }
     loadConversations();
   }, 5000);

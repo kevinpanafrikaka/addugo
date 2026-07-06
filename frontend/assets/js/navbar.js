@@ -280,6 +280,38 @@ async function initialiserNavbar() {
       `;
     }
 
+    // ── GESTION DU BADGE DES MESSAGES NON LUS ──
+    async function updateUnreadMessagesBadge() {
+      try {
+        const msgRes = await apiFetch('/messages/conversations');
+        const msgData = await msgRes.json();
+        if (msgData.success && msgData.data) {
+          // Additionner les non lus (si c'est un nombre, ou au moins 1 par conversation non lue)
+          const nbNonLus = msgData.data.reduce((sum, conv) => {
+            const nb = Number(conv.non_lu);
+            return sum + (isNaN(nb) || nb === 0 ? (conv.non_lu ? 1 : 0) : nb);
+          }, 0);
+          
+          const badgeMessages = document.getElementById('badge-messages-home');
+          if (badgeMessages) {
+            if (nbNonLus > 0) {
+              badgeMessages.textContent = nbNonLus;
+              badgeMessages.style.display = 'flex';
+              badgeMessages.style.alignItems = 'center';
+              badgeMessages.style.justifyContent = 'center';
+            } else {
+              badgeMessages.style.display = 'none';
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Erreur badges messages:', e);
+      }
+    }
+    
+    updateUnreadMessagesBadge();
+    setInterval(updateUnreadMessagesBadge, 10000);
+
   } catch (err) {
     console.error('Erreur initialisation navbar:', err);
   }
