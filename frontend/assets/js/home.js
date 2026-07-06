@@ -112,9 +112,14 @@ async function chargerProduits() {
 
               <div class="produit-prix-ligne">
                 <div class="produit-prix">${prixFormate}</div>
-                <a href="client/messages.html?user=${vendeurId}&p_nom=${encodeURIComponent(p.nom)}&p_prix=${encodeURIComponent(prixFormate)}&p_img=${encodeURIComponent(image)}" class="btn-contacter-vendeur" title="Contacter le vendeur">
-                  <i class="fas fa-comment-dots"></i> Contacter
-                </a>
+                <div style="display: flex; gap: 8px;">
+                  <a href="client/messages.html?user=${vendeurId}&p_nom=${encodeURIComponent(p.nom)}&p_prix=${encodeURIComponent(prixFormate)}&p_img=${encodeURIComponent(image)}" class="btn-contacter-vendeur" style="padding: 6px 10px;" title="Contacter le vendeur">
+                    <i class="fas fa-comment-dots"></i>
+                  </a>
+                  <button onclick="ajouterAuPanier(${p.id}, '${p.nom.replace(/'/g, "\\'")}', ${p.prix}, '${image}', ${p.commerce_id}, '${nomBoutique.replace(/'/g, "\\'")}')" class="btn-ajouter-panier" style="background: var(--orange); color: white; border: none; border-radius: 8px; padding: 6px 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 600; font-family: var(--police-texte); font-size: 0.85rem;" title="Ajouter au panier">
+                    <i class="fas fa-shopping-cart"></i> Ajouter
+                  </button>
+                </div>
               </div>
             </div>
 

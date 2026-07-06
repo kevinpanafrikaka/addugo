@@ -63,7 +63,12 @@ function chargerResultatsRecherche(query) {
 
     // Afficher les résultats
     let html = '';
-    resultats.forEach(p => {
+    resultats.forEach((p, index) => {
+      const fakeId = index + 1000;
+      const fakeCommerceId = (index % 3) + 1;
+      const nomBoutique = "Boutique Recherche " + fakeCommerceId;
+      const prixNumerique = parseInt(p.prix.replace(/[^0-9]/g, ''), 10) || 0;
+
       html += `
         <div class="produit-carte" style="background: var(--blanc); border-radius: var(--rayon-md); overflow: hidden; box-shadow: var(--ombre-sm); transition: transform 0.2s; display: flex; flex-direction: column;">
           <img src="${p.img}" alt="${p.nom}" style="width: 100%; height: 200px; object-fit: cover; background: var(--fond);" />
@@ -72,7 +77,7 @@ function chargerResultatsRecherche(query) {
             <div style="font-size: 0.85rem; color: var(--texte-gris); margin-bottom: 16px; flex-grow: 1;">${p.desc}</div>
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <span style="font-weight: 700; color: var(--orange); font-size: 1.1rem;">${p.prix}</span>
-              <button title="Ajouter au panier" style="background: rgba(255,107,0,0.1); color: var(--orange); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">
+              <button onclick="ajouterAuPanier(${fakeId}, '${p.nom.replace(/'/g, "\\'")}', ${prixNumerique}, '${p.img}', ${fakeCommerceId}, '${nomBoutique}')" title="Ajouter au panier" style="background: rgba(255,107,0,0.1); color: var(--orange); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s;">
                 <i class="fas fa-cart-plus"></i>
               </button>
             </div>
