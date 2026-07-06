@@ -91,26 +91,38 @@ document.addEventListener('DOMContentLoaded', async () => {
   const btnFermerPanier = document.getElementById('btn-fermer-panier');
   const panierSidebar = document.getElementById('panier-sidebar');
   const panierOverlay = document.getElementById('panier-overlay');
+  const navbarTitrePageSpan = document.querySelector('.navbar-titre-page span');
+  const originalTitreHTML = navbarTitrePageSpan ? navbarTitrePageSpan.innerHTML : '';
+
+  window.ouvrirPanier = function() {
+    if (panierSidebar) panierSidebar.classList.add('ouvert');
+    if (panierOverlay) panierOverlay.classList.add('ouvert');
+    document.body.style.overflow = 'hidden';
+    if (navbarTitrePageSpan) {
+      navbarTitrePageSpan.innerHTML = '<span style="color: var(--noir, #1A1A2E);">Mon </span><span style="color: var(--orange);">Panier</span>';
+    }
+  };
+
+  window.fermerPanier = function() {
+    if (panierSidebar) panierSidebar.classList.remove('ouvert');
+    if (panierOverlay) panierOverlay.classList.remove('ouvert');
+    document.body.style.overflow = '';
+    if (navbarTitrePageSpan && originalTitreHTML) {
+      navbarTitrePageSpan.innerHTML = originalTitreHTML;
+    }
+  };
 
   if (btnPanierToggle && panierSidebar && panierOverlay) {
     btnPanierToggle.addEventListener('click', (e) => {
       e.preventDefault();
-      panierSidebar.classList.add('ouvert');
-      panierOverlay.classList.add('ouvert');
-      document.body.style.overflow = 'hidden';
+      window.ouvrirPanier();
     });
 
     if (btnFermerPanier) {
-      btnFermerPanier.addEventListener('click', () => fermerPanier());
+      btnFermerPanier.addEventListener('click', () => window.fermerPanier());
     }
 
-    panierOverlay.addEventListener('click', () => fermerPanier());
-  }
-
-  function fermerPanier() {
-    if (panierSidebar) panierSidebar.classList.remove('ouvert');
-    if (panierOverlay) panierOverlay.classList.remove('ouvert');
-    document.body.style.overflow = '';
+    panierOverlay.addEventListener('click', () => window.fermerPanier());
   }
 
   // ==== GESTION DE LA RECHERCHE ====

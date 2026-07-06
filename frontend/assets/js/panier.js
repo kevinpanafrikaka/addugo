@@ -60,11 +60,15 @@ window.ajouterAuPanier = function(produitId, nom, prix, image, commerceId, nomBo
   setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
   
   // Ouvrir le tiroir panier
-  const sidebar = document.getElementById('panier-sidebar');
-  const overlay = document.getElementById('panier-overlay');
-  if(sidebar && overlay) {
-    sidebar.classList.add('ouvert');
-    overlay.classList.add('ouvert');
+  if (typeof window.ouvrirPanier === 'function') {
+    window.ouvrirPanier();
+  } else {
+    const sidebar = document.getElementById('panier-sidebar');
+    const overlay = document.getElementById('panier-overlay');
+    if(sidebar && overlay) {
+      sidebar.classList.add('ouvert');
+      overlay.classList.add('ouvert');
+    }
   }
 };
 
@@ -189,7 +193,7 @@ window.validerCommandeBoutique = async function(commerceId, nomBoutique) {
   const userStr = localStorage.getItem('user');
   if (!userStr) {
     alert("Vous devez être connecté pour passer une commande.");
-    window.location.href = '../login.html';
+    window.location.href = 'login.html';
     return;
   }
   const user = JSON.parse(userStr);
