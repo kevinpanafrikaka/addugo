@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo â€” Gestion des Utilisateurs</title>
+    <link rel="stylesheet" href="../assets/css/commun/style.css" />
+  <link rel="stylesheet" href="../assets/css/commun/dashboard.css" />
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="dashboard-body">
+
+  <!-- NAVBAR -->
+  <nav class="navbar-dashboard">
+    <a href="../accueil/index.html" class="navbar-dashboard-logo">
+      <span>Addu</span><span>Go</span>
+    </a>
+    <div class="navbar-dashboard-droite">
+      <button class="notif-btn">
+        <i class="fas fa-bell"></i>
+        <span class="notif-badge">0</span>
+      </button>
+      <div class="user-menu">
+        <div class="user-menu-avatar" id="user-avatar">?</div>
+        <span class="user-menu-nom" id="user-nom">Chargement...</span>
+        <i class="fas fa-chevron-down" style="font-size:0.75rem; color:var(--texte-gris)"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- LAYOUT -->
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-profil">
+        <div class="sidebar-avatar" id="sidebar-avatar">?</div>
+        <div class="sidebar-nom" id="sidebar-nom">Chargement...</div>
+        <div class="sidebar-role">
+          <span class="badge badge-erreur">Admin</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-titre">Administration</div>
+        <a href="dashboard.html" class="sidebar-lien">
+          <i class="fas fa-home"></i> Tableau de bord
+        </a>
+        <a href="statistiques.html" class="sidebar-lien">
+          <i class="fas fa-chart-bar"></i> Statistiques
+        </a>
+        <div class="sidebar-section-titre">Gestion</div>
+        <a href="utilisateurs.html" class="sidebar-lien actif" id="lien-utilisateurs">
+          <i class="fas fa-users"></i> Utilisateurs
+        </a>
+        <a href="commerces.html" class="sidebar-lien" id="lien-commerces">
+          <i class="fas fa-store"></i> Commerces
+        </a>
+        <a href="commandes.html" class="sidebar-lien" id="lien-commandes">
+          <i class="fas fa-shopping-bag"></i> Commandes
+        </a>
+        <a href="livraisons.html" class="sidebar-lien" id="lien-livraisons">
+          <i class="fas fa-motorcycle"></i> Livraisons
+        </a>
+        <div class="sidebar-section-titre">Mon Compte</div>
+        <a href="../espace-client/profil.html" class="sidebar-lien">
+          <i class="fas fa-user"></i> Mon profil
+        </a>
+      </nav>
+      <div class="sidebar-pied">
+        <button class="btn-deconnexion" id="btn-deconnexion">
+          <i class="fas fa-sign-out-alt"></i> Se dÃ©connecter
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTENU -->
+    <main class="dashboard-contenu anime-slide-up">
+
+      <div class="dashboard-entete" style="display:flex; justify-content:space-between; align-items:flex-end;">
+        <div>
+          <h1>Gestion des <span class="orange">Utilisateurs</span></h1>
+          <p>Examinez et modÃ©rez tous les comptes de la plateforme.</p>
+        </div>
+        <div style="display:flex; gap:var(--espace-sm)">
+          <div class="form-groupe" style="margin:0; min-width:250px;">
+            <div class="input-icone">
+              <i class="fas fa-search"></i>
+              <input type="text" id="recherche-utilisateur" placeholder="Rechercher (Nom, Email)..." class="form-controle" />
+            </div>
+          </div>
+          <select id="filtre-role" class="form-controle" style="width:auto; cursor:pointer;">
+            <option value="tous">Tous les rÃ´les</option>
+            <option value="client">Clients</option>
+            <option value="commerce">CommerÃ§ants</option>
+            <option value="livreur">Livreurs</option>
+            <option value="admin">Administrateurs</option>
+          </select>
+          <select id="filtre-statut" class="form-controle" style="width:auto; cursor:pointer;">
+            <option value="tous">Tous les statuts</option>
+            <option value="actifs">Actifs uniquement</option>
+            <option value="inactifs">Comptes bloquÃ©s</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="alerte-action" style="margin-bottom:var(--espace-md)"></div>
+
+      <!-- LISTE DES UTILISATEURS -->
+      <div class="dashboard-section">
+        <div id="liste-tous-utilisateurs">
+          <div class="chargement">
+            <div class="spinner"></div>
+            <p>Chargement des utilisateurs...</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- STYLES SPÃ‰CIFIQUES TOGGLE -->
+  <style>
+    .switch-conteneur { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+    .switch { position: relative; width: 44px; height: 24px; background: var(--bordure-dark); border-radius: 999px; transition: background 0.3s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+    .switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: var(--blanc); border-radius: 50%; transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .switch-actif .switch { background: var(--succes); }
+    .switch-actif .switch::after { transform: translateX(20px); }
+    .switch-label { font-size: 0.85rem; font-weight: 600; font-family: var(--police); }
+    .switch-label.actif { color: var(--succes); }
+    .switch-label.inactif { color: var(--erreur); }
+  </style>
+
+  <script src="../assets/js/commun/api.js"></script>
+  <script src="../assets/js/espace-admin/utilisateurs.js"></script>
+</body>
+</html>
+

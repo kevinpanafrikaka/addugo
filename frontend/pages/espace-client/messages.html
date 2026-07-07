@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdduGo — Messagerie</title>
+  <link rel="stylesheet" href="../assets/css/commun/style.css" />
+  <link rel="stylesheet" href="../assets/css/commun/dashboard.css" />
+  <link rel="stylesheet" href="../assets/css/commun/navbar.css" />
+  <link rel="stylesheet" href="../assets/css/espace-client/messages.css" />
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="dashboard-body">
+
+  <!-- NAVBAR UNIFIÉE -->
+  <nav class="navbar-home">
+    <div class="navbar-home-gauche">
+      <!-- Photo de profil au lieu du bouton hamburger -->
+      <button class="btn-mobile-menu" id="btn-mobile-menu-messages" style="padding: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 2px solid var(--orange); cursor: pointer; flex-shrink: 0;">
+        <img src="../../medias/default-avatar.png" alt="Profil" id="mobile-top-avatar" style="width: 100%; height: 100%; object-fit: cover;" />
+      </button>
+
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <a href="../mes-shoppings/home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
+          <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" style="height: 45px; width: auto; object-fit: contain;" />
+        </a>
+        <!-- Ligne de séparation verticale -->
+        <div style="height: 28px; width: 2px; background-color: var(--bordure-dark, #e5e7eb); border-radius: 2px;"></div>
+        <!-- Titre Mes Messages -->
+        <div class="navbar-titre-page">
+          <span>Mes</span><span style="color: var(--orange);">Messages</span> 
+          <i class="fas fa-comments" style="color:var(--orange);"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ICONES DE NAVIGATION DYNAMIQUES + PROFIL -->
+    <div class="navbar-home-droite" id="navbar-droite-messages">
+      <!-- Rempli dynamiquement selon l'espace/rôle (Client, Boutique ou Livraison) par messages.js -->
+      
+      <div class="profil-wrapper" id="profil-wrapper">
+        <div class="navbar-profil-btn" id="btn-profil-toggle">
+          <img src="../../medias/default-avatar.png" alt="Profil" id="navbar-top-avatar" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+        
+        <div class="profil-dropdown" id="profil-dropdown">
+          <div class="dropdown-header">
+            <img src="../../medias/default-avatar.png" alt="Profil" id="dropdown-avatar" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+            <div class="dropdown-infos">
+              <div class="dropdown-nom" id="dropdown-nom">Chargement...</div>
+              <div class="dropdown-role" id="dropdown-roles-badges">Utilisateur</div>
+            </div>
+          </div>
+          
+          <div class="dropdown-menu-container">
+            <a href="profil.html" class="sidebar-lien">
+              <i class="fas fa-user"></i> Mon Profil
+            </a>
+            
+            <a href="dashboard.html" class="sidebar-lien">
+              <i class="fas fa-user-circle"></i> Mon Espace Client
+            </a>
+
+            <div id="conteneur-mes-espaces">
+              <!-- Injecté selon le rôle (Ma Boutique ou Mon Espace de Livraison) -->
+            </div>
+            
+            <div style="border-top: 1px solid var(--bordure); margin-top: 8px; padding-top: 8px;">
+              <a href="#" class="sidebar-lien btn-deconnexion" id="btn-logout" style="color: #dc3545;">
+                <i class="fas fa-sign-out-alt"></i> Se déconnecter
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MESSAGERIE LAYOUT -->
+  <div class="messagerie-layout">
+    <!-- SIDEBAR CONVERSATIONS -->
+    <aside class="conversations-sidebar">
+      <div class="conversations-header">
+        <h2>Messages</h2>
+      </div>
+      <div class="conversations-search">
+        <div class="conversations-search-wrapper">
+          <i class="fas fa-search"></i>
+          <input type="text" class="conversations-search-input" id="search-conversations" placeholder="Rechercher une conversation..." />
+        </div>
+      </div>
+      <div class="conversations-list" id="conversations-list">
+        <!-- Rempli dynamiquement par JS -->
+      </div>
+    </aside>
+
+    <!-- CHAT AREA -->
+    <main class="chat-area">
+      <div class="chat-header" id="chat-header">
+        <div class="chat-header-user">
+          <div class="chat-header-avatar" style="background:#FFF3EB; color:var(--orange); display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:1.1rem;">A</div>
+          <div class="chat-header-info">
+            <h3>Support AdduGo</h3>
+            <p>En ligne</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <!-- Rempli dynamiquement par JS -->
+      </div>
+
+      <div class="chat-input-area">
+        <div class="chat-input-wrapper">
+          <input type="text" class="chat-input" id="chat-input" placeholder="Écrivez votre message..." />
+        </div>
+        <button class="btn-send" id="btn-send" title="Envoyer">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/commun/api.js"></script>
+  <script src="../assets/js/commun/navbar.js"></script>
+  <script src="../assets/js/commun/messages.js"></script>
+</body>
+</html>

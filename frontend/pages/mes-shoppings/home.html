@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AdduGo - Accueil</title>
+    <link rel="stylesheet" href="../assets/css/commun/style.css" />
+  <link rel="stylesheet" href="../assets/css/commun/dashboard.css" />
+  <link rel="stylesheet" href="../assets/css/commun/navbar.css" />
+  <link rel="stylesheet" href="../assets/css/mes-shoppings/home.css" />
+  <!-- FontAwesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Spécifique à la vue d'accueil (le feed est déjà dans navbar.css pour la réutilisation) */
+  </style>
+</head>
+<body class="dashboard-body">
+
+  <!-- NAVBAR UNIFIÉE -->
+  <nav class="navbar-home">
+    <div class="navbar-home-gauche">
+      <button class="btn-mobile-menu" id="btn-mobile-menu-home" style="padding: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 2px solid var(--orange);">
+        <img src="../../medias/default-avatar.png" alt="Profil" id="mobile-top-avatar" style="width: 100%; height: 100%; object-fit: cover;" />
+      </button>
+      <div style="display: flex; align-items: center; gap: 4px;">
+        <a href="home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
+          <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" style="height: 38px; width: auto; object-fit: contain;" />
+        </a>
+        <!-- Ligne de séparation verticale symétrique -->
+        <div style="height: 22px; width: 2px; background-color: var(--bordure-dark, #d1d5db); border-radius: 2px; margin: 0 6px; flex-shrink: 0;"></div>
+        <!-- Titre -->
+        <div class="navbar-titre-page" style="display: flex; align-items: center; gap: 6px; font-size: 0.95rem; font-weight: 800;">
+          <span>
+            <span style="color: var(--noir, #1A1A2E);">Shop</span><span style="color: var(--orange);">ping</span>
+          </span>
+          <i class="fas fa-shopping-bag" style="color: var(--orange); font-size: 1.1rem;"></i>
+        </div>
+      </div>
+      
+      <div class="navbar-home-recherche-groupe">
+        <!-- Espace vide pour garder la mise en page flex si besoin, ou on peut laisser vide -->
+        
+        <div class="navbar-home-recherche">
+          <input type="text" id="navbar-search-input" placeholder="Quels produits recherchez-vous ?" />
+          <button id="navbar-search-btn">
+            <i class="fas fa-search"></i><span class="btn-search-text"> Rechercher</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-home-droite">
+      <!-- ICONE MESSAGES -->
+      <div class="icon-wrapper" style="position: relative;" title="Messages">
+        <div class="nav-icone" id="btn-messages-toggle" style="cursor: pointer;">
+          <i class="fas fa-envelope" style="color: #3B82F6;"></i>
+          <span class="nav-badge" id="badge-messages-home" style="display: none;">0</span>
+        </div>
+        
+        <div id="messages-dropdown" class="categories-dropdown" style="width: 350px; right: 0; left: auto; transform-origin: top right; padding: 0; overflow: hidden;">
+          <div style="padding: 16px; border-bottom: 1px solid var(--bordure); display: flex; justify-content: space-between; align-items: center; background: var(--blanc);">
+            <h4 style="font-size: 1.05rem; color: var(--texte); font-family: var(--police-titre); margin: 0; font-weight: 700;">Messages</h4>
+            <span id="btn-tout-marquer-lu" style="font-size: 0.8rem; color: var(--orange); font-weight: 600; cursor: pointer;">Tout marquer lu</span>
+          </div>
+          <div id="messages-dropdown-liste" style="max-height: 320px; overflow-y: auto; background: var(--blanc);">
+            <div style="padding: 20px; text-align: center; color: var(--texte-clair); font-size: 0.9rem;">Chargement...</div>
+          </div>
+          <div style="padding: 14px; text-align: center; border-top: 1px solid var(--bordure); background: var(--fond-tres-clair);">
+            <a href="client/messages.html" style="font-size: 0.9rem; color: var(--orange); font-weight: 700; text-decoration: none;">Ouvrir la messagerie</a>
+          </div>
+        </div>
+      </div>
+      <!-- ICONE PANIER -->
+      <a href="#" class="nav-icone" id="btn-panier-toggle" title="Panier">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="nav-badge" id="badge-panier-home" style="display: none;">0</span>
+      </a>
+
+      <!-- ICONE CENTRE D'AIDE (regroupe Infos Pratiques + FAQ) -->
+      <div class="icon-wrapper" style="position: relative;" title="Centre d'aide">
+        <div class="nav-icone" id="btn-aide-toggle" style="cursor: pointer;">
+          <i class="fas fa-headset" style="color: #6366F1;"></i>
+        </div>
+        <div id="aide-dropdown" class="categories-dropdown" style="width: 340px; right: 0; left: auto; transform-origin: top right; padding: 16px;">
+          <h4 style="margin-bottom: 14px; font-size: 0.95rem; color: var(--texte); font-family: var(--police-titre); border-bottom: 1px solid var(--bordure); padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-headset" style="color: #6366F1;"></i> Centre d'aide
+          </h4>
+
+          <p style="font-size: 0.78rem; font-weight: 700; color: var(--texte-gris); text-transform: uppercase; letter-spacing: 0.8px; margin: 0 0 10px 0;">Informations pratiques</p>
+          <div style="margin-bottom: 12px;">
+            <strong style="font-size: 0.84rem; color: var(--texte); display: block; margin-bottom: 5px;"><i class="fas fa-store" style="color: var(--orange); margin-right: 5px;"></i> Ouvrir une boutique ?</strong>
+            <div style="font-size: 0.79rem; color: var(--texte-gris); padding-left: 20px; line-height: 1.5;">Espace Client → "Devenir Vendeur" → Formulaire boutique → Validation sous 24-48h.</div>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <strong style="font-size: 0.84rem; color: var(--texte); display: block; margin-bottom: 5px;"><i class="fas fa-motorcycle" style="color: var(--orange); margin-right: 5px;"></i> Devenir Livreur ?</strong>
+            <div style="font-size: 0.79rem; color: var(--texte-gris); padding-left: 20px; line-height: 1.5;">Paramètres → "Je veux devenir livreur" → Envoi pièce d'identité + permis → Entretien admin.</div>
+          </div>
+
+          <p style="font-size: 0.78rem; font-weight: 700; color: var(--texte-gris); text-transform: uppercase; letter-spacing: 0.8px; margin: 0 0 10px 0; border-top: 1px solid var(--bordure); padding-top: 12px;">Questions fréquentes</p>
+          <div style="margin-bottom: 10px;">
+            <strong style="font-size: 0.84rem; color: var(--texte); display: block; margin-bottom: 4px;"><i class="fas fa-chevron-right" style="color: var(--orange); font-size: 0.7rem;"></i> Comment suivre ma commande ?</strong>
+            <span style="font-size: 0.79rem; color: var(--texte-gris); display: block; padding-left: 14px;">Section "Commandes" pour voir le statut en temps réel.</span>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <strong style="font-size: 0.84rem; color: var(--texte); display: block; margin-bottom: 4px;"><i class="fas fa-chevron-right" style="color: var(--orange); font-size: 0.7rem;"></i> Comment retourner un article ?</strong>
+            <span style="font-size: 0.79rem; color: var(--texte-gris); display: block; padding-left: 14px;">Contactez le support via "Messages" dans les 14 jours.</span>
+          </div>
+          <div>
+            <strong style="font-size: 0.84rem; color: var(--texte); display: block; margin-bottom: 4px;"><i class="fas fa-chevron-right" style="color: var(--orange); font-size: 0.7rem;"></i> Où livrez-vous ?</strong>
+            <span style="font-size: 0.79rem; color: var(--texte-gris); display: block; padding-left: 14px;">Partout dans le pays, directement à votre porte.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="profil-wrapper" id="profil-wrapper">
+        <div class="navbar-profil-btn" id="btn-profil-toggle">
+          <img src="../../medias/default-avatar.png" alt="Profil" id="navbar-top-avatar" />
+        </div>
+        
+        <div class="profil-dropdown" id="profil-dropdown">
+          <div class="dropdown-header">
+            <img src="../../medias/default-avatar.png" alt="Profil" id="dropdown-avatar" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+            <div class="dropdown-infos">
+              <div class="dropdown-nom" id="dropdown-nom">Chargement...</div>
+              <div class="dropdown-role" id="dropdown-roles-badges">Client</div>
+            </div>
+          </div>
+          
+          <div class="dropdown-menu-container">
+            <a href="client/profil.html" class="sidebar-lien" style="margin-top: 8px;">
+              <i class="fas fa-user"></i> Mon profil
+            </a>
+
+            <div id="conteneur-mes-espaces">
+              <a href="client/dashboard.html" class="sidebar-lien">
+                <i class="fas fa-user-circle"></i> Espace Client
+              </a>
+            </div>
+            
+            <a href="#" class="sidebar-lien">
+              <i class="fas fa-headset"></i> Centre d'aide
+            </a>
+            
+            <div style="border-top: 1px solid var(--bordure); margin-top: 8px; padding-top: 8px;">
+              <a href="#" class="sidebar-lien btn-deconnexion" id="btn-logout" style="color: #dc3545;">
+                <i class="fas fa-sign-out-alt"></i> Se déconnecter
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="home-layout">
+    <!-- CONTENU PRINCIPAL -->
+    <main class="dashboard-contenu">
+      <!-- EN-TÊTE REDESIGNÉE EN CARTE -->
+      <div style="background: var(--blanc); border: 1px solid var(--bordure); border-radius: 18px; padding: 20px 24px; margin-bottom: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.02);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          
+          <!-- MESSAGE DE BIENVENUE -->
+          <div>
+            <h1 id="message-bienvenue" style="font-size: 1.35rem; color: var(--texte); font-family: var(--police-titre); font-weight: 800; margin: 0 0 4px 0; line-height: 1.2;">Bienvenue sur AdduGo</h1>
+            <p style="color: var(--texte-gris); font-size: 0.88rem; margin: 0; line-height: 1.4;">Découvrez les meilleurs produits de nos boutiques partenaires.</p>
+          </div>
+          <!-- NOTE: le nom de l'utilisateur est injecté dynamiquement par navbar.js via #message-bienvenue -->
+
+          <!-- GROUPE BOUTONS D'ACTION -->
+          <div class="entete-boutons-groupe" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            
+            <!-- BOUTON TOUTES LES CATÉGORIES (Noir Siphon) -->
+            <div class="categories-wrapper" style="position: relative;">
+              <button id="btn-categories-toggle" style="border-radius: 12px; font-weight: 700; padding: 9px 18px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.86rem; background: #1A1A2E; color: #FFFFFF; box-shadow: 0 4px 14px rgba(26,26,46,0.22); border: none; cursor: pointer; transition: transform 0.2s ease;">
+                <i class="fas fa-bars" style="color: var(--orange);"></i> Toutes les catégories
+              </button>
+              
+              <div id="categories-dropdown" class="categories-dropdown" style="width: 280px; right: 0; left: auto; margin-top: 10px; z-index: 100;">
+                <a href="#" class="sidebar-lien"><i class="fas fa-home"></i> Électroménagers</a>
+                <a href="#" class="sidebar-lien"><i class="fas fa-mobile-alt"></i> Électroniques</a>
+                <a href="#" class="sidebar-lien"><i class="fas fa-tshirt"></i> Modes & Accessoires</a>
+                <a href="#" class="sidebar-lien"><i class="fas fa-heartbeat"></i> Cosmétiques & Beauté</a>
+                <a href="#" class="sidebar-lien"><i class="fas fa-football-ball"></i> Sport & Loisirs</a>
+                <a href="#" class="sidebar-lien"><i class="fas fa-couch"></i> Meubles</a>
+                <a href="#" class="sidebar-lien"><i class="fas fa-child"></i> Jouets & Enfants</a>
+                <a href="#" class="sidebar-lien"><i class="fas fa-pencil-alt"></i> Fournitures & Papeterie</a>
+              </div>
+            </div>
+
+            <!-- BOUTON NOS BOUTIQUES (Orange) -->
+            <div class="categories-wrapper" style="position: relative;">
+              <button id="btn-boutiques-toggle" style="border-radius: 12px; font-weight: 700; padding: 9px 18px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.86rem; background: var(--orange); color: #FFFFFF; box-shadow: 0 4px 14px rgba(255,107,0,0.25); border: none; cursor: pointer; transition: transform 0.2s ease;">
+                <i class="fas fa-store"></i> Nos Boutiques
+              </button>
+              
+              <div id="boutiques-dropdown" class="categories-dropdown" style="width: 340px; right: 0; left: auto; padding: 12px; max-height: 440px; overflow-y: auto; margin-top: 10px; z-index: 100;">
+                <div style="padding: 8px 10px 12px 10px; border-bottom: 1px solid var(--bordure); margin-bottom: 8px;">
+                  <h4 style="margin: 0; font-family: var(--police-titre); font-size: 1.05rem; font-weight: 800; color: var(--texte);">
+                    <i class="fas fa-store" style="color: var(--orange); margin-right: 6px;"></i>Nos Boutiques
+                  </h4>
+                  <p style="margin: 2px 0 0 0; font-size: 0.78rem; color: var(--texte-gris);">Découvrez nos boutiques partenaires AdduGo</p>
+                </div>
+                <div id="liste-boutiques-nav">
+                  <!-- Chargé dynamiquement par home.js -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="produits-feed" id="feed-produits">
+        <!-- Les produits fictifs seront injectés ici par JS -->
+        <div class="skeleton" style="height: 300px; border-radius: var(--rayon-md);"></div>
+        <div class="skeleton" style="height: 300px; border-radius: var(--rayon-md);"></div>
+        <div class="skeleton" style="height: 300px; border-radius: var(--rayon-md);"></div>
+        <div class="skeleton" style="height: 300px; border-radius: var(--rayon-md);"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- OVERLAY ET SIDEBAR DU PANIER -->
+  <div class="panier-overlay" id="panier-overlay"></div>
+  <div class="panier-sidebar" id="panier-sidebar">
+    <div class="panier-header">
+      <div class="panier-titre">
+        Mon Panier <span class="panier-badge-titre">1 article</span>
+      </div>
+      <button class="btn-fermer-panier" id="btn-fermer-panier"><i class="fas fa-times"></i></button>
+    </div>
+    
+    <div class="panier-body">
+      <!-- Exemple d'un article ajouté -->
+      <div class="panier-item">
+        <div class="panier-item-img">
+          <!-- Image placeholder -->
+          <div style="width: 100%; height: 100%; background: #eee; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #ccc;">
+            <i class="fas fa-mobile-alt" style="font-size: 2rem;"></i>
+          </div>
+        </div>
+        <div class="panier-item-infos">
+          <div>
+            <div class="panier-item-titre">Smartphone Samsung Galaxy S23 Ultra - 256Go</div>
+            <div class="panier-item-prix">10 500 000 GNF</div>
+          </div>
+          <div class="panier-item-actions">
+            <div class="panier-quantite">
+              <button><i class="fas fa-minus" style="font-size: 0.7rem;"></i></button>
+              <span>1</span>
+              <button><i class="fas fa-plus" style="font-size: 0.7rem;"></i></button>
+            </div>
+            <button class="btn-supprimer-item" title="Retirer l'article"><i class="fas fa-trash-alt"></i></button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Exemple pour le panier vide (Caché par défaut ici)
+      <div class="panier-vide">
+        <i class="fas fa-shopping-basket"></i>
+        <h3>Votre panier est vide</h3>
+        <p>Découvrez nos offres et trouvez votre bonheur !</p>
+        <a href="#" class="btn-commencer-achats">Parcourir les produits</a>
+      </div>
+      -->
+    </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../assets/js/commun/api.js"></script>
+  <script src="../assets/js/commun/panier.js"></script>
+  <script src="../assets/js/commun/navbar.js"></script>
+  <script src="../assets/js/mes-shoppings/home.js"></script>
+</body>
+</html>

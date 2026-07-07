@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo — Ma Boutique</title>
+    <link rel="stylesheet" href="../assets/css/commun/style.css" />
+  <link rel="stylesheet" href="../assets/css/commun/dashboard.css" />
+  <link rel="stylesheet" href="../assets/css/commun/navbar.css" />
+  <link rel="stylesheet" href="../assets/css/ma-boutique/statistiques.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="dashboard-body">
+
+  <!-- NAVBAR UNIFIÉE -->
+  <nav class="navbar-home">
+    <div class="navbar-home-gauche">
+      <button class="btn-mobile-menu" id="btn-mobile-menu-home" style="padding: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 2px solid var(--orange);">
+        <img src="../../medias/default-avatar.png" alt="Profil" id="mobile-top-avatar" style="width: 100%; height: 100%; object-fit: cover;" />
+      </button>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="../mes-shoppings/home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
+          <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" style="height: 38px; width: auto; object-fit: contain;" />
+        </a>
+        <!-- Ligne de séparation verticale symétrique -->
+        <div style="height: 22px; width: 2px; background-color: var(--bordure-dark, #d1d5db); border-radius: 2px; margin: 0 6px; flex-shrink: 0;"></div>
+        <!-- Titre -->
+        <div class="navbar-titre-page">
+          <span>Ma</span><span style="color: var(--orange);">Boutique</span> 
+          <i class="fas fa-store" style="color:var(--orange);"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-home-droite">
+      <!-- 1. Icône Ma Boutique (Vert #10B981) à la place de Mon Espace Client -->
+      <a href="produits.html" class="nav-icone icone-produits" title="Ma Boutique">
+        <i class="fas fa-store" style="color: #10B981;"></i>
+      </a>
+
+      <!-- 2. Icône Messages (Bleu #3B82F6) -->
+      <div class="icon-wrapper" style="position: relative;" title="Messages">
+        <a href="../espace-client/messages.html?from=commerce" class="nav-icone icone-messages">
+          <i class="fas fa-envelope" style="color: #3B82F6;"></i>
+          <span class="nav-badge" id="badge-messages" style="display: none;">0</span>
+        </a>
+      </div>
+
+      <!-- 3. Icône Mon Espace Client (Chocolat #7A3E1D) -->
+      <a href="../espace-client/dashboard.html" class="nav-icone icone-client" title="Mon Espace Client">
+        <i class="fas fa-user-circle" style="color: #7A3E1D;"></i>
+      </a>
+      <div class="profil-wrapper" id="profil-wrapper">
+        <div class="navbar-profil-btn" id="btn-profil-toggle">
+          <img src="../../medias/default-avatar.png" alt="Profil" id="navbar-top-avatar" />
+        </div>
+        
+        <div class="profil-dropdown" id="profil-dropdown">
+          <div class="dropdown-header">
+            <img src="../../medias/default-avatar.png" alt="Profil" id="dropdown-avatar" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+            <div class="dropdown-infos">
+              <div class="dropdown-nom" id="dropdown-nom">Chargement...</div>
+              <div class="dropdown-role" id="dropdown-roles-badges">Commerce</div>
+            </div>
+          </div>
+          
+          <div class="dropdown-menu-container">
+            <a href="../espace-client/profil.html" class="sidebar-lien" style="margin-top: 8px;">
+              <i class="fas fa-user"></i> Mon Profil
+            </a>
+            
+            <a href="../espace-client/dashboard.html" class="sidebar-lien">
+              <i class="fas fa-user-circle"></i> Mon Espace Client
+            </a>
+            
+            <a href="produits.html" class="sidebar-lien">
+              <i class="fas fa-store"></i> Ma Boutique
+            </a>
+            
+            <div style="border-top: 1px solid var(--bordure); margin-top: 8px; padding-top: 8px;">
+              <a href="#" class="sidebar-lien btn-deconnexion" id="btn-logout" style="color: #dc3545;">
+                <i class="fas fa-sign-out-alt"></i> Se déconnecter
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- LAYOUT -->
+  <div class="home-layout" style="background-color: var(--fond-tres-clair); min-height: calc(100vh - 70px);">
+
+    <!-- CONTENU -->
+    <main class="stats-main anime-slide-up">
+
+      <!-- HEADER & FILTRES -->
+      <div class="stats-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+        <div class="stats-header-text">
+          <h1 class="stats-titre">Tableau de Bord <span class="orange">Analytique</span></h1>
+          <p class="stats-sous-titre">Vue d'ensemble de vos performances et ventes.</p>
+        </div>
+
+        <div class="stats-header-actions" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <!-- BOUTON VOIR MES COMMANDES (Noir Premium #1A1A2E) -->
+          <a href="commandes.html" class="btn btn-voir-commandes-stats" style="border-radius: 12px; font-weight: 700; padding: 11px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 0.88rem; background: var(--noir, #1A1A2E); color: #FFFFFF; box-shadow: 0 4px 14px rgba(26,26,46,0.22); transition: transform 0.2s ease;">
+            <i class="fas fa-box" style="color: var(--orange);"></i> Voir mes commandes
+          </a>
+
+          <div class="stats-filtres">
+            <button class="btn-filtre-date actif" data-jours="0">Aujourd'hui</button>
+            <button class="btn-filtre-date" data-jours="7">7 Jours</button>
+            <button class="btn-filtre-date" data-jours="30">30 Jours</button>
+            <button class="btn-filtre-date" data-jours="365">Année</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPIs (Indicateurs clés) -->
+      <div class="stats-kpi-grid">
+        
+        <div class="kpi-card kpi-card-ca">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+            <div style="width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: rgba(255,255,255,0.2);">
+              <i class="fas fa-wallet"></i>
+            </div>
+
+          </div>
+          <span class="kpi-label" style="font-size: 0.9rem; font-weight: 600;">Chiffre d'Affaires</span>
+          <span id="kpi-ca" class="kpi-valeur" style="font-size: 1.8rem; font-weight: 800; margin-top: 5px; font-family: var(--police-titre);">0 GNF</span>
+          <div class="kpi-icon-bg" style="position: absolute; bottom: -10px; right: -10px; font-size: 5rem;"><i class="fas fa-wallet"></i></div>
+        </div>
+
+        <div class="kpi-card kpi-card-livrees">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+            <div style="width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: rgba(255,255,255,0.2);">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+
+          </div>
+          <span class="kpi-label" style="font-size: 0.9rem; font-weight: 600;">Commandes Livrées</span>
+          <span id="kpi-commandes" class="kpi-valeur" style="font-size: 1.8rem; font-weight: 800; margin-top: 5px; font-family: var(--police-titre);">0</span>
+          <div class="kpi-icon-bg" style="position: absolute; bottom: -10px; right: -10px; font-size: 5rem;"><i class="fas fa-shopping-cart"></i></div>
+        </div>
+
+        <div class="kpi-card kpi-card-attente">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+            <div style="width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: rgba(0,0,0,0.05);">
+              <i class="fas fa-clock"></i>
+            </div>
+
+          </div>
+          <span class="kpi-label" style="font-size: 0.9rem; font-weight: 600;">En Attente</span>
+          <span id="kpi-attente" class="kpi-valeur" style="font-size: 1.8rem; font-weight: 800; margin-top: 5px; font-family: var(--police-titre);">0</span>
+          <div class="kpi-icon-bg" style="position: absolute; bottom: -10px; right: -10px; font-size: 5rem;"><i class="fas fa-clock"></i></div>
+        </div>
+
+        <div class="kpi-card kpi-card-produits">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+            <div style="width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: rgba(255,255,255,0.2);">
+              <i class="fas fa-box-open"></i>
+            </div>
+
+          </div>
+          <span class="kpi-label" style="font-size: 0.9rem; font-weight: 600;">Produits Actifs</span>
+          <span id="kpi-produits" class="kpi-valeur" style="font-size: 1.8rem; font-weight: 800; margin-top: 5px; font-family: var(--police-titre);">0</span>
+          <div class="kpi-icon-bg" style="position: absolute; bottom: -10px; right: -10px; font-size: 5rem;"><i class="fas fa-box-open"></i></div>
+        </div>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="stats-charts-grid">
+        <!-- Chart Revenus -->
+        <div class="card-chart-revenus">
+          <h3 class="card-chart-titre">
+            <span class="card-chart-titre-icon" style="background: rgba(216,67,21,0.1); color: #d84315;"><i class="fas fa-chart-line"></i></span>
+            Évolution des Revenus
+          </h3>
+          <div class="card-chart-canvas-wrapper">
+            <canvas id="chart-revenus"></canvas>
+          </div>
+        </div>
+        
+        <!-- Chart Catégories -->
+        <div class="card-chart-categories">
+          <h3 class="card-chart-titre">
+            <span class="card-chart-titre-icon" style="background: rgba(0,86,179,0.1); color: #0056b3;"><i class="fas fa-chart-pie"></i></span>
+            Ventes par Catégorie
+          </h3>
+          <div class="card-chart-canvas-wrapper card-chart-canvas-donut">
+            <canvas id="chart-categories"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOP PRODUITS -->
+      <div class="card-top-produits">
+        <h3 class="card-chart-titre">
+          <span class="card-chart-titre-icon" style="background: rgba(30,126,52,0.1); color: #1e7e34;"><i class="fas fa-trophy"></i></span>
+          Top 3 des Produits les Plus Vendus
+        </h3>
+        <div id="liste-top-produits" class="top-produits-liste">
+          <!-- Injecté via JS -->
+          <div class="top-produits-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Chargement de vos meilleurs produits...</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+
+  <!-- Librairie Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="../assets/js/commun/api.js"></script>
+  <script src="../assets/js/commun/navbar.js"></script>
+  <script src="../assets/js/commun/statistiques.js"></script>
+</body>
+</html>

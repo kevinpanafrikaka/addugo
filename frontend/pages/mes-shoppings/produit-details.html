@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo — Détails du Produit</title>
+  
+  <link rel="stylesheet" href="../../assets/css/commun/style.css" />
+  <link rel="stylesheet" href="../../assets/css/commun/navbar.css" />
+  <link rel="stylesheet" href="../../assets/css/mes-shoppings/produit-details.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-light">
+
+  <nav class="navbar">
+    <div class="conteneur">
+      <div class="navbar-contenu">
+        <a href="home.html" class="navbar-logo">
+          <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" class="logo-image" />
+        </a>
+        <div class="navbar-mobile-title" id="navbar-mobile-title">
+          <i class="fas fa-tag"></i> Détails
+        </div>
+        <div class="navbar-actions">
+          <a href="../espace-client/panier.html" class="nav-btn-icon nav-panier-btn" title="Mon Panier" style="display:none;" id="nav-panier-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge" id="cart-count">0</span>
+          </a>
+          <div class="nav-profil" id="nav-profil-container" style="display:none;">
+            <a href="../espace-client/dashboard.html">
+              <img src="../../medias/default-avatar.png" alt="Profil" class="nav-avatar" id="nav-avatar-img" />
+            </a>
+          </div>
+          <a href="../accueil/login.html" class="btn btn-orange" id="btn-login-nav">Connexion</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="conteneur-principal">
+    <div class="header-section" style="margin-bottom: 20px;">
+      <a href="home.html" class="btn-retour"><i class="fas fa-arrow-left"></i> Retour au shopping</a>
+    </div>
+
+    <!-- SKELETON LOADER -->
+    <div id="loader-produit" class="produit-details-container skeleton-active">
+      <div class="produit-image-col skeleton-box" style="height: 400px;"></div>
+      <div class="produit-info-col">
+        <div class="skeleton-box" style="width:30%; height:20px; margin-bottom:15px;"></div>
+        <div class="skeleton-box" style="width:80%; height:35px; margin-bottom:20px;"></div>
+        <div class="skeleton-box" style="width:40%; height:40px; margin-bottom:30px;"></div>
+        <div class="skeleton-box" style="width:100%; height:100px; margin-bottom:20px;"></div>
+      </div>
+    </div>
+
+    <!-- CONTENU DU PRODUIT -->
+    <div id="contenu-produit" class="produit-details-container" style="display:none;">
+      <!-- Colonne Image -->
+      <div class="produit-image-col">
+        <img src="" alt="Produit" id="detail-image" class="detail-image-principale" onerror="this.src='../../medias/AdduGo_Logo.png'" />
+      </div>
+      
+      <!-- Colonne Informations -->
+      <div class="produit-info-col">
+        <div class="detail-categorie" id="detail-categorie">Catégorie</div>
+        <h1 class="detail-nom" id="detail-nom">Nom du Produit</h1>
+        <div class="detail-prix" id="detail-prix">0 GNF</div>
+        
+        <div class="detail-description" id="detail-description">
+          Description du produit...
+        </div>
+        
+        <div class="detail-actions">
+          <button class="btn btn-orange btn-grand" id="btn-add-cart">
+            <i class="fas fa-cart-plus"></i> Ajouter au panier
+          </button>
+        </div>
+
+        <hr class="separateur" />
+
+        <!-- Info Boutique -->
+        <div class="detail-boutique-info">
+          <img src="" alt="Boutique" id="boutique-logo" class="boutique-logo" onerror="this.src='../../medias/default-avatar.png'" />
+          <div class="boutique-text">
+            <h3 id="boutique-nom">Nom de la Boutique</h3>
+            <p id="boutique-adresse"><i class="fas fa-map-marker-alt"></i> Adresse</p>
+          </div>
+          <button class="btn btn-contour-orange btn-sm" id="btn-contact-boutique">
+            <i class="fas fa-comment-dots"></i> Contacter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- AUTRES PRODUITS DE LA BOUTIQUE -->
+    <section class="section-recommandations" id="section-boutique" style="display:none; margin-top: 50px;">
+      <h2 class="section-titre">Plus de produits de cette boutique</h2>
+      <div class="grille-produits" id="grille-boutique">
+        <!-- Rempli par JS -->
+      </div>
+    </section>
+
+    <!-- PRODUITS SIMILAIRES -->
+    <section class="section-recommandations" id="section-similaires" style="display:none; margin-top: 50px; margin-bottom: 50px;">
+      <h2 class="section-titre">Produits similaires</h2>
+      <div class="grille-produits" id="grille-similaires">
+        <!-- Rempli par JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../../assets/js/commun/api.js"></script>
+  <script src="../../assets/js/commun/navbar.js"></script>
+  <script src="../../assets/js/commun/panier.js"></script>
+  <script src="../../assets/js/mes-shoppings/produit-details.js"></script>
+</body>
+</html>

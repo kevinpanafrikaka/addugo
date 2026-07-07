@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo — Suivi de Livraison</title>
+    <link rel="stylesheet" href="../assets/css/commun/style.css" />
+  <link rel="stylesheet" href="../assets/css/commun/dashboard.css" />
+  <link rel="stylesheet" href="../assets/css/commun/suivi.css" />
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="dashboard-body">
+
+  <!-- NAVBAR -->
+  <nav class="navbar-dashboard">
+    <a href="../accueil/index.html" class="navbar-dashboard-logo">
+      <span>Addu</span><span>Go</span>
+    </a>
+    <div class="navbar-dashboard-droite">
+      <button class="notif-btn">
+        <i class="fas fa-bell"></i>
+        <span class="notif-badge">0</span>
+      </button>
+      <div class="user-menu">
+        <div class="user-menu-avatar" id="user-avatar">?</div>
+        <span class="user-menu-nom" id="user-nom">Chargement...</span>
+        <i class="fas fa-chevron-down" style="font-size:0.75rem; color:var(--texte-gris)"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- LAYOUT -->
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-profil">
+        <div class="sidebar-avatar" id="sidebar-avatar">?</div>
+        <div class="sidebar-nom" id="sidebar-nom">Chargement...</div>
+        <div class="sidebar-role">
+          <span class="badge badge-orange">Client</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-titre">Menu Principal</div>
+        <a href="dashboard.html" class="sidebar-lien">
+          <i class="fas fa-home"></i> Tableau de bord
+        </a>
+        <a href="commandes.html" class="sidebar-lien">
+          <i class="fas fa-shopping-bag"></i> Mes commandes
+        </a>
+        <a href="suivi.html" class="sidebar-lien actif">
+          <i class="fas fa-map-marker-alt"></i> Suivi livraison
+        </a>
+        <div class="sidebar-section-titre">Boutiques</div>
+        <a href="#" class="sidebar-lien">
+          <i class="fas fa-store"></i> Parcourir les boutiques
+        </a>
+        <a href="#" class="sidebar-lien">
+          <i class="fas fa-box"></i> Tous les produits
+        </a>
+        <div class="sidebar-section-titre">Mon Compte</div>
+        <a href="profil.html" class="sidebar-lien">
+          <i class="fas fa-user"></i> Mon profil
+        </a>
+        <a href="#" class="sidebar-lien">
+          <i class="fas fa-bell"></i> Notifications
+        </a>
+      </nav>
+      <div class="sidebar-pied">
+        <button class="btn-deconnexion" id="btn-deconnexion">
+          <i class="fas fa-sign-out-alt"></i> Se déconnecter
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTENU -->
+    <main class="dashboard-contenu anime-slide-up">
+
+      <div class="dashboard-entete">
+        <h1>Suivi de <span class="orange">Livraison</span></h1>
+        <p>Suivez vos commandes en temps réel</p>
+      </div>
+
+      <!-- RECHERCHE COMMANDE -->
+      <div class="suivi-recherche">
+        <div class="input-groupe" style="max-width:400px">
+          <input
+            type="text"
+            class="form-input"
+            id="input-commande-id"
+            placeholder="Numéro de commande (ex: 00001)"
+          />
+          <button class="input-icone" id="btn-rechercher" style="color:var(--orange)">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <button class="btn btn-orange" id="btn-rechercher-commande">
+          <i class="fas fa-search"></i> Rechercher
+        </button>
+      </div>
+
+      <!-- CONTENU SUIVI -->
+      <div id="suivi-contenu">
+
+        <!-- SÉLECTION COMMANDE EN COURS -->
+        <div id="commandes-en-cours">
+          <h3 class="mb-md">Commandes en cours</h3>
+          <div id="liste-en-cours">
+            <div class="chargement">
+              <div class="skeleton skeleton-carte" style="width:100%"></div>
+              <div class="skeleton skeleton-carte" style="width:100%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DÉTAIL SUIVI -->
+        <div id="detail-suivi" class="cache">
+
+          <!-- INFO COMMANDE -->
+          <div class="suivi-carte">
+            <div class="suivi-carte-entete">
+              <div>
+                <h3 id="suivi-commerce">Commerce</h3>
+                <span class="texte-sm gris" id="suivi-id">#00000</span>
+              </div>
+              <div id="suivi-badge"></div>
+            </div>
+
+            <!-- TIMELINE STATUTS -->
+            <div class="timeline">
+              <div class="timeline-etape" id="etape-en_attente">
+                <div class="timeline-icone">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="timeline-contenu">
+                  <div class="timeline-titre">Commande reçue</div>
+                  <div class="timeline-desc">Votre commande a été passée</div>
+                </div>
+              </div>
+              <div class="timeline-etape" id="etape-confirmee">
+                <div class="timeline-icone">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div class="timeline-contenu">
+                  <div class="timeline-titre">Commande confirmée</div>
+                  <div class="timeline-desc">Le commerce a confirmé votre commande</div>
+                </div>
+              </div>
+              <div class="timeline-etape" id="etape-en_preparation">
+                <div class="timeline-icone">
+                  <i class="fas fa-box-open"></i>
+                </div>
+                <div class="timeline-contenu">
+                  <div class="timeline-titre">En préparation</div>
+                  <div class="timeline-desc">Votre commande est en cours de préparation</div>
+                </div>
+              </div>
+              <div class="timeline-etape" id="etape-prete">
+                <div class="timeline-icone">
+                  <i class="fas fa-box"></i>
+                </div>
+                <div class="timeline-contenu">
+                  <div class="timeline-titre">Prête</div>
+                  <div class="timeline-desc">Votre commande attend un livreur</div>
+                </div>
+              </div>
+              <div class="timeline-etape" id="etape-en_livraison">
+                <div class="timeline-icone">
+                  <i class="fas fa-motorcycle"></i>
+                </div>
+                <div class="timeline-contenu">
+                  <div class="timeline-titre">En livraison</div>
+                  <div class="timeline-desc">Un livreur est en route vers vous</div>
+                </div>
+              </div>
+              <div class="timeline-etape" id="etape-livree">
+                <div class="timeline-icone">
+                  <i class="fas fa-home"></i>
+                </div>
+                <div class="timeline-contenu">
+                  <div class="timeline-titre">Livrée !</div>
+                  <div class="timeline-desc">Votre commande a été livrée avec succès</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- INFOS LIVRAISON -->
+            <div class="suivi-infos">
+              <div class="suivi-info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                  <div class="suivi-info-label">Adresse de livraison</div>
+                  <div class="suivi-info-val" id="suivi-adresse">—</div>
+                </div>
+              </div>
+              <div class="suivi-info-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <div>
+                  <div class="suivi-info-label">Montant total</div>
+                  <div class="suivi-info-val prix" id="suivi-montant">—</div>
+                </div>
+              </div>
+              <div class="suivi-info-item">
+                <i class="fas fa-calendar"></i>
+                <div>
+                  <div class="suivi-info-label">Date de commande</div>
+                  <div class="suivi-info-val" id="suivi-date">—</div>
+                </div>
+              </div>
+              <div class="suivi-info-item" id="info-livreur" style="display:none">
+                <i class="fas fa-motorcycle"></i>
+                <div>
+                  <div class="suivi-info-label">Votre livreur</div>
+                  <div class="suivi-info-val" id="suivi-livreur">—</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ARTICLES -->
+            <div class="suivi-articles">
+              <h4 class="mb-md">Articles commandés</h4>
+              <div id="suivi-liste-articles"></div>
+            </div>
+
+          </div>
+
+          <div class="flex gap-md mt-md">
+            <button class="btn btn-contour-orange" id="btn-retour-liste">
+              <i class="fas fa-arrow-left"></i> Retour
+            </button>
+            <a href="commandes.html" class="btn btn-orange">
+              <i class="fas fa-shopping-bag"></i> Mes commandes
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- BOTTOM NAV (MOBILE) -->
+  <nav class="bottom-nav">
+    <ul class="bottom-nav-liste">
+      <a href="dashboard.html" class="bottom-nav-item">
+        <i class="fas fa-home"></i> Accueil
+      </a>
+      <a href="commandes.html" class="bottom-nav-item">
+        <i class="fas fa-shopping-bag"></i> Commandes
+      </a>
+      <a href="#" class="bottom-nav-item">
+        <i class="fas fa-user"></i> Profil
+      </a>
+    </ul>
+  </nav>
+
+  <script src="../assets/js/commun/api.js"></script>
+  <script src="../assets/js/espace-client/suivi.js"></script>
+</body>
+</html>
