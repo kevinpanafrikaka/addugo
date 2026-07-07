@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!searchInput) return;
     const query = searchInput.value.trim();
     if (query.length > 0) {
-      window.location.href = `recherche.html?q=${encodeURIComponent(query)}`;
+      window.location.href = `../mes-shoppings/recherche.html?q=${encodeURIComponent(query)}`;
     }
   }
 
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 function verifierAuthentification() {
   const token = localStorage.getItem('addugo_token');
   if (!token) {
-    window.location.href = 'login.html';
+    window.location.href = '../accueil/login.html';
   }
 }
 

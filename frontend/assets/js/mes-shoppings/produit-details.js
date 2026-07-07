@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (!productId) {
     alert("Produit introuvable.");
-    window.location.href = 'home.html';
+    window.location.href = '../mes-shoppings/home.html';
     return;
   }
 

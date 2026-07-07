@@ -6,7 +6,7 @@
 const token = localStorage.getItem('addugo_token');
 const user  = JSON.parse(localStorage.getItem('addugo_user') || 'null');
 
-if (!token || !user) window.location.href = '../login.html';
+if (!token || !user) window.location.href = '../accueil/login.html';
 
 // ── INIT UTILISATEUR ──
 const initiales = `${user.nom?.[0] || ''}${user.prenom?.[0] || ''}`.toUpperCase();

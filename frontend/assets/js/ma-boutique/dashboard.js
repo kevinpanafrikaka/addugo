@@ -6,7 +6,7 @@
 const token = localStorage.getItem('addugo_token');
 const user  = JSON.parse(localStorage.getItem('addugo_user') || 'null');
 
-if (!token || !user) window.location.href = '../login.html';
+if (!token || !user) window.location.href = '../accueil/login.html';
 
 // ── INIT UTILISATEUR ──
 // L'initialisation du profil (nom, avatar, menu déroulant) est désormais 

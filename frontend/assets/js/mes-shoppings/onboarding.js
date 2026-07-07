@@ -6,7 +6,7 @@ const token = localStorage.getItem('addugo_token');
 let user = JSON.parse(localStorage.getItem('addugo_user') || 'null');
 
 if (!token || !user) {
-  window.location.href = 'login.html';
+  window.location.href = '../accueil/login.html';
 }
 
 // ── UTILITAIRES ──
@@ -79,7 +79,7 @@ document.getElementById('form-onboarding').addEventListener('submit', async (e) 
     // Succès → redirection
     afficherAlerte('Profil configuré ! Redirection vers AdduGo...', 'succes');
     setTimeout(() => {
-      window.location.href = 'home.html';
+      window.location.href = '../mes-shoppings/home.html';
     }, 1200);
 
   } catch (err) {
@@ -92,5 +92,5 @@ document.getElementById('form-onboarding').addEventListener('submit', async (e) 
 
 // ── PASSER L'ÉTAPE ──
 window.passerEtape = () => {
-  window.location.href = 'home.html';
+  window.location.href = '../mes-shoppings/home.html';
 };

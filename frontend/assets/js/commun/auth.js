@@ -44,14 +44,14 @@ const ROLES_CONFIG = {
 };
 
 const ROLES_REDIRECT = {
-  admin:    'admin/dashboard.html',
-  commerce: 'commerce/produits.html',
-  livreur:  'livreur/dashboard.html',
-  client:   'client/dashboard.html'
+  admin:    '../espace-admin/dashboard.html',
+  commerce: '../ma-boutique/produits.html',
+  livreur:  '../espace-livreur/dashboard.html',
+  client:   '../espace-client/dashboard.html'
 };
 
 function redirigerVersRole(role) {
-  window.location.href = ROLES_REDIRECT[role] || 'client/dashboard.html';
+  window.location.href = ROLES_REDIRECT[role] || '../espace-client/dashboard.html';
 }
 
 function afficherSelecteurRole(utilisateur) {
@@ -115,7 +115,7 @@ if (formConnexion) {
         // Tous les utilisateurs sont redirigés vers l'accueil unifié (home.html)
         afficherAlerte('alerte-connexion', 'Connexion réussie ! Redirection...', 'succes');
         setTimeout(() => {
-          window.location.href = 'home.html';
+          window.location.href = '../mes-shoppings/home.html';
         }, 1000);
 
       } else {
@@ -169,7 +169,7 @@ if (formInscription) {
         afficherAlerte('alerte-inscription', '<i class="fas fa-check-circle"></i> Compte créé avec succès ! Redirection...', 'succes');
 
         setTimeout(() => {
-          window.location.href = 'onboarding.html';
+          window.location.href = '../mes-shoppings/onboarding.html';
         }, 1000);
 
       } else {

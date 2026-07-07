@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const userStr = localStorage.getItem('addugo_user');
   
   if (!token || !userStr) {
-    window.location.href = '../login.html';
+    window.location.href = '../accueil/login.html';
     return;
   }
   

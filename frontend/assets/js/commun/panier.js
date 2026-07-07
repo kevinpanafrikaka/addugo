@@ -193,7 +193,7 @@ window.validerCommandeBoutique = async function(commerceId, nomBoutique) {
   const userStr = localStorage.getItem('addugo_user');
   if (!userStr) {
     alert("Vous devez être connecté pour passer une commande.");
-    window.location.href = 'login.html';
+    window.location.href = '../accueil/login.html';
     return;
   }
   const user = JSON.parse(userStr);

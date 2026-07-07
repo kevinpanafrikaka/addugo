@@ -6,7 +6,7 @@ const token = localStorage.getItem('addugo_token');
 const user  = JSON.parse(localStorage.getItem('addugo_user') || 'null');
 
 if (!token || !user) {
-  window.location.href = '../../pages/login.html';
+  window.location.href = '../accueil/login.html';
 }
 
 // ── AFFICHAGE INFOS UTILISATEUR ──
@@ -174,7 +174,7 @@ async function chargerBoutiques() {
             ? (c.logo.startsWith('http') ? c.logo : `https://addugo.up.railway.app${c.logo}`)
             : null;
           return `
-          <div class="carte carte-orange" style="cursor:pointer; background:var(--blanc); border:1px solid var(--bordure); border-radius:16px; padding:18px; transition:transform 0.2s ease, box-shadow 0.2s ease;" onclick="window.location.href='../home.html'">
+          <div class="carte carte-orange" style="cursor:pointer; background:var(--blanc); border:1px solid var(--bordure); border-radius:16px; padding:18px; transition:transform 0.2s ease, box-shadow 0.2s ease;" onclick="window.location.href = '../mes-shoppings/home.html'">
             <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
               ${logoUrl 
                 ? `<img src="${logoUrl}" alt="${c.nom}" style="width:48px; height:48px; border-radius:10px; object-fit:cover; border:1px solid var(--bordure);">`
