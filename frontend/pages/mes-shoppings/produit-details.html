@@ -12,28 +12,35 @@
 </head>
 <body class="bg-light">
 
-  <nav class="navbar">
-    <div class="conteneur">
-      <div class="navbar-contenu">
-        <a href="home.html" class="navbar-logo">
-          <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" class="logo-image" />
+  <!-- NAVBAR UNIFIÉE -->
+  <nav class="navbar-home">
+    <div class="navbar-home-gauche">
+      <div style="display: flex; align-items: center; gap: 4px;">
+        <a href="home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
+          <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" style="height: 38px; width: auto; object-fit: contain;" />
         </a>
-        <div class="navbar-mobile-title" id="navbar-mobile-title">
-          <i class="fas fa-tag"></i> Détails
-        </div>
-        <div class="navbar-actions">
-          <a href="../espace-client/panier.html" class="nav-btn-icon nav-panier-btn" title="Mon Panier" style="display:none;" id="nav-panier-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="badge" id="cart-count">0</span>
-          </a>
-          <div class="nav-profil" id="nav-profil-container" style="display:none;">
-            <a href="../espace-client/dashboard.html">
-              <img src="../../medias/default-avatar.png" alt="Profil" class="nav-avatar" id="nav-avatar-img" />
-            </a>
-          </div>
-          <a href="../accueil/login.html" class="btn btn-orange" id="btn-login-nav">Connexion</a>
+        <!-- Ligne de séparation verticale symétrique -->
+        <div style="height: 22px; width: 2px; background-color: var(--bordure-dark, #d1d5db); border-radius: 2px; margin: 0 6px; flex-shrink: 0;"></div>
+        <!-- Titre -->
+        <div class="navbar-titre-page" style="display: flex; align-items: center; gap: 6px; font-size: 0.95rem; font-weight: 800;">
+          <span>
+            <span style="color: var(--noir, #1A1A2E);">Mes</span> <span style="color: var(--orange);">Shoppings</span>
+          </span>
+          <i class="fas fa-shopping-bag" style="color: var(--orange); font-size: 1.1rem;"></i>
         </div>
       </div>
+    </div>
+    <div class="navbar-home-droite">
+      <a href="../espace-client/panier.html" class="nav-btn-icon nav-panier-btn" title="Mon Panier" style="display:none; position:relative; margin-right: 15px;" id="nav-panier-icon">
+        <i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>
+        <span class="badge" id="cart-count" style="position:absolute; top:-8px; right:-8px; background:var(--orange); color:white; border-radius:50%; width:18px; height:18px; font-size:0.7rem; display:flex; align-items:center; justify-content:center;">0</span>
+      </a>
+      <div class="nav-profil" id="nav-profil-container" style="display:none; margin-right:15px;">
+        <a href="../espace-client/dashboard.html">
+          <img src="../../medias/default-avatar.png" alt="Profil" class="nav-avatar" id="nav-avatar-img" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid var(--orange);" />
+        </a>
+      </div>
+      <a href="../accueil/login.html" class="btn btn-orange" id="btn-login-nav" style="padding: 6px 16px; font-size: 0.9rem; font-weight: 600;">Connexion</a>
     </div>
   </nav>
 

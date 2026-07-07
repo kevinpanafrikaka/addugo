@@ -274,6 +274,11 @@
   color: var(--texte-gris);
   margin-bottom: var(--espace-md);
   flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .produit-prix-panier {
