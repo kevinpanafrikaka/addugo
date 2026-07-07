@@ -291,6 +291,7 @@
   font-weight: 700;
   color: var(--orange);
   font-size: 1.1rem;
+  white-space: nowrap;
 }
 
 .produit-panier-btn {

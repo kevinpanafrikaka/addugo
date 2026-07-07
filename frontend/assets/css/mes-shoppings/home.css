@@ -128,6 +128,7 @@ main {
   font-weight: 800;
   color: var(--orange);
   text-align: center;
+  white-space: nowrap;
 }
 
 .btn-contacter-vendeur {
