@@ -820,11 +820,26 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
   font-family: var(--police);
 }
 
+
+@keyframes floatIcon {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
 .hero-icone-principale {
   font-size: 5rem;
   text-align: center;
   margin-bottom: 16px;
+  animation: floatIcon 3s ease-in-out infinite;
+  color: var(--orange);
+  text-shadow: 0 10px 20px rgba(255,107,53,0.3);
 }
+
+.hero {
+  background: linear-gradient(135deg, #111111 0%, #1a1a2e 50%, #16213e 100%);
+}
+
 
 .hero-icone-titre {
   font-size: 1.25rem;
@@ -883,13 +898,16 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
 }
 
 .categorie-carte {
-  background: var(--fond);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: var(--rayon-lg);
   padding: 28px 20px;
   text-align: center;
   cursor: pointer;
-  transition: var(--transition);
-  border: 2px solid transparent;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255, 107, 53, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
 .categorie-carte:hover {
@@ -1003,9 +1021,12 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
 .acteur-commerce::before { background: var(--noir);   }
 .acteur-livreur::before  { background: var(--succes); }
 
-.acteur-client   { background: var(--orange-bg); border: 1px solid rgba(255,107,53,0.2); }
-.acteur-commerce { background: var(--noir-bg);   border: 1px solid rgba(26,26,46,0.2);  }
-.acteur-livreur  { background: var(--succes-bg); border: 1px solid rgba(40,167,69,0.2); }
+.acteur-client   { background: linear-gradient(180deg, var(--orange-bg) 0%, rgba(255,255,255,1) 100%); border: 1px solid rgba(255,107,53,0.3); box-shadow: 0 10px 30px rgba(255,107,53,0.08); transition: transform 0.3s ease; }
+.acteur-client:hover { transform: translateY(-5px); }
+.acteur-commerce { background: linear-gradient(180deg, var(--noir-bg) 0%, rgba(255,255,255,1) 100%); border: 1px solid rgba(26,26,46,0.2); box-shadow: 0 10px 30px rgba(26,26,46,0.08); transition: transform 0.3s ease; }
+.acteur-commerce:hover { transform: translateY(-5px); }
+.acteur-livreur  { background: linear-gradient(180deg, var(--succes-bg) 0%, rgba(255,255,255,1) 100%); border: 1px solid rgba(40,167,69,0.3); box-shadow: 0 10px 30px rgba(40,167,69,0.08); transition: transform 0.3s ease; }
+.acteur-livreur:hover { transform: translateY(-5px); }
 
 .acteur-icone {
   font-size: 3rem;
