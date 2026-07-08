@@ -699,8 +699,8 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
    PAGE D'ACCUEIL — HERO
    ============================================================ */
 .hero {
-  background: linear-gradient(135deg, var(--noir) 0%, var(--noir-light) 50%, var(--texte) 100%);
-  color: var(--blanc);
+  background: linear-gradient(135deg, #FFF4EE 0%, #FFFFFF 60%, #FFF8F2 100%);
+  color: var(--texte);
   padding: 100px 0 80px;
   position: relative;
   overflow: hidden;
@@ -763,7 +763,7 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
 
 .hero p {
   font-size: 1.1rem;
-  color: rgba(255,255,255,0.85);
+  color: var(--texte-gris);
   margin-bottom: 36px;
   line-height: 1.8;
   font-family: var(--police);
@@ -784,11 +784,11 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
 .hero-illustration {
   width: 100%;
   max-width: 480px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,107,53,0.2);
   border-radius: 24px;
   padding: 40px;
-  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(255,107,53,0.08);
 }
 
 .hero-stats {
@@ -801,9 +801,10 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
 .hero-stat {
   text-align: center;
   padding: 20px 16px;
-  background: rgba(255,255,255,0.08);
+  background: #FFFFFF;
   border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,107,53,0.1);
+  box-shadow: 0 4px 15px rgba(255,107,53,0.05);
 }
 
 .hero-stat-valeur {
@@ -815,7 +816,7 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
 
 .hero-stat-label {
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.7);
+  color: var(--texte-gris);
   margin-top: 4px;
   font-family: var(--police);
 }
@@ -836,16 +837,14 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
   text-shadow: 0 10px 20px rgba(255,107,53,0.3);
 }
 
-.hero {
-  background: linear-gradient(135deg, #111111 0%, #1a1a2e 50%, #16213e 100%);
-}
+
 
 
 .hero-icone-titre {
   font-size: 1.25rem;
   font-weight: 700;
   text-align: center;
-  color: var(--blanc);
+  color: var(--texte);
   margin-bottom: 8px;
   font-family: var(--police-titre);
 }
@@ -853,7 +852,7 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
 .hero-icone-desc {
   font-size: 0.85rem;
   text-align: center;
-  color: rgba(255,255,255,0.6);
+  color: var(--texte-gris);
   font-family: var(--police);
 }
 
