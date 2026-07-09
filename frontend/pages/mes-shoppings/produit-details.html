@@ -10,8 +10,6 @@
   <link rel="stylesheet" href="../../assets/css/mes-shoppings/produit-details.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  
-
   <!-- Favicon Standard -->
   <link rel="icon" type="image/png" href="../../favicon.png?v=1783501557640" />
   <link rel="shortcut icon" type="image/png" href="../../favicon.png?v=1783501557640" />
@@ -26,7 +24,7 @@
         <a href="home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
           <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" style="height: 38px; width: auto; object-fit: contain;" />
         </a>
-        <!-- Ligne de séparation verticale symétrique -->
+        <!-- Ligne de séparation verticale -->
         <div style="height: 22px; width: 2px; background-color: var(--bordure-dark, #d1d5db); border-radius: 2px; margin: 0 6px; flex-shrink: 0;"></div>
         <!-- Titre -->
         <div class="navbar-titre-page" style="display: flex; align-items: center; gap: 6px; font-size: 0.95rem; font-weight: 800;">
@@ -37,24 +35,34 @@
         </div>
       </div>
     </div>
-    <div class="navbar-home-droite">
-      <a href="../espace-client/panier.html" class="nav-btn-icon nav-panier-btn" title="Mon Panier" style="display:none; position:relative; margin-right: 15px;" id="nav-panier-icon">
-        <i class="fas fa-shopping-cart" style="font-size: 1.2rem;"></i>
+    <div class="navbar-home-droite" style="display: flex; align-items: center; gap: 14px;">
+      
+      <!-- Icône Accueil -->
+      <a href="home.html" class="nav-btn-icon" title="Accueil Shopping" style="color: var(--texte); font-size: 1.25rem; text-decoration: none; display: flex; align-items: center;">
+        <i class="fas fa-home"></i>
+      </a>
+
+      <!-- Icône Mes Messages -->
+      <a href="../espace-client/messages.html" class="nav-btn-icon" title="Mes Messages" style="color: var(--texte); font-size: 1.25rem; text-decoration: none; display: flex; align-items: center; position: relative;">
+        <i class="fas fa-comment-dots"></i>
+      </a>
+
+      <!-- Icône Mon Espace / Panier -->
+      <a href="../espace-client/panier.html" class="nav-btn-icon nav-panier-btn" title="Mon Panier" style="display:none; position:relative; color: var(--texte); font-size: 1.25rem; text-decoration: none;" id="nav-panier-icon">
+        <i class="fas fa-shopping-cart"></i>
         <span class="badge" id="cart-count" style="position:absolute; top:-8px; right:-8px; background:var(--orange); color:white; border-radius:50%; width:18px; height:18px; font-size:0.7rem; display:flex; align-items:center; justify-content:center;">0</span>
       </a>
-      <div class="nav-profil" id="nav-profil-container" style="display:none; margin-right:15px;">
-        <a href="../espace-client/dashboard.html">
-          <img src="../../medias/default-avatar.png" alt="Profil" class="nav-avatar" id="nav-avatar-img" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid var(--orange);" />
-        </a>
-      </div>
-      <a href="../accueil/login.html" class="btn btn-orange" id="btn-login-nav" style="padding: 6px 16px; font-size: 0.9rem; font-weight: 600;">Connexion</a>
+
+      <!-- Mon Espace Client (Avatar) -->
+      <a href="../espace-client/dashboard.html" class="nav-btn-icon" title="Mon Espace Client" id="nav-profil-container" style="display: flex; align-items: center; color: var(--texte); font-size: 1.25rem; text-decoration: none;">
+        <i class="fas fa-user-circle" id="nav-icon-user"></i>
+        <img src="../../medias/default-avatar.png" alt="Profil" id="nav-avatar-img" style="display:none; width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid var(--orange);" />
+      </a>
+
     </div>
   </nav>
 
   <main class="conteneur-principal">
-    <div class="header-section" style="margin-bottom: 20px;">
-      <a href="home.html" class="btn-retour"><i class="fas fa-arrow-left"></i> Retour au shopping</a>
-    </div>
 
     <!-- SKELETON LOADER -->
     <div id="loader-produit" class="produit-details-container skeleton-active">
@@ -104,6 +112,14 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- MESSAGE D'ERREUR -->
+    <div id="erreur-produit" style="display:none; text-align:center; padding: 60px 20px;">
+      <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--orange); margin-bottom: 20px;"></i>
+      <h2 style="color: var(--texte); margin-bottom: 10px;">Produit introuvable</h2>
+      <p style="color: var(--texte-gris); margin-bottom: 25px;">Ce produit n'existe pas ou a été retiré de la vente.</p>
+      <a href="home.html" class="btn btn-orange"><i class="fas fa-arrow-left"></i> Retour aux produits</a>
     </div>
 
     <!-- AUTRES PRODUITS DE LA BOUTIQUE -->
