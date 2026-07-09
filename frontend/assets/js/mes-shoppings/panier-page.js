@@ -17,12 +17,14 @@ function renderPanierPage() {
 
   if (panier.length === 0) {
     panierBody.innerHTML = `
-      <div style="text-align: center; padding: 80px 20px; color: var(--texte-gris); background: white; border-radius: 12px; box-shadow: var(--ombre-sm);">
-        <i class="fas fa-shopping-cart" style="font-size: 4rem; margin-bottom: 20px; color: #ddd;"></i>
-        <h3 style="font-weight: bold; margin: 0 0 15px 0; color: var(--texte);">Votre panier est vide</h3>
-        <p style="margin: 0 0 25px 0;">Découvrez nos produits et trouvez ce qu'il vous faut !</p>
-        <button class="btn btn-orange" style="padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer;" onclick="window.location.href='home.html'">
-          Retour au shopping
+      <div style="text-align: center; padding: 100px 20px; color: var(--texte-gris); background: var(--blanc); border-radius: var(--rayon-lg); box-shadow: var(--ombre-sm); border: 1px solid var(--bordure);">
+        <div style="width: 100px; height: 100px; background: var(--fond-tres-clair); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px auto;">
+          <i class="fas fa-shopping-basket" style="font-size: 3.5rem; color: #cbd5e1;"></i>
+        </div>
+        <h3 style="font-family: var(--police-titre); font-size: 1.5rem; font-weight: 700; margin: 0 0 10px 0; color: var(--texte);">Votre panier est tristement vide</h3>
+        <p style="margin: 0 0 30px 0; font-size: 1.05rem;">Découvrez nos produits et trouvez votre bonheur !</p>
+        <button class="btn btn-orange" style="padding: 14px 32px; border-radius: var(--rayon-md); font-weight: 700; font-size: 1.1rem; cursor: pointer; border: none; box-shadow: 0 4px 6px rgba(249, 115, 22, 0.2);" onclick="window.location.href='home.html'">
+          <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Retour au shopping
         </button>
       </div>
     `;
