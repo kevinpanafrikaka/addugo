@@ -27,12 +27,14 @@ function savePanier(panier) {
 }
 
 // ── OPERATIONS SUR LE PANIER ──
-window.ajouterAuPanier = function(produitId, nom, prix, image, commerceId, nomBoutique) {
+window.ajouterAuPanier = function(produitId, nom, prix, image, commerceId, nomBoutique, logoBoutique) {
   const panier = getPanier();
   const existingItem = panier.find(item => item.produit_id === produitId);
 
   if (existingItem) {
     existingItem.quantite += 1;
+    // Mettre à jour le logo si on en a un
+    if (logoBoutique) existingItem.logo_boutique = logoBoutique;
   } else {
     panier.push({
       produit_id: produitId,
@@ -41,7 +43,8 @@ window.ajouterAuPanier = function(produitId, nom, prix, image, commerceId, nomBo
       image: image,
       quantite: 1,
       commerce_id: commerceId,
-      nom_boutique: nomBoutique
+      nom_boutique: nomBoutique,
+      logo_boutique: logoBoutique || null
     });
   }
 

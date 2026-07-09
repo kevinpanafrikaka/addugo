@@ -415,3 +415,19 @@ Voici 3 secrets de conception (UX/UI) pour la rendre "Pro" :
    - Ajoute une belle icône grise ou pastel.
    - Ajoute un bouton "Découvrir nos offres" ou "Retour au shopping" qui redirige vers la page principale.
    Un état vide ne doit jamais être une impasse !
+
+---
+
+### Astuce #23 : L'Enrichissement Progressif du localStorage
+*Date : 9 Juillet 2026*
+
+**Le problème :** Dans une marketplace, le panier est sauvegardé dans le `localStorage` (côté client). Lors d'une session de navigation, on souhaite récupérer le logo de la boutique pour l'afficher dans la page panier. Mais si le logo n'a pas été stocké au moment de l'ajout, il est perdu.
+
+**La solution : L'Enrichissement Progressif.** C'est l'art de **faire évoluer la structure de tes données** sans tout casser.
+
+**Comment on a fait sur AdduGo :**
+1. **Étape 1 (ancienne version)** : `ajouterAuPanier(id, nom, prix, image, commerceId, nomBoutique)` — le logo n'était pas stocké.
+2. **Étape 2 (nouvelle version)** : On a ajouté un 7ème paramètre `logoBoutique` **optionnel** à la fonction. Les anciens appels continuent de fonctionner (le paramètre sera `undefined` et sauvegardé comme `null`).
+3. **Étape 3 (défensive)** : Dans `panier-page.js`, on fait toujours un fallback si le logo est absent : `item.logo_boutique ? <img> : <icône colorée>`.
+
+**Règle d'or :** Quand tu enrichis une structure de données, rends toujours les nouveaux champs **optionnels** avec une valeur par défaut (`null`, `''`, `false`). Ne casse jamais les données existantes de tes utilisateurs !

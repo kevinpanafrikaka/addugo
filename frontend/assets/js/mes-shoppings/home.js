@@ -119,7 +119,7 @@ async function chargerProduits() {
                 <button title="Contacter" style="background: #1A1A2E; border: none; border-radius: 6px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #FFFFFF; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" onclick="window.location.href='../espace-client/messages.html?user=${vendeurId}&p_nom=' + encodeURIComponent('${p.nom.replace(/'/g, "\\'")}') + '&p_prix=${p.prix}&p_img=' + encodeURIComponent('${image}')">
                   <i class="fas fa-comment-dots" style="font-size: 1.1rem;"></i>
                 </button>
-                <button class="btn btn-orange" style="flex: 1; padding: 0; height: 34px; font-size: 0.8rem; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;" onclick="ajouterAuPanier(${p.id}, '${p.nom.replace(/'/g, "\\'")}', ${p.prix}, '${image}', ${vendeurId}, '${nomBoutique.replace(/'/g, "\\'")}')">
+                <button class="btn btn-orange" style="flex: 1; padding: 0; height: 34px; font-size: 0.8rem; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;" onclick="ajouterAuPanier(${p.id}, '${p.nom.replace(/'/g, "\\'")}', ${p.prix}, '${image}', ${vendeurId}, '${nomBoutique.replace(/'/g, "\\'")}', '${photoBoutique}')">
                   <i class="fas fa-cart-plus"></i> Ajouter
                 </button>
               </div>
