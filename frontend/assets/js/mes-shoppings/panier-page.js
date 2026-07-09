@@ -15,8 +15,19 @@ function renderPanierPage() {
     panierBadge.textContent = `${totalArticles} article${totalArticles > 1 ? 's' : ''}`;
   }
 
+  const user = JSON.parse(localStorage.getItem('addugo_user') || 'null');
+  const prenom = user && user.prenom ? user.prenom : 'Cher Client';
+
+  let html = `
+    <div style="margin-bottom: 30px;">
+      <h2 style="font-family: var(--police-titre); color: var(--texte); font-size: 1.4rem; margin: 0;">
+        Salut <span style="color: var(--orange);">${prenom}</span>, vous avez <span style="font-weight: 800;">${totalArticles} produit${totalArticles > 1 ? 's' : ''}</span> ajouté${totalArticles > 1 ? 's' : ''} dans votre panier.
+      </h2>
+    </div>
+  `;
+
   if (panier.length === 0) {
-    panierBody.innerHTML = `
+    html += `
       <div style="text-align: center; padding: 100px 20px; color: var(--texte-gris); background: var(--blanc); border-radius: var(--rayon-lg); box-shadow: var(--ombre-sm); border: 1px solid var(--bordure);">
         <div style="width: 100px; height: 100px; background: var(--fond-tres-clair); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px auto;">
           <i class="fas fa-shopping-basket" style="font-size: 3.5rem; color: #cbd5e1;"></i>
@@ -28,10 +39,10 @@ function renderPanierPage() {
         </button>
       </div>
     `;
+    panierBody.innerHTML = html;
     return;
   }
 
-  // Grouper les articles par commerce
   const parCommerce = {};
   panier.forEach(item => {
     if (!parCommerce[item.commerce_id]) {
@@ -44,8 +55,6 @@ function renderPanierPage() {
     parCommerce[item.commerce_id].articles.push(item);
     parCommerce[item.commerce_id].total += (item.prix * item.quantite);
   });
-
-  let html = '';
 
   for (const commerceId in parCommerce) {
     const boutique = parCommerce[commerceId];
