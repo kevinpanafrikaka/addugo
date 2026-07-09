@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="../../assets/css/mes-shoppings/produit-details.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-  <!-- Favicon Standard -->
   <link rel="icon" type="image/png" href="../../favicon.png?v=1783501557640" />
   <link rel="shortcut icon" type="image/png" href="../../favicon.png?v=1783501557640" />
   <link rel="apple-touch-icon" href="../../favicon.png?v=1783501557640" />
@@ -19,14 +18,13 @@
 
   <!-- NAVBAR UNIFIÉE -->
   <nav class="navbar-home">
+    <!-- GAUCHE : Logo + Titre -->
     <div class="navbar-home-gauche">
       <div style="display: flex; align-items: center; gap: 4px;">
         <a href="home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
           <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" style="height: 38px; width: auto; object-fit: contain;" />
         </a>
-        <!-- Ligne de séparation verticale -->
         <div style="height: 22px; width: 2px; background-color: var(--bordure-dark, #d1d5db); border-radius: 2px; margin: 0 6px; flex-shrink: 0;"></div>
-        <!-- Titre -->
         <div class="navbar-titre-page" style="display: flex; align-items: center; gap: 6px; font-size: 0.95rem; font-weight: 800;">
           <span>
             <span style="color: var(--noir, #1A1A2E);">Mes</span> <span style="color: var(--orange);">Shoppings</span>
@@ -35,29 +33,38 @@
         </div>
       </div>
     </div>
-    <div class="navbar-home-droite" style="display: flex; align-items: center; gap: 14px;">
-      
-      <!-- Icône Accueil -->
-      <a href="home.html" class="nav-btn-icon" title="Accueil Shopping" style="color: var(--texte); font-size: 1.25rem; text-decoration: none; display: flex; align-items: center;">
-        <i class="fas fa-home"></i>
+
+    <!-- DROITE : Icônes identiques à home.html -->
+    <div class="navbar-home-droite" style="display: flex; align-items: center; gap: 18px;">
+
+      <!-- Icône Accueil (maison verte avec personne) -->
+      <a href="home.html" title="Accueil Shopping" style="color: #0D9488; font-size: 1.3rem; text-decoration: none; display: flex; align-items: center;">
+        <i class="fas fa-house-user"></i>
       </a>
 
-      <!-- Icône Mes Messages -->
-      <a href="../espace-client/messages.html" class="nav-btn-icon" title="Mes Messages" style="color: var(--texte); font-size: 1.25rem; text-decoration: none; display: flex; align-items: center; position: relative;">
-        <i class="fas fa-comment-dots"></i>
+      <!-- Icône Messages (enveloppe bleue) -->
+      <a href="../espace-client/messages.html" title="Mes Messages" style="text-decoration: none; display: flex; align-items: center;">
+        <i class="fas fa-envelope" style="color: #3B82F6; font-size: 1.3rem;"></i>
       </a>
 
-      <!-- Icône Mon Espace / Panier -->
-      <a href="../espace-client/panier.html" class="nav-btn-icon nav-panier-btn" title="Mon Panier" style="display:none; position:relative; color: var(--texte); font-size: 1.25rem; text-decoration: none;" id="nav-panier-icon">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="badge" id="cart-count" style="position:absolute; top:-8px; right:-8px; background:var(--orange); color:white; border-radius:50%; width:18px; height:18px; font-size:0.7rem; display:flex; align-items:center; justify-content:center;">0</span>
-      </a>
-
-      <!-- Mon Espace Client (Avatar) -->
-      <a href="../espace-client/dashboard.html" class="nav-btn-icon" title="Mon Espace Client" id="nav-profil-container" style="display: flex; align-items: center; color: var(--texte); font-size: 1.25rem; text-decoration: none;">
-        <i class="fas fa-user-circle" id="nav-icon-user"></i>
-        <img src="../../medias/default-avatar.png" alt="Profil" id="nav-avatar-img" style="display:none; width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid var(--orange);" />
-      </a>
+      <!-- Avatar Profil (avec dropdown) -->
+      <div class="profil-wrapper" id="profil-wrapper" style="position: relative;">
+        <div class="navbar-profil-btn" id="btn-profil-toggle" style="cursor: pointer;">
+          <img src="../../medias/default-avatar.png" alt="Profil" id="navbar-top-avatar" />
+        </div>
+        <div class="profil-dropdown" id="profil-dropdown">
+          <div class="dropdown-header">
+            <img src="../../medias/default-avatar.png" alt="Profil" id="dropdown-avatar" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+            <div class="dropdown-infos">
+              <div class="dropdown-nom" id="dropdown-nom">Chargement...</div>
+              <div class="dropdown-role" id="dropdown-roles-badges">Client</div>
+            </div>
+          </div>
+          <div class="dropdown-menu-container">
+            <!-- Rempli dynamiquement par navbar.js -->
+          </div>
+        </div>
+      </div>
 
     </div>
   </nav>
@@ -77,30 +84,20 @@
 
     <!-- CONTENU DU PRODUIT -->
     <div id="contenu-produit" class="produit-details-container" style="display:none;">
-      <!-- Colonne Image -->
       <div class="produit-image-col">
         <img src="" alt="Produit" id="detail-image" class="detail-image-principale" onerror="this.src='../../medias/AdduGo_Logo.png'" />
       </div>
-      
-      <!-- Colonne Informations -->
       <div class="produit-info-col">
         <div class="detail-categorie" id="detail-categorie">Catégorie</div>
         <h1 class="detail-nom" id="detail-nom">Nom du Produit</h1>
         <div class="detail-prix" id="detail-prix">0 GNF</div>
-        
-        <div class="detail-description" id="detail-description">
-          Description du produit...
-        </div>
-        
+        <div class="detail-description" id="detail-description">Description du produit...</div>
         <div class="detail-actions">
           <button class="btn btn-orange btn-grand" id="btn-add-cart">
             <i class="fas fa-cart-plus"></i> Ajouter au panier
           </button>
         </div>
-
         <hr class="separateur" />
-
-        <!-- Info Boutique -->
         <div class="detail-boutique-info">
           <img src="" alt="Boutique" id="boutique-logo" class="boutique-logo" onerror="this.src='../../medias/default-avatar.png'" />
           <div class="boutique-text">
@@ -125,17 +122,13 @@
     <!-- AUTRES PRODUITS DE LA BOUTIQUE -->
     <section class="section-recommandations" id="section-boutique" style="display:none; margin-top: 50px;">
       <h2 class="section-titre">Plus de produits de cette boutique</h2>
-      <div class="grille-produits" id="grille-boutique">
-        <!-- Rempli par JS -->
-      </div>
+      <div class="grille-produits" id="grille-boutique"></div>
     </section>
 
     <!-- PRODUITS SIMILAIRES -->
     <section class="section-recommandations" id="section-similaires" style="display:none; margin-top: 50px; margin-bottom: 50px;">
       <h2 class="section-titre">Produits similaires</h2>
-      <div class="grille-produits" id="grille-similaires">
-        <!-- Rempli par JS -->
-      </div>
+      <div class="grille-produits" id="grille-similaires"></div>
     </section>
 
   </main>
