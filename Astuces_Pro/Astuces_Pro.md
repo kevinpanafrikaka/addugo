@@ -431,3 +431,37 @@ Voici 3 secrets de conception (UX/UI) pour la rendre "Pro" :
 3. **Étape 3 (défensive)** : Dans `panier-page.js`, on fait toujours un fallback si le logo est absent : `item.logo_boutique ? <img> : <icône colorée>`.
 
 **Règle d'or :** Quand tu enrichis une structure de données, rends toujours les nouveaux champs **optionnels** avec une valeur par défaut (`null`, `''`, `false`). Ne casse jamais les données existantes de tes utilisateurs !
+
+---
+
+### Astuce #24 : Isolation des Données par Utilisateur dans le localStorage
+*Date : 9 Juillet 2026*
+
+**Le problème de sécurité :** Le `localStorage` d'un navigateur est **partagé par tous les utilisateurs sur le même appareil**. Si deux personnes utilisent le même ordinateur (cyber-café, maison familiale), une clé générique comme `addugo_panier` fait que le panier de l'utilisateur A est visible par l'utilisateur B !
+
+**La solution :** Inclure l'**ID de l'utilisateur** dans la clé de stockage.
+
+```javascript
+// ❌ MAUVAIS — clé globale, partagée entre tous les utilisateurs
+const PANIER_KEY = 'addugo_panier';
+
+// ✅ BON — clé isolée par utilisateur
+function getPanierKey() {
+  const user = JSON.parse(localStorage.getItem('addugo_user') || 'null');
+  const userId = user?.id || 'guest';
+  return `addugo_panier_${userId}`; // Ex: "addugo_panier_42"
+}
+```
+
+**La règle de nettoyage :** Lors de la déconnexion, tu DOIS supprimer la clé panier **AVANT** de supprimer `addugo_user`, car la fonction `getPanierKey()` a besoin de lire l'ID utilisateur pour construire la bonne clé à effacer.
+
+```javascript
+// Toujours dans cet ordre !
+function seDeconnecter() {
+  // 1. Nettoyer le panier (utilise encore addugo_user pour la clé)
+  localStorage.removeItem(getPanierKey());
+  // 2. Seulement ensuite, supprimer les données de session
+  localStorage.removeItem('addugo_user');
+  localStorage.removeItem('addugo_token');
+}
+```

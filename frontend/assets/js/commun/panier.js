@@ -2,7 +2,14 @@
 // GESTION DU PANIER (LOCALSTORAGE & UI)
 // ============================================================
 
-const PANIER_STORAGE_KEY = 'addugo_panier';
+// ── CLÉ DE STOCKAGE ISOLÉE PAR UTILISATEUR ──
+// On inclut l'ID utilisateur dans la clé pour que chaque compte
+// ait un panier totalement indépendant sur le même navigateur.
+function getPanierKey() {
+  const user = JSON.parse(localStorage.getItem('addugo_user') || 'null');
+  const userId = user?.id || user?.utilisateur_id || 'guest';
+  return `addugo_panier_${userId}`;
+}
 
 // Fonction globale utilitaire pour apiFetch si elle n'est pas dispo
 const fetchApi = typeof apiFetch !== 'undefined' ? apiFetch : async (url, options = {}) => {
@@ -16,15 +23,16 @@ const fetchApi = typeof apiFetch !== 'undefined' ? apiFetch : async (url, option
 
 // ── LECTURE / ÉCRITURE ──
 function getPanier() {
-  const data = localStorage.getItem(PANIER_STORAGE_KEY);
+  const data = localStorage.getItem(getPanierKey());
   return data ? JSON.parse(data) : [];
 }
 
 function savePanier(panier) {
-  localStorage.setItem(PANIER_STORAGE_KEY, JSON.stringify(panier));
+  localStorage.setItem(getPanierKey(), JSON.stringify(panier));
   renderPanierSidebar();
   updatePanierBadgeGlobal(); 
 }
+
 
 // ── OPERATIONS SUR LE PANIER ──
 window.ajouterAuPanier = function(produitId, nom, prix, image, commerceId, nomBoutique, logoBoutique) {

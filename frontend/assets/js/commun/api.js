@@ -44,6 +44,17 @@ async function apiFetch(endpoint, options = {}) {
  * Déconnexion globale de l'utilisateur et redirection vers l'interface initiale index.html
  */
 function seDeconnecter() {
+  // ── NETTOYAGE DU PANIER AVANT DÉCONNEXION ──
+  // On doit supprimer la clé panier AVANT de supprimer addugo_user
+  // car la clé contient l'ID utilisateur.
+  try {
+    const user = JSON.parse(localStorage.getItem('addugo_user') || 'null');
+    const userId = user?.id || user?.utilisateur_id || 'guest';
+    localStorage.removeItem(`addugo_panier_${userId}`);
+    // Nettoyage de l'ancienne clé générique (compatibilité ascendante)
+    localStorage.removeItem('addugo_panier');
+  } catch(e) { /* silencieux */ }
+
   localStorage.removeItem('addugo_token');
   localStorage.removeItem('addugo_user');
   localStorage.removeItem('addugo_commerce_id');
