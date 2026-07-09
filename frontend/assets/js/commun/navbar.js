@@ -209,52 +209,78 @@ async function initialiserNavbar() {
     // ── HARMONISATION UNIFIÉE DU MENU DÉROULANT PROFIL ──
     const dropdownMenu = document.querySelector('.dropdown-menu-container');
     if (dropdownMenu) {
-      const isCommercePage = window.location.pathname.includes('/commerce/');
-      const isLivreurPage = window.location.pathname.includes('/livreur/');
-      const isClientPage = window.location.pathname.includes('/client/');
+      const currentPath = window.location.pathname;
 
-      let basePath = '';
-      if (isCommercePage || isLivreurPage || isClientPage) {
-        basePath = '../';
+      // Détermine le préfixe relatif selon l'emplacement de la page courante
+      let prefix = '';
+      if (currentPath.includes('/espace-client/') || currentPath.includes('/client/')) {
+        prefix = '../espace-client/';
+        // Les chemins vers d'autres espaces depuis espace-client
+      } else if (currentPath.includes('/ma-boutique/') || currentPath.includes('/commerce/')) {
+        prefix = '../';
+      } else if (currentPath.includes('/espace-livreur/') || currentPath.includes('/livreur/')) {
+        prefix = '../';
+      } else if (currentPath.includes('/espace-admin/') || currentPath.includes('/admin/')) {
+        prefix = '../';
+      } else {
+        // Pages dans /mes-shoppings/, /accueil/, ou racine frontend
+        prefix = '../';
       }
 
-      const isProfilPage = window.location.pathname.endsWith('profil.html');
-      const isHomePage = window.location.pathname.endsWith('home.html');
-      const isClientDash = window.location.pathname.endsWith('client/dashboard.html');
-      const isLivreurDash = window.location.pathname.endsWith('livreur/dashboard.html');
-      const isCommerceDash = window.location.pathname.endsWith('commerce/produits.html');
+      // Chemins vers chaque espace
+      const pathClient  = prefix + 'espace-client/dashboard.html';
+      const pathLivreur = prefix + 'espace-livreur/dashboard.html';
+      const pathBoutique = prefix + 'ma-boutique/produits.html';
+      const pathAdmin   = prefix + 'espace-admin/dashboard.html';
+      const pathProfil  = prefix + 'espace-client/profil.html';
+      const pathHome    = prefix + 'mes-shoppings/home.html';
+
+      // Si déjà dans espace-client, les liens internes sont directs
+      const isEspaceClient = currentPath.includes('/espace-client/') || currentPath.includes('/client/');
+      const finalPathClient  = isEspaceClient ? 'dashboard.html' : pathClient;
+      const finalPathProfil  = isEspaceClient ? 'profil.html'    : pathProfil;
+      const finalPathHome    = currentPath.includes('/mes-shoppings/') ? 'home.html' : pathHome;
+
+      const isProfilPage  = currentPath.endsWith('profil.html');
+      const isHomePage    = currentPath.endsWith('home.html');
+      const isClientDash  = currentPath.includes('espace-client/dashboard') || currentPath.includes('client/dashboard');
+      const isLivreurDash = currentPath.includes('espace-livreur/dashboard') || currentPath.includes('livreur/dashboard');
+      const isBoutiqueDash = currentPath.includes('ma-boutique/') || currentPath.includes('commerce/');
 
       let menuHTML = `
-        <a href="${basePath}client/profil.html" class="sidebar-lien ${isProfilPage ? 'actif' : ''}" style="margin-top:6px;">
+        <a href="${finalPathProfil}" class="sidebar-lien ${isProfilPage ? 'actif' : ''}" style="margin-top:6px;">
           <i class="fas fa-user" ${isProfilPage ? 'style="color:var(--orange);"' : ''}></i> Mon Profil
         </a>
-        <a href="${basePath}home.html" class="sidebar-lien ${isHomePage ? 'actif' : ''}">
+        <a href="${finalPathHome}" class="sidebar-lien ${isHomePage ? 'actif' : ''}">
           <i class="fas fa-home"></i> Home
         </a>
-        <a href="${basePath}client/dashboard.html" class="sidebar-lien ${isClientDash ? 'actif' : ''}">
+        <a href="${finalPathClient}" class="sidebar-lien ${isClientDash ? 'actif' : ''}">
           <i class="fas fa-user-circle"></i> Mon Espace Client
         </a>
       `;
 
-      if (roles.includes('livreur') || isLivreurPage) {
+      if (roles.includes('livreur')) {
+        const finalPathLivreur = currentPath.includes('/espace-livreur/') || currentPath.includes('/livreur/') ? 'dashboard.html' : pathLivreur;
         menuHTML += `
-          <a href="${basePath}livreur/dashboard.html" class="sidebar-lien ${isLivreurDash ? 'actif' : ''}">
+          <a href="${finalPathLivreur}" class="sidebar-lien ${isLivreurDash ? 'actif' : ''}">
             <i class="fas fa-motorcycle"></i> Mon Espace Livreur
           </a>
         `;
       }
 
-      if (roles.includes('commerce') || isCommercePage) {
+      if (roles.includes('commerce')) {
+        const finalPathBoutique = currentPath.includes('/ma-boutique/') || currentPath.includes('/commerce/') ? 'produits.html' : pathBoutique;
         menuHTML += `
-          <a href="${basePath}commerce/produits.html" class="sidebar-lien ${isCommerceDash ? 'actif' : ''}">
+          <a href="${finalPathBoutique}" class="sidebar-lien ${isBoutiqueDash ? 'actif' : ''}">
             <i class="fas fa-store"></i> Ma Boutique
           </a>
         `;
       }
 
       if (roles.includes('admin')) {
+        const finalPathAdmin = currentPath.includes('/espace-admin/') || currentPath.includes('/admin/') ? 'dashboard.html' : pathAdmin;
         menuHTML += `
-          <a href="${basePath}admin/dashboard.html" class="sidebar-lien">
+          <a href="${finalPathAdmin}" class="sidebar-lien">
             <i class="fas fa-shield-alt"></i> Espace Admin
           </a>
         `;

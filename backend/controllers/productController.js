@@ -179,10 +179,16 @@ exports.voirProduit = async (req, res) => {
       `SELECT p.*, c.nom as categorie_nom,
               com.nom as commerce_nom,
               com.adresse as commerce_adresse,
-              com.telephone as commerce_telephone
+              com.telephone as commerce_telephone,
+              com.logo as commerce_logo,
+              com.utilisateur_id as commerce_utilisateur_id,
+              u.photo_profil as commercant_photo,
+              u.nom as commercant_nom,
+              u.prenom as commercant_prenom
        FROM produits p
-       JOIN categories c ON p.categorie_id = c.id
-       JOIN commerces com ON p.commerce_id = com.id
+       LEFT JOIN categories c ON p.categorie_id = c.id
+       LEFT JOIN commerces com ON p.commerce_id = com.id
+       LEFT JOIN utilisateurs u ON com.utilisateur_id = u.id
        WHERE p.id = ?`,
       [id]
     );
