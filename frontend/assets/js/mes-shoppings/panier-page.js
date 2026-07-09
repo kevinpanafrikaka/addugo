@@ -2,108 +2,173 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPanierPage();
 });
 
+window.addEventListener('panier_updated', () => {
+  renderPanierPage();
+});
+
 function renderPanierPage() {
   const panierBody = document.getElementById('panier-page-body');
-  const panierBadge = document.getElementById('panier-page-badge');
+  const titreAccueil = document.getElementById('panier-titre-accueil');
+  const sousTitre = document.getElementById('panier-sous-titre');
   if (!panierBody) return;
-
-  const panier = getPanier(); // Provided by panier.js
-  let totalArticles = 0;
-  panier.forEach(i => totalArticles += i.quantite);
-
-  if (panierBadge) {
-    panierBadge.textContent = `${totalArticles} article${totalArticles > 1 ? 's' : ''}`;
-  }
 
   const user = JSON.parse(localStorage.getItem('addugo_user') || 'null');
   const prenom = user && user.prenom ? user.prenom : 'Cher Client';
+  const panier = getPanier();
 
-  let html = `
-    <div style="margin-bottom: 30px;">
-      <h2 style="font-family: var(--police-titre); color: var(--texte); font-size: 1.4rem; margin: 0;">
-        Salut <span style="color: var(--orange);">${prenom}</span>, vous avez <span style="font-weight: 800;">${totalArticles} produit${totalArticles > 1 ? 's' : ''}</span> ajouté${totalArticles > 1 ? 's' : ''} dans votre panier.
-      </h2>
-    </div>
-  `;
+  let totalArticles = 0;
+  panier.forEach(i => totalArticles += i.quantite);
 
+  // Mise à jour du titre
+  if (titreAccueil) {
+    titreAccueil.innerHTML = `Salut <span style="color: var(--orange);">${prenom}</span>, votre panier`;
+  }
+  if (sousTitre) {
+    if (totalArticles === 0) {
+      sousTitre.textContent = 'Vous n\'avez pas encore d\'article dans votre panier.';
+    } else {
+      sousTitre.textContent = `Vous avez ${totalArticles} produit${totalArticles > 1 ? 's' : ''} ajouté${totalArticles > 1 ? 's' : ''} dans votre panier.`;
+    }
+  }
+
+  // === ÉTAT VIDE ===
   if (panier.length === 0) {
-    html += `
-      <div style="text-align: center; padding: 100px 20px; color: var(--texte-gris); background: var(--blanc); border-radius: var(--rayon-lg); box-shadow: var(--ombre-sm); border: 1px solid var(--bordure);">
-        <div style="width: 100px; height: 100px; background: var(--fond-tres-clair); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px auto;">
-          <i class="fas fa-shopping-basket" style="font-size: 3.5rem; color: #cbd5e1;"></i>
+    panierBody.innerHTML = `
+      <div style="background: var(--blanc); border: 1px solid var(--bordure); border-radius: 18px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); padding: 80px 30px; text-align: center;">
+        <div style="width: 90px; height: 90px; background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 2px solid var(--bordure); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto;">
+          <i class="fas fa-shopping-basket" style="font-size: 2.8rem; color: #cbd5e1;"></i>
         </div>
-        <h3 style="font-family: var(--police-titre); font-size: 1.5rem; font-weight: 700; margin: 0 0 10px 0; color: var(--texte);">Votre panier est tristement vide</h3>
-        <p style="margin: 0 0 30px 0; font-size: 1.05rem;">Découvrez nos produits et trouvez votre bonheur !</p>
-        <button class="btn btn-orange" style="padding: 14px 32px; border-radius: var(--rayon-md); font-weight: 700; font-size: 1.1rem; cursor: pointer; border: none; box-shadow: 0 4px 6px rgba(249, 115, 22, 0.2);" onclick="window.location.href='home.html'">
-          <i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Retour au shopping
-        </button>
+        <h3 style="font-family: var(--police-titre); font-size: 1.4rem; font-weight: 800; margin: 0 0 10px 0; color: var(--texte);">Votre panier est vide</h3>
+        <p style="margin: 0 0 30px 0; font-size: 0.95rem; color: var(--texte-gris); max-width: 360px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+          Vous n'avez pas encore sélectionné d'articles. Explorez nos boutiques et ajoutez vos coups de cœur !
+        </p>
+        <a href="home.html" style="display: inline-flex; align-items: center; gap: 10px; padding: 13px 28px; background: var(--orange); color: white; border-radius: 12px; font-weight: 700; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 14px rgba(255,107,0,0.28); transition: opacity 0.2s ease;">
+          <i class="fas fa-arrow-left"></i> Découvrir les produits
+        </a>
       </div>
     `;
-    panierBody.innerHTML = html;
     return;
   }
 
+  // === GROUPER LES ARTICLES PAR BOUTIQUE ===
   const parCommerce = {};
+  let totalGlobal = 0;
   panier.forEach(item => {
     if (!parCommerce[item.commerce_id]) {
       parCommerce[item.commerce_id] = {
-        nom_boutique: item.nom_boutique,
+        nom_boutique: item.nom_boutique || 'Boutique',
         articles: [],
         total: 0
       };
     }
     parCommerce[item.commerce_id].articles.push(item);
-    parCommerce[item.commerce_id].total += (item.prix * item.quantite);
+    const sousTotal = item.prix * item.quantite;
+    parCommerce[item.commerce_id].total += sousTotal;
+    totalGlobal += sousTotal;
   });
+
+  let html = '';
+  const nbBoutiques = Object.keys(parCommerce).length;
 
   for (const commerceId in parCommerce) {
     const boutique = parCommerce[commerceId];
-    
+    const nbItems = boutique.articles.reduce((s, a) => s + a.quantite, 0);
+
     html += `
-      <div style="background: white; border-radius: 12px; margin-bottom: 25px; padding: 20px; box-shadow: var(--ombre-sm);">
-        <h3 style="margin: 0 0 20px 0; font-family: var(--police-titre); color: var(--texte); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--bordure); padding-bottom: 12px;">
-          <i class="fas fa-store" style="color: var(--orange); font-size: 1.2rem;"></i> ${boutique.nom_boutique}
-        </h3>
-        <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div class="panier-boutique-card">
+
+        <!-- EN-TÊTE DE LA CARTE BOUTIQUE -->
+        <div class="panier-boutique-header">
+          <div class="panier-boutique-icon">
+            <i class="fas fa-store" style="color: white; font-size: 1.1rem;"></i>
+          </div>
+          <div style="flex: 1;">
+            <div style="font-family: var(--police-titre); font-weight: 800; font-size: 1.05rem; color: var(--texte);">${boutique.nom_boutique}</div>
+            <div style="font-size: 0.82rem; color: var(--texte-gris); margin-top: 2px;">${nbItems} article${nbItems > 1 ? 's' : ''}</div>
+          </div>
+          <div style="font-size: 1.2rem; font-weight: 800; color: var(--orange);">
+            ${boutique.total.toLocaleString('fr-FR')} GNF
+          </div>
+        </div>
+
+        <!-- ARTICLES -->
+        <div>
     `;
 
     boutique.articles.forEach(item => {
+      const sousTotal = item.prix * item.quantite;
       html += `
-        <div style="display: flex; gap: 15px; align-items: center; padding: 10px 0; border-bottom: 1px dashed #eee;">
-          <img src="${item.image}" alt="${item.nom}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);" onerror="this.src='../../images/AdduGo_Logo.png'">
-          
+        <div class="panier-article-row">
+
+          <!-- IMAGE -->
+          <img class="panier-article-img"
+               src="${item.image || '../../medias/AdduGo_Logo.png'}"
+               alt="${item.nom}"
+               onerror="this.src='../../medias/AdduGo_Logo.png'" />
+
+          <!-- INFOS -->
           <div style="flex: 1; min-width: 0;">
-            <div style="font-size: 1.05rem; font-weight: 600; margin-bottom: 5px;">${item.nom}</div>
-            <div style="font-size: 1.1rem; color: var(--orange); font-weight: bold;">${item.prix.toLocaleString('fr-FR')} GNF</div>
-          </div>
-          
-          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
-            <div style="display: flex; align-items: center; background: #f5f5f5; border-radius: 8px; padding: 4px;">
-              <button onclick="modifierQuantitePage(${item.produit_id}, -1)" style="width: 30px; height: 30px; border: none; background: white; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><i class="fas fa-minus" style="font-size: 0.8rem;"></i></button>
-              <span style="font-weight: bold; font-size: 1rem; width: 40px; text-align: center;">${item.quantite}</span>
-              <button onclick="modifierQuantitePage(${item.produit_id}, 1)" style="width: 30px; height: 30px; border: none; background: white; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><i class="fas fa-plus" style="font-size: 0.8rem;"></i></button>
+            <div class="panier-article-nom">${item.nom}</div>
+            <div class="panier-article-prix">${item.prix.toLocaleString('fr-FR')} GNF</div>
+            <div style="font-size: 0.82rem; color: var(--texte-gris); margin-top: 4px;">
+              Sous-total : <strong style="color: var(--texte);">${sousTotal.toLocaleString('fr-FR')} GNF</strong>
             </div>
-            
-            <button onclick="supprimerDuPanierPage(${item.produit_id})" style="border: none; background: none; color: #ef4444; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; gap: 5px;">
-              <i class="fas fa-trash-alt"></i> Supprimer
+          </div>
+
+          <!-- CONTRÔLE QUANTITÉ + SUPPRESSION -->
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0;">
+            <div class="panier-quantite-ctrl">
+              <button onclick="modifierQuantitePage(${item.produit_id}, -1)" title="Réduire la quantité">
+                <i class="fas fa-minus" style="font-size: 0.75rem;"></i>
+              </button>
+              <span>${item.quantite}</span>
+              <button onclick="modifierQuantitePage(${item.produit_id}, 1)" title="Augmenter la quantité">
+                <i class="fas fa-plus" style="font-size: 0.75rem;"></i>
+              </button>
+            </div>
+            <button class="btn-supprimer-article" onclick="supprimerDuPanierPage(${item.produit_id})" title="Retirer l'article">
+              <i class="fas fa-trash-alt"></i> Retirer
             </button>
           </div>
+
         </div>
       `;
     });
 
     html += `
         </div>
-        
-        <div style="margin-top: 20px; background: var(--fond-tres-clair); padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-weight: 600; color: var(--texte-gris); font-size: 1.1rem;">Sous-total de la boutique</span>
-          <span style="font-weight: 800; font-size: 1.4rem; color: var(--texte);">${boutique.total.toLocaleString('fr-FR')} GNF</span>
-        </div>
-        
-        <div style="text-align: right; margin-top: 15px;">
-          <button class="btn" onclick="validerCommandeBoutique(${commerceId}, '${boutique.nom_boutique.replace(/'/g, "\\'")}')" style="padding: 14px 28px; background: #1A1A2E; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1.05rem;">
-            Commander ces articles
+
+        <!-- FOOTER CARTE BOUTIQUE -->
+        <div class="panier-boutique-footer">
+          <div>
+            <div style="font-size: 0.82rem; color: var(--texte-gris); margin-bottom: 3px;">Sous-total de la boutique</div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--texte);">${boutique.total.toLocaleString('fr-FR')} GNF</div>
+          </div>
+          <button class="btn-commander-boutique" onclick="validerCommandeBoutique(${commerceId}, '${boutique.nom_boutique.replace(/'/g, "\\'")}')">
+            <i class="fas fa-check-circle"></i>
+            Commander chez ${boutique.nom_boutique}
           </button>
+        </div>
+
+      </div>
+    `;
+  }
+
+  // === TOTAL GLOBAL (si plusieurs boutiques) ===
+  if (nbBoutiques > 1) {
+    html += `
+      <div class="panier-total-global-card">
+        <div>
+          <div style="font-size: 0.85rem; color: var(--texte-gris); margin-bottom: 4px;">
+            <i class="fas fa-shopping-cart" style="color: var(--orange); margin-right: 5px;"></i>
+            Total de toutes vos boutiques (${nbBoutiques} boutiques · ${totalArticles} article${totalArticles > 1 ? 's' : ''})
+          </div>
+          <div style="font-size: 1.7rem; font-weight: 900; color: var(--texte); font-family: var(--police-titre);">
+            ${totalGlobal.toLocaleString('fr-FR')} <span style="font-size: 1rem; font-weight: 600;">GNF</span>
+          </div>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--texte-gris); max-width: 260px; line-height: 1.5; text-align: right;">
+          Chaque boutique est commandée séparément. Cliquez sur le bouton de chaque boutique pour valider.
         </div>
       </div>
     `;
@@ -112,22 +177,17 @@ function renderPanierPage() {
   panierBody.innerHTML = html;
 }
 
-// Wrappers pour re-rendre la page au lieu de re-rendre la sidebar
+// === WRAPPERS ===
 window.modifierQuantitePage = function(produitId, delta) {
   if (typeof window.modifierQuantitePanier === 'function') {
     window.modifierQuantitePanier(produitId, delta);
-    renderPanierPage(); // Re-render the page body after update
   }
+  renderPanierPage();
 };
 
 window.supprimerDuPanierPage = function(produitId) {
   if (typeof window.supprimerDuPanier === 'function') {
     window.supprimerDuPanier(produitId);
-    renderPanierPage();
   }
-};
-
-// Redéfinition globale au cas où on recharge complètement après commande
-window.addEventListener('panier_updated', () => {
   renderPanierPage();
-});
+};

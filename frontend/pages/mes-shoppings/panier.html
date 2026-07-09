@@ -2,67 +2,308 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AdduGo — Mon Panier</title>
-  
   <link rel="stylesheet" href="../../assets/css/commun/style.css" />
   <link rel="stylesheet" href="../../assets/css/commun/dashboard.css" />
   <link rel="stylesheet" href="../../assets/css/commun/navbar.css" />
   <link rel="stylesheet" href="../../assets/css/mes-shoppings/home.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="icon" type="image/png" href="../../favicon.png?v=1" />
+  <style>
+    .panier-boutique-card {
+      background: var(--blanc);
+      border: 1px solid var(--bordure);
+      border-radius: 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+      overflow: hidden;
+      transition: box-shadow 0.2s ease;
+    }
+    .panier-boutique-card:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.07);
+    }
+    .panier-boutique-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--bordure);
+      background: var(--fond-tres-clair);
+    }
+    .panier-boutique-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--orange), #ff8c00);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .panier-article-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--bordure);
+      transition: background 0.15s ease;
+    }
+    .panier-article-row:last-of-type {
+      border-bottom: none;
+    }
+    .panier-article-row:hover {
+      background: #fafbff;
+    }
+    .panier-article-img {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 12px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .panier-article-nom {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--texte);
+      margin-bottom: 5px;
+      font-family: var(--police-titre);
+    }
+    .panier-article-prix {
+      font-size: 1.15rem;
+      color: var(--orange);
+      font-weight: 800;
+    }
+    .panier-quantite-ctrl {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--fond-tres-clair);
+      border: 1px solid var(--bordure);
+      border-radius: 10px;
+      padding: 4px 6px;
+    }
+    .panier-quantite-ctrl button {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background: var(--blanc);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--texte);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      transition: all 0.15s ease;
+      font-weight: 700;
+    }
+    .panier-quantite-ctrl button:hover {
+      background: var(--orange);
+      color: white;
+    }
+    .panier-quantite-ctrl span {
+      min-width: 32px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--texte);
+    }
+    .btn-supprimer-article {
+      border: none;
+      background: none;
+      color: #ef4444;
+      cursor: pointer;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.15s ease;
+    }
+    .btn-supprimer-article:hover {
+      background: #fef2f2;
+    }
+    .panier-boutique-footer {
+      padding: 16px 22px;
+      background: var(--fond-tres-clair);
+      border-top: 1px solid var(--bordure);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-commander-boutique {
+      padding: 12px 26px;
+      background: #1A1A2E;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .btn-commander-boutique:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+    .panier-total-global-card {
+      position: sticky;
+      bottom: 20px;
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: 16px;
+      padding: 18px 22px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .bienvenue-card {
+      background: var(--blanc);
+      border: 1px solid var(--bordure);
+      border-radius: 18px;
+      padding: 20px 24px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+    }
+    @media (max-width: 600px) {
+      .panier-article-row { flex-wrap: wrap; }
+      .panier-article-img { width: 70px; height: 70px; }
+      .panier-boutique-footer { flex-direction: column; align-items: flex-start; }
+      .btn-commander-boutique { width: 100%; justify-content: center; }
+    }
+  </style>
 </head>
-<body class="dashboard-body" style="padding-top: 80px; padding-bottom: 20px;">
+<body class="dashboard-body">
 
-  <!-- NAVBAR -->
-  <header class="navbar-home" style="padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; box-sizing: border-box;">
-    
-    <div class="navbar-home-gauche" style="display: flex; align-items: center; gap: 12px;">
-      <h1 class="logo" style="margin: 0; font-size: 1.5rem; text-decoration: none;">Addu<span style="color:var(--orange);">Go</span></h1>
-      <span style="font-size: 1.2rem; color: #ccc;">|</span>
-      <span style="font-size: 1.1rem; font-weight: 700; font-family: var(--police-titre);">
-        <span style="color: var(--noir, #1A1A2E);">Mon</span> <span style="color: var(--orange);">Panier</span>
-      </span>
-    </div>
-
-    <!-- Icônes Droite -->
-    <div class="navbar-home-droite" style="display: flex; align-items: center; gap: 15px;">
-      
-      <a href="home.html" title="Accueil" class="nav-icone" style="text-decoration: none; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--fond-tres-clair);">
-        <!-- Remplacement par l'icône fa-house-user qui correspond à l'image envoyée -->
-        <i class="fas fa-house-user" style="color: #00897B; font-size: 1.2rem;"></i>
-      </a>
-
-      <a href="../espace-client/messages.html" title="Mes Messages" class="nav-icone" style="text-decoration: none; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--fond-tres-clair);">
-        <i class="fas fa-envelope" style="color: #3B82F6; font-size: 1.1rem;"></i>
-      </a>
-      
-      <a href="../espace-client/dashboard.html" title="Mon Espace Client" class="nav-icone" style="text-decoration: none; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--fond-tres-clair);">
-        <i class="fas fa-user-circle" style="color: #8B4513; font-size: 1.2rem;"></i>
-      </a>
-
-      <!-- Le menu Profil sera géré par navbar.js -->
-      <div id="profil-wrapper" style="position: relative;">
-        <!-- Injection dynamique navbar.js -->
+  <!-- NAVBAR IDENTIQUE À HOME.HTML -->
+  <nav class="navbar-home">
+    <div class="navbar-home-gauche">
+      <button class="btn-mobile-menu" id="btn-mobile-menu-home" style="padding: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 2px solid var(--orange);">
+        <img src="../../medias/default-avatar.png" alt="Profil" id="mobile-top-avatar" style="width: 100%; height: 100%; object-fit: cover;" />
+      </button>
+      <div style="display: flex; align-items: center; gap: 4px;">
+        <a href="home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
+          <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" style="height: 38px; width: auto; object-fit: contain;" />
+        </a>
+        <div style="height: 22px; width: 2px; background-color: var(--bordure-dark, #d1d5db); border-radius: 2px; margin: 0 6px; flex-shrink: 0;"></div>
+        <div class="navbar-titre-page" style="display: flex; align-items: center; gap: 6px; font-size: 0.95rem; font-weight: 800;">
+          <span>
+            <span style="color: var(--noir, #1A1A2E);">Mon </span><span style="color: var(--orange);">Panier</span>
+          </span>
+          <i class="fas fa-shopping-cart" style="color: var(--orange); font-size: 1.1rem;"></i>
+        </div>
       </div>
     </div>
-  </header>
 
-  <!-- CONTENU PRINCIPAL -->
-  <main class="container" style="max-width: 900px; margin: 20px auto; padding: 0 15px;">
+    <div class="navbar-home-droite">
 
-    <div id="panier-page-body" style="min-height: 400px;">
-      <div style="text-align: center; padding: 80px 20px; color: var(--texte-gris);">
-        <i class="fas fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 15px; color: #ddd;"></i>
-        <p style="font-weight: bold;">Chargement du panier...</p>
+      <!-- ICONE ACCUEIL -->
+      <a href="home.html" class="nav-icone" title="Accueil" style="text-decoration: none;">
+        <i class="fas fa-house-user" style="color: #00897B;"></i>
+      </a>
+
+      <!-- ICONE MESSAGES -->
+      <div class="icon-wrapper" style="position: relative;" title="Messages">
+        <div class="nav-icone" id="btn-messages-toggle" style="cursor: pointer;">
+          <i class="fas fa-envelope" style="color: #3B82F6;"></i>
+          <span class="nav-badge" id="badge-messages-home" style="display: none;">0</span>
+        </div>
+        <div id="messages-dropdown" class="categories-dropdown" style="width: 350px; right: 0; left: auto; transform-origin: top right; padding: 0; overflow: hidden;">
+          <div style="padding: 16px; border-bottom: 1px solid var(--bordure); display: flex; justify-content: space-between; align-items: center; background: var(--blanc);">
+            <h4 style="font-size: 1.05rem; color: var(--texte); font-family: var(--police-titre); margin: 0; font-weight: 700;">Messages</h4>
+            <span id="btn-tout-marquer-lu" style="font-size: 0.8rem; color: var(--orange); font-weight: 600; cursor: pointer;">Tout marquer lu</span>
+          </div>
+          <div id="messages-dropdown-liste" style="max-height: 320px; overflow-y: auto; background: var(--blanc);">
+            <div style="padding: 20px; text-align: center; color: var(--texte-clair); font-size: 0.9rem;">Chargement...</div>
+          </div>
+          <div style="padding: 14px; text-align: center; border-top: 1px solid var(--bordure); background: var(--fond-tres-clair);">
+            <a href="../espace-client/messages.html" style="font-size: 0.9rem; color: var(--orange); font-weight: 700; text-decoration: none;">Ouvrir la messagerie</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ICONE ESPACE CLIENT -->
+      <a href="../espace-client/dashboard.html" class="nav-icone" title="Mon Espace Client" style="text-decoration: none;">
+        <i class="fas fa-user-circle" style="color: #8B4513;"></i>
+      </a>
+
+      <!-- PHOTO DE PROFIL + DROPDOWN -->
+      <div class="profil-wrapper" id="profil-wrapper">
+        <div class="navbar-profil-btn" id="btn-profil-toggle">
+          <img src="../../medias/default-avatar.png" alt="Profil" id="navbar-top-avatar" />
+        </div>
+        <div class="profil-dropdown" id="profil-dropdown">
+          <div class="dropdown-header">
+            <img src="../../medias/default-avatar.png" alt="Profil" id="dropdown-avatar" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+            <div class="dropdown-infos">
+              <div class="dropdown-nom" id="dropdown-nom">Chargement...</div>
+              <div class="dropdown-role" id="dropdown-roles-badges">Client</div>
+            </div>
+          </div>
+          <div class="dropdown-menu-container">
+            <a href="../espace-client/dashboard.html" class="sidebar-lien" style="margin-top: 8px;">
+              <i class="fas fa-user-circle"></i> Mon Espace Client
+            </a>
+            <div id="conteneur-mes-espaces"></div>
+            <div style="border-top: 1px solid var(--bordure); margin-top: 8px; padding-top: 8px;">
+              <a href="#" class="sidebar-lien btn-deconnexion" id="btn-logout" style="color: #dc3545;">
+                <i class="fas fa-sign-out-alt"></i> Se déconnecter
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    
-  </main>
+  </nav>
+
+  <!-- LAYOUT IDENTIQUE À HOME -->
+  <div class="home-layout">
+    <main class="dashboard-contenu">
+
+      <!-- CARTE BIENVENUE / EN-TÊTE -->
+      <div class="bienvenue-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h1 id="panier-titre-accueil" style="font-size: 1.35rem; color: var(--texte); font-family: var(--police-titre); font-weight: 800; margin: 0 0 4px 0; line-height: 1.2;">
+              Mon Panier
+            </h1>
+            <p id="panier-sous-titre" style="color: var(--texte-gris); font-size: 0.88rem; margin: 0; line-height: 1.4;">
+              Chargement de vos articles...
+            </p>
+          </div>
+          <a href="home.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; background: var(--fond-tres-clair); border: 1px solid var(--bordure); border-radius: 12px; font-size: 0.86rem; font-weight: 700; color: var(--texte); text-decoration: none; transition: background 0.15s ease;">
+            <i class="fas fa-arrow-left" style="color: var(--orange);"></i> Continuer mes achats
+          </a>
+        </div>
+      </div>
+
+      <!-- CONTENU DU PANIER (injecté par JS) -->
+      <div id="panier-page-body">
+        <!-- Skeleton de chargement -->
+        <div class="skeleton" style="height: 160px; border-radius: 18px; margin-bottom: 22px;"></div>
+        <div class="skeleton" style="height: 160px; border-radius: 18px;"></div>
+      </div>
+
+    </main>
+  </div>
 
   <!-- SCRIPTS -->
   <script src="../../assets/js/commun/api.js"></script>
-  <script src="../../assets/js/commun/navbar.js"></script>
   <script src="../../assets/js/commun/panier.js"></script>
+  <script src="../../assets/js/commun/navbar.js"></script>
   <script src="../../assets/js/mes-shoppings/panier-page.js"></script>
 
 </body>
