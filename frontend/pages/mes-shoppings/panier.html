@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo — Mon Panier</title>
+  
+  <link rel="stylesheet" href="../../assets/css/commun/global.css" />
+  <link rel="stylesheet" href="../../assets/css/commun/navbar.css" />
+  <link rel="stylesheet" href="../../assets/css/mes-shoppings/shopping.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body style="background: var(--fond); padding-top: 80px; padding-bottom: 20px;">
+
+  <!-- NAVBAR -->
+  <header class="navbar-home">
+    <div class="navbar-home-gauche">
+      <a href="home.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-arrow-left" style="font-size: 1.2rem;"></i>
+        <h1 class="logo" style="margin: 0; font-size: 1.5rem;">Addu<span style="color:var(--orange);">Go</span></h1>
+      </a>
+    </div>
+
+    <!-- Icônes Droite -->
+    <div class="navbar-home-droite">
+      <a href="../espace-client/messages.html" title="Mes Messages" style="text-decoration: none; display: flex; align-items: center; margin-right: 14px;">
+        <i class="fas fa-envelope" style="color: #3B82F6; font-size: 1.3rem;"></i>
+      </a>
+
+      <!-- Le menu Profil sera géré par navbar.js -->
+      <div id="profil-wrapper" style="position: relative;">
+        <!-- Injection dynamique navbar.js -->
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="container" style="max-width: 900px; margin: 20px auto; padding: 0 15px;">
+    
+    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+      <i class="fas fa-shopping-cart" style="font-size: 2rem; color: var(--texte);"></i>
+      <h2 style="margin: 0; font-family: var(--police-titre); color: var(--texte);">Mon Panier</h2>
+      <span id="panier-page-badge" style="background: var(--orange); color: white; padding: 4px 10px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; margin-left: auto;">
+        0 article
+      </span>
+    </div>
+
+    <div id="panier-page-body" style="min-height: 400px;">
+      <div style="text-align: center; padding: 80px 20px; color: var(--texte-gris);">
+        <i class="fas fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 15px; color: #ddd;"></i>
+        <p style="font-weight: bold;">Chargement du panier...</p>
+      </div>
+    </div>
+    
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="../../assets/js/commun/api.js"></script>
+  <script src="../../assets/js/commun/navbar.js"></script>
+  <script src="../../assets/js/commun/panier.js"></script>
+  <script src="../../assets/js/mes-shoppings/panier-page.js"></script>
+
+</body>
+</html>

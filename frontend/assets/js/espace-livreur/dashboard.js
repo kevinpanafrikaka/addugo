@@ -118,7 +118,7 @@ async function chargerCommandesDisponibles() {
         </div>
         <div style="display: flex; gap: 10px; margin-top: 4px;">
           ${c.commerce_utilisateur_id ? `
-          <a href="../client/messages.html?user=${c.commerce_utilisateur_id}"
+          <a href="../espace-client/messages.html?user=${c.commerce_utilisateur_id}"
              class="btn btn-contour-orange btn-sm"
              style="border-radius:10px; font-weight:700; flex:1; padding:10px; display:flex; align-items:center; justify-content:center; gap:6px; text-decoration:none;">
             <i class="fas fa-comment-dots"></i> Contacter

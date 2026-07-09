@@ -86,43 +86,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupSmartDropdown('btn-aide-toggle', 'aide-dropdown');
   setupSmartDropdown('btn-messages-toggle', 'messages-dropdown');
 
-  // ==== GESTION DU PANIER (SIDEBAR) ====
+  // ==== GESTION DU PANIER (REDIRECTION) ====
   const btnPanierToggle = document.getElementById('btn-panier-toggle');
-  const btnFermerPanier = document.getElementById('btn-fermer-panier');
-  const panierSidebar = document.getElementById('panier-sidebar');
-  const panierOverlay = document.getElementById('panier-overlay');
-  const navbarTitrePageSpan = document.querySelector('.navbar-titre-page span');
-  const originalTitreHTML = navbarTitrePageSpan ? navbarTitrePageSpan.innerHTML : '';
-
-  window.ouvrirPanier = function() {
-    if (panierSidebar) panierSidebar.classList.add('ouvert');
-    if (panierOverlay) panierOverlay.classList.add('ouvert');
-    document.body.style.overflow = 'hidden';
-    if (navbarTitrePageSpan) {
-      navbarTitrePageSpan.innerHTML = '<span style="color: var(--noir, #1A1A2E);">Mon </span><span style="color: var(--orange);">Panier</span>';
-    }
-  };
-
-  window.fermerPanier = function() {
-    if (panierSidebar) panierSidebar.classList.remove('ouvert');
-    if (panierOverlay) panierOverlay.classList.remove('ouvert');
-    document.body.style.overflow = '';
-    if (navbarTitrePageSpan && originalTitreHTML) {
-      navbarTitrePageSpan.innerHTML = originalTitreHTML;
-    }
-  };
-
-  if (btnPanierToggle && panierSidebar && panierOverlay) {
+  
+  if (btnPanierToggle) {
     btnPanierToggle.addEventListener('click', (e) => {
       e.preventDefault();
-      window.ouvrirPanier();
+      // On redirige vers la page panier.html
+      // Le chemin relatif dépend de l'endroit où on se trouve.
+      // On va vérifier l'URL courante pour adapter le chemin.
+      const currentPath = window.location.pathname;
+      if (currentPath.includes('/pages/mes-shoppings/')) {
+        window.location.href = 'panier.html';
+      } else if (currentPath.includes('/pages/espace-client/') || currentPath.includes('/pages/espace-livreur/')) {
+        window.location.href = '../mes-shoppings/panier.html';
+      } else {
+        window.location.href = 'pages/mes-shoppings/panier.html';
+      }
     });
-
-    if (btnFermerPanier) {
-      btnFermerPanier.addEventListener('click', () => window.fermerPanier());
-    }
-
-    panierOverlay.addEventListener('click', () => window.fermerPanier());
   }
 
   // ==== GESTION DE LA RECHERCHE ====

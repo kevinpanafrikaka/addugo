@@ -59,17 +59,8 @@ window.ajouterAuPanier = function(produitId, nom, prix, image, commerceId, nomBo
   document.body.appendChild(toast);
   setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
   
-  // Ouvrir le tiroir panier
-  if (typeof window.ouvrirPanier === 'function') {
-    window.ouvrirPanier();
-  } else {
-    const sidebar = document.getElementById('panier-sidebar');
-    const overlay = document.getElementById('panier-overlay');
-    if(sidebar && overlay) {
-      sidebar.classList.add('ouvert');
-      overlay.classList.add('ouvert');
-    }
-  }
+  // Dispatche un événement pour les pages qui affichent le panier complet
+  window.dispatchEvent(new Event('panier_updated'));
 };
 
 window.modifierQuantitePanier = function(produitId, delta) {

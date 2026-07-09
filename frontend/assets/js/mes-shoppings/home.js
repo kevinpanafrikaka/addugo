@@ -98,7 +98,7 @@ async function chargerProduits() {
         const vendeurId = p.commerce_utilisateur_id || p.utilisateur_id || 1;
 
         html += `
-          <div class="produit-carte" style="cursor: pointer;" onclick="window.location.href='produit-details.html?id=${p.id}'">
+          <div class="produit-carte">
             <div class="produit-img-wrapper">
               <span class="produit-badge-categorie">
                 <i class="fas fa-tag" style="color:var(--orange);"></i> ${categorie}
@@ -106,13 +106,22 @@ async function chargerProduits() {
               <img src="${image}" alt="${p.nom}" class="produit-img" onerror="this.src='../../images/AdduGo_Logo.png'" />
             </div>
 
-            <div class="produit-corps">
+            <div class="produit-corps" style="padding: 12px 10px;">
               <!-- Le nom du produit est masqué ici selon la demande -->
-              <h4 class="produit-titre">${p.nom}</h4>
+              
               <div class="produit-desc" title="${p.description || ''}">${p.description || 'Aucune description fournie.'}</div>
 
-              <div class="produit-prix-ligne">
-                <div class="produit-prix">${prixFormate}</div>
+              <div class="produit-prix-ligne" style="margin-top: 10px;">
+                <div class="produit-prix" style="font-size: 1.1rem;">${prixFormate}</div>
+              </div>
+
+              <div class="produit-actions" style="margin-top: 12px; display: flex; gap: 8px; align-items: center;">
+                <button title="Contacter" style="background: #1A1A2E; border: none; border-radius: 6px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #FFFFFF; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" onclick="window.location.href='../espace-client/messages.html?user=${vendeurId}&p_nom=' + encodeURIComponent('${p.nom.replace(/'/g, "\\'")}') + '&p_prix=${p.prix}&p_img=' + encodeURIComponent('${image}')">
+                  <i class="fas fa-comment-dots" style="font-size: 1.1rem;"></i>
+                </button>
+                <button class="btn btn-orange" style="flex: 1; padding: 0; height: 34px; font-size: 0.8rem; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;" onclick="ajouterAuPanier(${p.id}, '${p.nom.replace(/'/g, "\\'")}', ${p.prix}, '${image}', ${vendeurId}, '${nomBoutique.replace(/'/g, "\\'")}')">
+                  <i class="fas fa-cart-plus"></i> Ajouter
+                </button>
               </div>
             </div>
 

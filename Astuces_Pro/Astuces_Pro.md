@@ -398,3 +398,20 @@ Les applications marketplace comme AdduGo impliquent plusieurs rôles. La clé p
 | `cloturee` | Commerçant | Clôture la commande |
 
 **Règle d'or :** Chaque transition de statut doit être **validée côté backend** (middleware d'autorisation). Par exemple, seul un livreur peut passer de `assignee` à `en_livraison`. Jamais le client ou le commerçant.
+
+---
+
+### Astuce #22 : États Vides (Empty States) et Tiroirs Latéraux (Off-Canvas) — L'Art du Panier Parfait
+*Date : 9 Juillet 2026*
+
+Dans la conception d'un site e-commerce ou d'une marketplace, l'interface du panier est l'une des plus importantes.
+Voici 3 secrets de conception (UX/UI) pour la rendre "Pro" :
+
+1. **Le Tiroir Latéral (Off-Canvas Sidebar) :** Ne force jamais l'utilisateur à quitter la page sur laquelle il se trouve pour voir son panier. L'utilisation d'un tiroir qui glisse depuis la droite permet à l'utilisateur de vérifier son panier, puis de le refermer pour **continuer ses achats** sans perdre le contexte. C'est exactement ce que nous avons fait sur AdduGo !
+
+2. **Le Regroupement par Vendeur :** Sur une marketplace, grouper les articles par boutique (avec le petit logo du vendeur) rassure le client sur la provenance des produits et facilite la compréhension des frais de livraison associés à chaque boutique.
+
+3. **L'État Vide Actif (Active Empty State) :** Quand le panier est vide, ne te contente pas d'afficher un texte triste comme "Votre panier est vide". Les pros utilisent cet espace pour **relancer l'action**. 
+   - Ajoute une belle icône grise ou pastel.
+   - Ajoute un bouton "Découvrir nos offres" ou "Retour au shopping" qui redirige vers la page principale.
+   Un état vide ne doit jamais être une impasse !

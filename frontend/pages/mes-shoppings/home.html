@@ -73,7 +73,7 @@
             <div style="padding: 20px; text-align: center; color: var(--texte-clair); font-size: 0.9rem;">Chargement...</div>
           </div>
           <div style="padding: 14px; text-align: center; border-top: 1px solid var(--bordure); background: var(--fond-tres-clair);">
-            <a href="client/messages.html" style="font-size: 0.9rem; color: var(--orange); font-weight: 700; text-decoration: none;">Ouvrir la messagerie</a>
+            <a href="../espace-client/messages.html" style="font-size: 0.9rem; color: var(--orange); font-weight: 700; text-decoration: none;">Ouvrir la messagerie</a>
           </div>
         </div>
       </div>
@@ -227,52 +227,7 @@
     </main>
   </div>
 
-  <!-- OVERLAY ET SIDEBAR DU PANIER -->
-  <div class="panier-overlay" id="panier-overlay"></div>
-  <div class="panier-sidebar" id="panier-sidebar">
-    <div class="panier-header">
-      <div class="panier-titre">
-        Mon Panier <span class="panier-badge-titre">1 article</span>
-      </div>
-      <button class="btn-fermer-panier" id="btn-fermer-panier"><i class="fas fa-times"></i></button>
-    </div>
-    
-    <div class="panier-body">
-      <!-- Exemple d'un article ajouté -->
-      <div class="panier-item">
-        <div class="panier-item-img">
-          <!-- Image placeholder -->
-          <div style="width: 100%; height: 100%; background: #eee; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #ccc;">
-            <i class="fas fa-mobile-alt" style="font-size: 2rem;"></i>
-          </div>
-        </div>
-        <div class="panier-item-infos">
-          <div>
-            <div class="panier-item-titre">Smartphone Samsung Galaxy S23 Ultra - 256Go</div>
-            <div class="panier-item-prix">10 500 000 GNF</div>
-          </div>
-          <div class="panier-item-actions">
-            <div class="panier-quantite">
-              <button><i class="fas fa-minus" style="font-size: 0.7rem;"></i></button>
-              <span>1</span>
-              <button><i class="fas fa-plus" style="font-size: 0.7rem;"></i></button>
-            </div>
-            <button class="btn-supprimer-item" title="Retirer l'article"><i class="fas fa-trash-alt"></i></button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Exemple pour le panier vide (Caché par défaut ici)
-      <div class="panier-vide">
-        <i class="fas fa-shopping-basket"></i>
-        <h3>Votre panier est vide</h3>
-        <p>Découvrez nos offres et trouvez votre bonheur !</p>
-        <a href="#" class="btn-commencer-achats">Parcourir les produits</a>
-      </div>
-      -->
-    </div>
-    </div>
-  </div>
+
 
   <!-- Scripts -->
   <script src="../../assets/js/commun/api.js"></script>

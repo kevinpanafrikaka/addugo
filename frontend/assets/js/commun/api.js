@@ -51,10 +51,8 @@ function seDeconnecter() {
   const path = window.location.pathname;
   let redirectUrl = 'index.html';
 
-  if (path.includes('/pages/client/') || path.includes('/pages/commerce/') || path.includes('/pages/livreur/') || path.includes('/pages/admin/')) {
+  if (path.includes('/pages/')) {
     redirectUrl = '../../index.html';
-  } else if (path.includes('/pages/')) {
-    redirectUrl = '../index.html';
   }
 
   window.location.href = redirectUrl;

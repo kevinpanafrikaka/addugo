@@ -70,13 +70,22 @@ function chargerResultatsRecherche(query) {
       const prixNumerique = parseInt(p.prix.replace(/[^0-9]/g, ''), 10) || 0;
 
       html += `
-        <div class="produit-carte" style="background: var(--blanc); border-radius: var(--rayon-md); overflow: hidden; box-shadow: var(--ombre-sm); transition: transform 0.2s; display: flex; flex-direction: column; cursor: pointer;" onclick="window.location.href='produit-details.html?id=${fakeId}'">
+        <div class="produit-carte" style="background: var(--blanc); border-radius: var(--rayon-md); overflow: hidden; box-shadow: var(--ombre-sm); display: flex; flex-direction: column;">
           <img src="${p.img}" alt="${p.nom}" style="width: 100%; height: 200px; object-fit: cover; background: var(--fond);" />
           <div style="padding: 16px; display: flex; flex-direction: column; flex-grow: 1;">
-            <div style="font-weight: 600; color: var(--texte); margin-bottom: 8px; font-size: 1rem;">${p.nom}</div>
+            
             <div style="font-size: 0.85rem; color: var(--texte-gris); margin-bottom: 16px; flex-grow: 1;">${p.desc}</div>
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <span style="font-weight: 700; color: var(--orange); font-size: 1.1rem;">${p.prix}</span>
+            </div>
+            
+            <div class="produit-actions" style="margin-top: 15px; display: flex; gap: 8px; align-items: center;">
+              <button title="Contacter" style="background: #1A1A2E; border: none; border-radius: 6px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #FFFFFF; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" onclick="window.location.href='../espace-client/messages.html?user=${fakeCommerceId}&p_nom=' + encodeURIComponent('${p.nom.replace(/'/g, "\\'")}') + '&p_prix=' + encodeURIComponent('${p.prix}') + '&p_img=' + encodeURIComponent('${p.img}')">
+                <i class="fas fa-comment-dots" style="font-size: 1.1rem;"></i>
+              </button>
+              <button class="btn btn-orange" style="flex: 1; padding: 0; height: 34px; font-size: 0.8rem; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;" onclick="ajouterAuPanier(${fakeId}, '${p.nom.replace(/'/g, "\\'")}', ${prixNumerique}, '${p.img}', ${fakeCommerceId}, '${p.boutique.replace(/'/g, "\\'")}')">
+                <i class="fas fa-cart-plus"></i> Ajouter
+              </button>
             </div>
           </div>
         </div>
