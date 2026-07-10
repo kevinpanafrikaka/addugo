@@ -507,3 +507,89 @@ if (produits.length === 0) {
 ```
 
 **Résultat :** Quand l'utilisateur navigue du Panier vers l'Accueil, le chargement est **instantané** ! Le cold start n'affecte plus que la toute première visite.
+
+---
+
+### Astuce #26 : Encodage UTF-8 — Pourquoi les accents se transforment en "Ã©" ?
+*Date : 10 Juillet 2026*
+
+**Le problème :** Tu as vu dans l'espace admin des textes corrompus comme `Se dÃ©connecter` au lieu de `Se déconnecter`, ou `Ã©` au lieu de `é`. C'est un bug d'**encodage de caractères**, pas un bug de code.
+
+**Pourquoi ça arrive ?**
+Quand un fichier `.html` est sauvegardé avec un mauvais encodage (ex: `Latin-1` / `ISO-8859-1`) mais que le navigateur essaie de le lire comme `UTF-8`, les caractères accentués se "cassent". Le `é` en Latin-1 est représenté par l'octet `0xE9`. En UTF-8, ce même octet seul n'est pas valide, alors le navigateur l'interprète comme deux caractères : `Ã` (`0xC3`) + `©` (`0xA9`), ce qui donne `Ã©`.
+
+**La prévention :**
+1. **Toujours avoir** `<meta charset="UTF-8" />` **en premier** dans le `<head>`.
+2. **Sauvegarder les fichiers en UTF-8** dans ton éditeur (VS Code : barre d'état en bas à droite → cliquer sur l'encodage → choisir "Save with Encoding" → UTF-8).
+3. **Ne jamais copier-coller** du texte depuis Word ou d'autres sources sans vérifier l'encodage.
+
+**La correction :** Réécrire complètement les fichiers corrompus en UTF-8 propre, ce qu'on a fait pour les 6 pages de l'espace admin d'AdduGo.
+
+---
+
+### Astuce #27 : Filtres et Tri Dynamiques — Ne jamais coder les options en dur
+*Date : 10 Juillet 2026*
+
+**Le problème :** Si tu codes les catégories de filtre en dur dans le HTML (`<label>Électronique</label>`, etc.), elles deviennent vite obsolètes. Quand un commerçant ajoute une nouvelle catégorie en base, l'utilisateur ne la voit jamais dans les filtres.
+
+**La solution — Génération dynamique des filtres depuis les données réelles :**
+```javascript
+function construireFiltresCategories(produits) {
+  const conteneur = document.getElementById('filtres-categories');
+  
+  // Extraire les catégories uniques directement depuis les vrais produits
+  const categories = [...new Set(
+    produits.map(p => p.categorie_nom || p.categorie || 'Général')
+  )].sort();
+
+  conteneur.innerHTML = categories.map(cat => `
+    <label class="filtre-option">
+      <input type="checkbox" class="filtre-categorie" value="${cat}"> ${cat}
+    </label>
+  `).join('');
+}
+```
+
+**Le pattern complet :** Charger les données → extraire les valeurs uniques → construire les filtres → ajouter les listeners → appliquer en cascade (texte → catégorie → prix → tri). L'ordre est important !
+
+**Bonus Tri :** Pour rendre un `<select>` de tri fonctionnel :
+```javascript
+document.getElementById('tri-select').addEventListener('change', () => {
+  const tri = document.getElementById('tri-select').value;
+  if (tri === 'prix-asc') resultats.sort((a, b) => a.prix - b.prix);
+  if (tri === 'prix-desc') resultats.sort((a, b) => b.prix - a.prix);
+  afficher(resultats);
+});
+```
+
+---
+
+### Astuce #28 : Isoler le CSS par Espace — Un fichier CSS dédié par rôle
+*Date : 10 Juillet 2026*
+
+**Le problème :** L'espace admin d'AdduGo n'avait aucun CSS dédié. Tout son design reposait sur `style.css` et `dashboard.css` partagés, sans personnalisation possible.
+
+**La solution — Structure CSS isolée par espace :**
+```
+assets/css/
+├── commun/
+│   ├── style.css       ← Variables CSS globales, reset
+│   ├── dashboard.css   ← Layout sidebar+main commun
+│   └── navbar.css      ← Navbar commune
+├── espace-admin/
+│   └── admin.css       ← Design spécifique: sidebar sombre, badges Admin
+├── espace-client/
+│   └── dashboard.css   ← Design spécifique client
+└── espace-livreur/
+    └── dashboard.css   ← Design spécifique livreur
+```
+
+**Règle :** Chaque fichier CSS spécifique **hérite** des variables du `style.css` commun (`var(--orange)`, `var(--texte)`, etc.) mais **surcharge** uniquement ce qui est propre à son espace. Ne jamais dupliquer des règles CSS communes.
+
+**Dans le HTML, l'ordre d'inclusion compte :**
+```html
+<link rel="stylesheet" href="../../assets/css/commun/style.css" />
+<link rel="stylesheet" href="../../assets/css/commun/dashboard.css" />
+<link rel="stylesheet" href="../../assets/css/espace-admin/admin.css" />  ← En dernier !
+```
+Le dernier fichier gagne en priorité CSS. C'est voulu.

@@ -225,38 +225,43 @@
   <div class="recherche-layout">
     <!-- FILTRES (SIDEBAR) -->
     <aside class="recherche-sidebar">
+
+      <!-- Titre filtres + bouton réinitialiser -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <span style="font-size:1rem; font-weight:800; font-family:var(--police-titre); color:var(--texte);"><i class="fas fa-sliders-h" style="color:var(--orange); margin-right:6px;"></i>Filtres</span>
+        <button id="btn-reset-filtres" style="font-size:0.78rem; color:var(--orange); background:none; border:none; cursor:pointer; font-weight:600; text-decoration:underline;">Réinitialiser</button>
+      </div>
+
+      <!-- Filtre Catégories (rempli dynamiquement par JS) -->
       <div class="filtre-groupe">
         <div class="filtre-titre">Catégories</div>
-        <label class="filtre-option"><input type="checkbox"> Électronique</label>
-        <label class="filtre-option"><input type="checkbox"> Vêtements</label>
-        <label class="filtre-option"><input type="checkbox"> Maison & Bureau</label>
-        <label class="filtre-option"><input type="checkbox"> Beauté & Santé</label>
+        <div id="filtres-categories">
+          <div style="font-size:0.8rem; color:var(--texte-gris);">Chargement...</div>
+        </div>
       </div>
 
+      <!-- Filtre Prix -->
       <div class="filtre-groupe">
-        <div class="filtre-titre">Prix</div>
-        <label class="filtre-option"><input type="checkbox"> Moins de 100 000 GNF</label>
-        <label class="filtre-option"><input type="checkbox"> 100 000 - 500 000 GNF</label>
-        <label class="filtre-option"><input type="checkbox"> Plus de 500 000 GNF</label>
+        <div class="filtre-titre">Fourchette de Prix</div>
+        <label class="filtre-option"><input type="checkbox" class="filtre-prix" data-min="0" data-max="100000"> Moins de 100 000 GNF</label>
+        <label class="filtre-option"><input type="checkbox" class="filtre-prix" data-min="100000" data-max="500000"> 100 000 – 500 000 GNF</label>
+        <label class="filtre-option"><input type="checkbox" class="filtre-prix" data-min="500000" data-max="999999999"> Plus de 500 000 GNF</label>
       </div>
 
-      <div class="filtre-groupe">
-        <div class="filtre-titre">Livraison</div>
-        <label class="filtre-option"><input type="checkbox"> Livraison Gratuite</label>
-        <label class="filtre-option"><input type="checkbox"> AdduGo Express</label>
-      </div>
     </aside>
 
     <!-- RÉSULTATS (MAIN) -->
     <main class="recherche-main">
       <div class="recherche-header">
-        <div class="recherche-titre">Résultats pour <span id="recherche-query-text">"..."</span></div>
+        <div>
+          <div class="recherche-titre">Résultats pour <span id="recherche-query-text">"..."</span></div>
+          <div id="recherche-count" style="font-size:0.82rem; color:var(--texte-gris); margin-top:4px;"></div>
+        </div>
         <div class="recherche-tri">
-          <select>
-            <option>Pertinence</option>
-            <option>Prix croissant</option>
-            <option>Prix décroissant</option>
-            <option>Meilleures ventes</option>
+          <select id="tri-select">
+            <option value="pertinence">Pertinence</option>
+            <option value="prix-asc">Prix croissant</option>
+            <option value="prix-desc">Prix décroissant</option>
           </select>
         </div>
       </div>
