@@ -24,12 +24,41 @@ async function chargerProduits() {
   const feed = document.getElementById('feed-produits');
   if (!feed) return;
 
-  try {
-    const res = await apiFetch('/produits');
-    const data = await res.json();
+  const CACHE_KEY = 'addugo_produits_cache';
+  const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-    if (data.success && data.produits && data.produits.length > 0) {
-      let produitsAffiches = data.produits;
+  try {
+    let produitsListe = [];
+    
+    // 1. Vérification du cache
+    const cachedDataStr = sessionStorage.getItem(CACHE_KEY);
+    if (cachedDataStr) {
+      try {
+        const cached = JSON.parse(cachedDataStr);
+        if (Date.now() - cached.timestamp < CACHE_DURATION) {
+          produitsListe = cached.data;
+        }
+      } catch (e) {
+        sessionStorage.removeItem(CACHE_KEY);
+      }
+    }
+
+    // 2. Si pas de cache ou cache expiré, appel API
+    if (produitsListe.length === 0) {
+      const res = await apiFetch('/produits');
+      const data = await res.json();
+      if (data.success && data.produits) {
+        produitsListe = data.produits;
+        // Enregistrement dans le cache
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+          timestamp: Date.now(),
+          data: produitsListe
+        }));
+      }
+    }
+
+    if (produitsListe && produitsListe.length > 0) {
+      let produitsAffiches = produitsListe;
 
       // CONDITION A & C : Si l'utilisateur est un commerçant, exlure TOUS SES PROPRES produits
       if (currentUser && currentUser.id) {

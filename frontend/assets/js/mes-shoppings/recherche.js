@@ -14,79 +14,151 @@ document.addEventListener('DOMContentLoaded', () => {
     if (queryTextSpan) queryTextSpan.textContent = `"Toutes les recherches"`;
   }
 
-  // ==== CHARGEMENT DES RÉSULTATS (FICTIFS) ====
+  // ==== CHARGEMENT DES RÉSULTATS ====
   chargerResultatsRecherche(query);
 });
 
-function chargerResultatsRecherche(query) {
+async function chargerResultatsRecherche(query) {
   const feed = document.getElementById('recherche-resultats-feed');
   if (!feed) return;
 
-  // Base de données fictive
-  const tousLesProduits = [
-    { nom: "Sneakers Air Max", desc: "Chaussures de sport confortables pour toutes vos sorties.", prix: "600 000 GNF", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80" },
-    { nom: "Montre Connectée Z-Pro", desc: "Suivez votre rythme cardiaque et recevez vos notifs.", prix: "350 000 GNF", img: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500&q=80" },
-    { nom: "Sac à main en cuir", desc: "Un style élégant pour les soirées chics.", prix: "250 000 GNF", img: "https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=500&q=80" },
-    { nom: "Casque Audio Sans Fil", desc: "Réduction de bruit active, 40h d'autonomie.", prix: "450 000 GNF", img: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&q=80" },
-    { nom: "Appareil Photo Reflex", desc: "Capturez vos meilleurs moments avec une qualité 4K.", prix: "3 500 000 GNF", img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&q=80" },
-    { nom: "Lunettes de Soleil", desc: "Protection UV400, monture en métal léger.", prix: "120 000 GNF", img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500&q=80" },
-    { nom: "Parfum Élixir Boisé", desc: "Senteur masculine envoûtante, tenue longue durée.", prix: "550 000 GNF", img: "https://images.unsplash.com/photo-1523293115678-d2900f52f461?w=500&q=80" },
-    { nom: "Enceinte Bluetooth", desc: "Son stéréo puissant, étanche IPX7.", prix: "300 000 GNF", img: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&q=80" },
-    { nom: "Montre Classique en Cuir", desc: "Design intemporel, mouvement à quartz précis.", prix: "280 000 GNF", img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500&q=80" },
-    { nom: "Sac à dos Urbain", desc: "Compartiment PC, imperméable et résistant.", prix: "180 000 GNF", img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&q=80" }
-  ];
+  const CACHE_KEY = 'addugo_produits_cache';
+  const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-  // Simuler un temps de chargement réseau
-  setTimeout(() => {
-    // Filtrage simple en JS
+  try {
+    let produitsListe = [];
+    
+    // 1. Vérification du cache
+    const cachedDataStr = sessionStorage.getItem(CACHE_KEY);
+    if (cachedDataStr) {
+      try {
+        const cached = JSON.parse(cachedDataStr);
+        if (Date.now() - cached.timestamp < CACHE_DURATION) {
+          produitsListe = cached.data;
+        }
+      } catch (e) {
+        sessionStorage.removeItem(CACHE_KEY);
+      }
+    }
+
+    // 2. Si pas de cache ou cache expiré, appel API
+    if (produitsListe.length === 0) {
+      const res = await apiFetch('/produits');
+      const data = await res.json();
+      if (data.success && data.produits) {
+        produitsListe = data.produits;
+        // Enregistrement dans le cache
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+          timestamp: Date.now(),
+          data: produitsListe
+        }));
+      }
+    }
+
+    let resultats = produitsListe;
+
+    // 3. Filtrage en fonction de la requête
     const requeteClean = query.toLowerCase().trim();
-    let resultats = tousLesProduits;
-
     if (requeteClean) {
-      resultats = tousLesProduits.filter(p => 
-        p.nom.toLowerCase().includes(requeteClean) || 
-        p.desc.toLowerCase().includes(requeteClean)
-      );
+      resultats = produitsListe.filter(p => {
+        const nom = (p.nom || '').toLowerCase();
+        const desc = (p.description || '').toLowerCase();
+        const categorie = (p.categorie_nom || p.categorie || '').toLowerCase();
+        const boutique = (p.commerce_nom || p.nom_boutique || '').toLowerCase();
+        
+        return nom.includes(requeteClean) || 
+               desc.includes(requeteClean) ||
+               categorie.includes(requeteClean) ||
+               boutique.includes(requeteClean);
+      });
     }
 
     if (resultats.length === 0) {
       // Aucun résultat trouvé
       feed.innerHTML = `
-        <div class="aucun-resultat" style="grid-column: 1 / -1;">
-          <i class="fas fa-search-minus"></i>
-          <h3>Aucun produit ne correspond à "${query}"</h3>
-          <p>Essayez de vérifier l'orthographe ou d'utiliser des termes plus généraux.</p>
+        <div class="aucun-resultat" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+          <div style="font-size: 3rem; color: var(--orange); margin-bottom: 15px;"><i class="fas fa-search-minus"></i></div>
+          <h3 style="font-family: var(--police-titre); font-weight: 800; color: var(--texte); font-size: 1.5rem;">Aucun produit ne correspond à "${query}"</h3>
+          <p style="color: var(--texte-gris);">Essayez de vérifier l'orthographe ou d'utiliser des termes plus généraux.</p>
         </div>
       `;
       return;
     }
 
-    // Afficher les résultats
+    // Afficher les résultats avec le même design que home.js
     let html = '';
-    resultats.forEach((p, index) => {
-      const fakeId = index + 1000;
-      const fakeCommerceId = (index % 3) + 1;
-      const nomBoutique = "Boutique Recherche " + fakeCommerceId;
-      const prixNumerique = parseInt(p.prix.replace(/[^0-9]/g, ''), 10) || 0;
+    resultats.forEach(p => {
+      const prixFormate = new Intl.NumberFormat('fr-FR').format(p.prix || 0) + ' GNF';
+      
+      // Image du produit
+      let image = '../../images/AdduGo_Logo.png'; // Placeholder fallback
+      if (p.images) {
+        try {
+          let parsedImages = p.images;
+          if (typeof p.images === 'string') {
+            if (p.images.startsWith('[')) {
+              parsedImages = JSON.parse(p.images);
+            } else {
+              parsedImages = [p.images];
+            }
+          }
+          
+          if (Array.isArray(parsedImages) && parsedImages.length > 0) {
+            image = parsedImages[0];
+          } else if (typeof p.images === 'string' && p.images.startsWith('/')) {
+            image = p.images;
+          }
+        } catch (e) {
+          image = typeof p.images === 'string' ? p.images : '../../images/AdduGo_Logo.png';
+        }
+        
+        if (image && typeof image === 'string' && !image.startsWith('http') && !image.includes('AdduGo_Logo.png')) {
+          image = `https://addugo.up.railway.app${image.startsWith('/') ? '' : '/'}${image}`;
+        }
+      }
+
+      // Photo de la boutique / du commerçant
+      let photoBoutique = '../../assets/img/default-avatar.png';
+      const photoSource = p.commerce_logo || p.commercant_photo;
+      if (photoSource && typeof photoSource === 'string' && !photoSource.includes('default-avatar.png')) {
+        photoBoutique = photoSource.startsWith('http') ? photoSource : `https://addugo.up.railway.app${photoSource.startsWith('/') ? '' : '/'}${photoSource}`;
+      }
+
+      const nomBoutique = p.commerce_nom || p.nom_boutique || `${p.commercant_prenom || ''} ${p.commercant_nom || ''}`.trim() || 'Boutique Partenaire';
+      const categorie = p.categorie_nom || p.categorie || 'Général';
+      const vendeurId = p.commerce_utilisateur_id || p.utilisateur_id || 1;
 
       html += `
-        <div class="produit-carte" style="background: var(--blanc); border-radius: var(--rayon-md); overflow: hidden; box-shadow: var(--ombre-sm); display: flex; flex-direction: column;">
-          <img src="${p.img}" alt="${p.nom}" style="width: 100%; height: 200px; object-fit: cover; background: var(--fond);" />
-          <div style="padding: 16px; display: flex; flex-direction: column; flex-grow: 1;">
+        <div class="produit-carte">
+          <div class="produit-img-wrapper">
+            <span class="produit-badge-categorie">
+              <i class="fas fa-tag" style="color:var(--orange);"></i> ${categorie}
+            </span>
+            <img src="${image}" alt="${p.nom}" class="produit-img" onerror="this.src='../../images/AdduGo_Logo.png'" />
+          </div>
+
+          <div class="produit-corps" style="padding: 12px 10px;">
+            <!-- Le nom du produit est masqué ici selon la demande sur home.js -->
             
-            <div style="font-size: 0.85rem; color: var(--texte-gris); margin-bottom: 16px; flex-grow: 1;">${p.desc}</div>
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <span style="font-weight: 700; color: var(--orange); font-size: 1.1rem;">${p.prix}</span>
+            <div class="produit-desc" title="${p.description || ''}">${p.description || 'Aucune description fournie.'}</div>
+
+            <div class="produit-prix-ligne" style="margin-top: 10px;">
+              <div class="produit-prix" style="font-size: 1.1rem;">${prixFormate}</div>
             </div>
-            
-            <div class="produit-actions" style="margin-top: 15px; display: flex; gap: 8px; align-items: center;">
-              <button title="Contacter" style="background: #1A1A2E; border: none; border-radius: 6px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #FFFFFF; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" onclick="window.location.href='../espace-client/messages.html?user=${fakeCommerceId}&p_nom=' + encodeURIComponent('${p.nom.replace(/'/g, "\\'")}') + '&p_prix=' + encodeURIComponent('${p.prix}') + '&p_img=' + encodeURIComponent('${p.img}')">
+
+            <div class="produit-actions" style="margin-top: 12px; display: flex; gap: 8px; align-items: center;">
+              <button title="Contacter" style="background: #1A1A2E; border: none; border-radius: 6px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #FFFFFF; flex-shrink: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" onclick="window.location.href='../espace-client/messages.html?user=${vendeurId}&p_nom=' + encodeURIComponent('${p.nom.replace(/'/g, "\\'")}') + '&p_prix=${p.prix}&p_img=' + encodeURIComponent('${image}')">
                 <i class="fas fa-comment-dots" style="font-size: 1.1rem;"></i>
               </button>
-              <button class="btn btn-orange" style="flex: 1; padding: 0; height: 34px; font-size: 0.8rem; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;" onclick="ajouterAuPanier(${fakeId}, '${p.nom.replace(/'/g, "\\'")}', ${prixNumerique}, '${p.img}', ${fakeCommerceId}, '${p.boutique.replace(/'/g, "\\'")}')">
+              <button class="btn btn-orange" style="flex: 1; padding: 0; height: 34px; font-size: 0.8rem; border-radius: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;" onclick="ajouterAuPanier(${p.id}, '${p.nom.replace(/'/g, "\\'")}', ${p.prix}, '${image}', ${vendeurId}, '${nomBoutique.replace(/'/g, "\\'")}', '${photoBoutique}')">
                 <i class="fas fa-cart-plus"></i> Ajouter
               </button>
             </div>
+          </div>
+
+          <div class="produit-boutique-footer">
+            <img src="${photoBoutique}" alt="${nomBoutique}" class="produit-boutique-img" onerror="this.src='../../assets/img/default-avatar.png'" />
+            <span class="produit-boutique-nom">${nomBoutique}</span>
           </div>
         </div>
       `;
@@ -94,5 +166,14 @@ function chargerResultatsRecherche(query) {
 
     feed.innerHTML = html;
     
-  }, 600); // 600ms de faux chargement pour voir l'effet
+  } catch (err) {
+    console.error("Erreur lors de la recherche :", err);
+    feed.innerHTML = `
+      <div class="aucun-resultat" style="grid-column: 1 / -1; text-align: center; padding: 50px 20px;">
+        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #dc3545; margin-bottom: 15px;"></i>
+        <h3 style="color: var(--texte);">Erreur de chargement</h3>
+        <p style="color: var(--texte-gris);">Impossible de charger les résultats de recherche. Veuillez réessayer plus tard.</p>
+      </div>
+    `;
+  }
 }

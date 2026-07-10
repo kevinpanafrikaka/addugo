@@ -107,6 +107,19 @@ if (formConnexion) {
       const data = await res.json();
 
       if (data.success) {
+        // ── NETTOYAGE DE L'ANCIEN UTILISATEUR ──
+        // Si quelqu'un était connecté avant (sans se déconnecter),
+        // on supprime son panier AVANT d'écraser addugo_user.
+        try {
+          const ancienUser = JSON.parse(localStorage.getItem('addugo_user') || 'null');
+          const ancienId   = ancienUser?.id || ancienUser?.utilisateur_id;
+          const nouveauId  = data.utilisateur?.id || data.utilisateur?.utilisateur_id;
+          // Nettoyer seulement si c'est un utilisateur différent
+          if (ancienId && ancienId !== nouveauId) {
+            localStorage.removeItem(`addugo_panier_${ancienId}`);
+          }
+        } catch(e) { /* silencieux */ }
+
         localStorage.setItem('addugo_token', data.token);
         localStorage.setItem('addugo_user',  JSON.stringify(data.utilisateur));
 

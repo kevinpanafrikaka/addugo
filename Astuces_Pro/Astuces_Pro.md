@@ -465,3 +465,45 @@ function seDeconnecter() {
   localStorage.removeItem('addugo_token');
 }
 ```
+
+---
+
+### Astuce #25 : Utiliser `sessionStorage` comme Cache pour améliorer les Performances
+*Date : 10 Juillet 2026*
+
+**Le problème :** L'hébergement gratuit (comme Railway) subit un "Cold Start" (démarrage à froid). Le serveur se met en veille après inactivité, ce qui rend la première requête très lente (10-30s). De plus, refaire un appel API pour des données qui n'ont pas changé récemment ralentit inutilement la navigation de l'utilisateur.
+
+**La solution :** Utiliser le `sessionStorage` pour créer un cache côté client temporaire (ex: 5 minutes). Contrairement au `localStorage`, le `sessionStorage` est automatiquement vidé quand l'utilisateur ferme l'onglet, ce qui est parfait pour des données volatiles comme un fil d'actualité de produits.
+
+**L'algorithme de mise en cache :**
+1. **Définir une clé et une durée :** `const CACHE_KEY = 'mes_produits'; const CACHE_DURATION = 5 * 60 * 1000;`
+2. **Vérifier le cache :** Lire le `sessionStorage`. S'il contient des données et qu'elles sont plus récentes que la durée autorisée, les utiliser.
+3. **Appel API (si cache expiré ou vide) :** Si aucune donnée valide n'est en cache, faire l'appel `fetch` au serveur.
+4. **Mettre à jour le cache :** Sauvegarder les nouvelles données reçues de l'API avec un *timestamp* (`Date.now()`) dans le `sessionStorage`.
+
+**Exemple d'implémentation (dans AdduGo) :**
+```javascript
+let produits = [];
+const cache = sessionStorage.getItem('addugo_produits_cache');
+
+if (cache) {
+  const { timestamp, data } = JSON.parse(cache);
+  if (Date.now() - timestamp < 5 * 60 * 1000) {
+    produits = data; // ✅ Récupération instantanée depuis le cache !
+  }
+}
+
+if (produits.length === 0) {
+  // ⏳ Appel réseau lent...
+  const res = await apiFetch('/produits'); 
+  produits = await res.json();
+  
+  // 💾 Sauvegarde pour les 5 prochaines minutes
+  sessionStorage.setItem('addugo_produits_cache', JSON.stringify({
+    timestamp: Date.now(),
+    data: produits
+  }));
+}
+```
+
+**Résultat :** Quand l'utilisateur navigue du Panier vers l'Accueil, le chargement est **instantané** ! Le cold start n'affecte plus que la toute première visite.
