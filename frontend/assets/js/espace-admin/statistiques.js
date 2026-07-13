@@ -9,10 +9,25 @@ if (!token || !user) window.location.href = '../accueil/login.html';
 
 // ── INIT UTILISATEUR ──
 const initiales = `${user.nom?.[0] || ''}${user.prenom?.[0] || ''}`.toUpperCase();
-document.getElementById('user-avatar').textContent    = initiales;
+
+const avatarHtml = user.photo_profil 
+  ? `<img src="${user.photo_profil.startsWith('http') ? user.photo_profil : 'http://localhost:5000' + user.photo_profil}" alt="Profil" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />` 
+  : initiales;
+
+document.getElementById('user-avatar').innerHTML    = avatarHtml;
 document.getElementById('user-nom').textContent       = `${user.prenom} ${user.nom}`;
-document.getElementById('sidebar-avatar').textContent = initiales;
+document.getElementById('sidebar-avatar').innerHTML = avatarHtml;
 document.getElementById('sidebar-nom').textContent    = `${user.prenom} ${user.nom}`;
+
+// Simulation chargement notifications
+setTimeout(() => {
+  const notifBadge = document.querySelector('.notif-badge');
+  if (notifBadge) {
+    const notifs = Math.floor(Math.random() * 5) + 1;
+    notifBadge.textContent = notifs;
+    notifBadge.style.display = 'flex';
+  }
+}, 1000);
 
 // ── UTILITAIRES ──
 function formatPrix(montant) {
@@ -290,3 +305,112 @@ chargerUtilisateurs();
 chargerCommerces();
 chargerProduits();
 chargerCommandes();
+
+// ── GRAPHIQUE ÉVOLUTION (CHART.JS) ──
+let evolutionChart = null;
+
+function chargerGraphiqueEvolution(periode) {
+  const ctx = document.getElementById('chart-evolution');
+  if (!ctx) return;
+
+  // Simulation de données selon la période
+  let labels = [];
+  let dataRevenus = [];
+  let dataCommandes = [];
+
+  if (periode === '7j') {
+    labels = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    dataRevenus = [1500, 2300, 1800, 3200, 2900, 4100, 3800];
+    dataCommandes = [12, 19, 15, 25, 22, 35, 30];
+  } else if (periode === '30j') {
+    for (let i = 1; i <= 30; i+=3) labels.push(`Jour ${i}`);
+    dataRevenus = Array.from({length: 10}, () => Math.floor(Math.random() * 5000) + 1000);
+    dataCommandes = dataRevenus.map(r => Math.floor(r / 150));
+  } else if (periode === '12m') {
+    labels = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+    dataRevenus = [15000, 18000, 17500, 22000, 25000, 21000, 30000, 32000, 28000, 35000, 40000, 45000];
+    dataCommandes = dataRevenus.map(r => Math.floor(r / 120));
+  }
+
+  if (evolutionChart) {
+    evolutionChart.destroy();
+  }
+
+  evolutionChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Revenus (kGNF)',
+          data: dataRevenus,
+          borderColor: '#FF7F00',
+          backgroundColor: 'rgba(255, 127, 0, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          fill: true,
+          yAxisID: 'y'
+        },
+        {
+          label: 'Commandes',
+          data: dataCommandes,
+          borderColor: '#005BBB',
+          backgroundColor: 'rgba(0, 91, 187, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          fill: true,
+          yAxisID: 'y1'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { font: { family: "'Inter', sans-serif", size: 13 } }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(15, 23, 42, 0.9)',
+          titleFont: { family: "'Inter', sans-serif", size: 14 },
+          bodyFont: { family: "'Inter', sans-serif", size: 13 },
+          padding: 10,
+          cornerRadius: 8
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { family: "'Inter', sans-serif" } }
+        },
+        y: {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          grid: { color: 'rgba(0,0,0,0.05)' },
+          title: { display: true, text: 'Revenus (kGNF)' }
+        },
+        y1: {
+          type: 'linear',
+          display: true,
+          position: 'right',
+          grid: { drawOnChartArea: false },
+          title: { display: true, text: 'Commandes' }
+        }
+      }
+    }
+  });
+}
+
+// Initialiser le graphique
+chargerGraphiqueEvolution('30j');
+
+// Écouter les changements de période
+document.getElementById('select-periode')?.addEventListener('change', (e) => {
+  chargerGraphiqueEvolution(e.target.value);
+});

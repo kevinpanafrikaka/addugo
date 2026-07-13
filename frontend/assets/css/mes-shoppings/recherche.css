@@ -1,0 +1,118 @@
+﻿
+    /* Styles spécifiques pour la page de recherche */
+    .recherche-layout {
+      display: flex;
+      gap: 24px;
+      padding: var(--espace-xl);
+      width: 100%;
+      align-items: flex-start;
+    }
+
+    .recherche-sidebar {
+      width: 260px;
+      background: var(--blanc);
+      border-radius: var(--rayon-lg);
+      padding: 24px;
+      box-shadow: var(--ombre-sm);
+      flex-shrink: 0;
+      position: sticky;
+      top: 90px;
+    }
+
+    .filtre-groupe {
+      margin-bottom: 24px;
+    }
+
+    .filtre-groupe:last-child {
+      margin-bottom: 0;
+    }
+
+    .filtre-titre {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--texte);
+      margin-bottom: 12px;
+      font-family: var(--police-titre);
+    }
+
+    .filtre-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--texte-doux);
+    }
+
+    .filtre-option input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--orange);
+    }
+
+    .recherche-main {
+      flex: 1;
+    }
+
+    .recherche-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      background: var(--blanc);
+      padding: 16px 24px;
+      border-radius: var(--rayon-lg);
+      box-shadow: var(--ombre-sm);
+    }
+
+    .recherche-titre {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--texte);
+    }
+
+    .recherche-titre span {
+      color: var(--orange);
+    }
+
+    .recherche-tri select {
+      padding: 8px 12px;
+      border: 1px solid var(--bordure);
+      border-radius: var(--rayon-md);
+      font-family: var(--police);
+      outline: none;
+      color: var(--texte);
+    }
+
+    /* Grille de produits */
+    .produits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--espace-lg);
+    }
+
+    .aucun-resultat {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--blanc);
+      border-radius: var(--rayon-lg);
+      box-shadow: var(--ombre-sm);
+    }
+
+    .aucun-resultat i {
+      font-size: 4rem;
+      color: var(--bordure);
+      margin-bottom: 16px;
+    }
+
+    .aucun-resultat h3 {
+      font-size: 1.2rem;
+      color: var(--texte);
+      margin-bottom: 8px;
+    }
+
+    .aucun-resultat p {
+      color: var(--texte-gris);
+    }
+  

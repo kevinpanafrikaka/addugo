@@ -10,10 +10,31 @@ if (!token || !user) window.location.href = '../accueil/login.html';
 
 // ── INIT UTILISATEUR ──
 const initiales = `${user.nom?.[0] || ''}${user.prenom?.[0] || ''}`.toUpperCase();
-document.getElementById('user-avatar').textContent    = initiales;
+
+const avatarHtml = user.photo_profil 
+  ? `<img src="${user.photo_profil.startsWith('http') ? user.photo_profil : 'http://localhost:5000' + user.photo_profil}" alt="Profil" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />` 
+  : initiales;
+
+document.getElementById('user-avatar').innerHTML    = avatarHtml;
 document.getElementById('user-nom').textContent       = `${user.prenom} ${user.nom}`;
-document.getElementById('sidebar-avatar').textContent = initiales;
+document.getElementById('sidebar-avatar').innerHTML = avatarHtml;
 document.getElementById('sidebar-nom').textContent    = `${user.prenom} ${user.nom}`;
+
+// Simulation chargement notifications
+setTimeout(() => {
+  const notifBadge = document.querySelector('.notif-badge');
+  if (notifBadge) {
+    const notifs = Math.floor(Math.random() * 5) + 1;
+    notifBadge.textContent = notifs;
+    notifBadge.style.display = 'flex';
+  }
+}, 1000);
+
+// ── VARIABLES GLOBALES ──
+let carteSuivi = null;
+let marqueurLivreur = null;
+let marqueurClient = null;
+let simulateurInterval = null;
 
 // ── UTILITAIRES ──
 function formatPrix(montant) {
@@ -46,6 +67,90 @@ const ordreStatuts = [
   'en_attente', 'confirmee', 'en_preparation',
   'prete', 'en_livraison', 'livree'
 ];
+
+// ── INITIALISATION CARTE LEAFLET ──
+function initMap(statut) {
+  const mapContainer = document.getElementById('map-suivi');
+  if (!mapContainer) return;
+
+  if (carteSuivi) {
+    carteSuivi.remove();
+    carteSuivi = null;
+  }
+  
+  if (simulateurInterval) {
+    clearInterval(simulateurInterval);
+  }
+
+  // Si on n'est pas au moins en cours de livraison ou prête, on ne montre pas la carte
+  if (!['prete', 'en_livraison', 'livree'].includes(statut)) {
+    mapContainer.style.display = 'none';
+    return;
+  }
+  mapContainer.style.display = 'block';
+
+  // Point de livraison fictif (Conakry centre)
+  const clientCoords = [9.509167, -13.712222];
+  
+  carteSuivi = L.map('map-suivi').setView(clientCoords, 14);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+  }).addTo(carteSuivi);
+
+  // Icône Client (Maison)
+  const iconeClient = L.divIcon({
+    html: '<div style="background:var(--orange);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-home"></i></div>',
+    className: '',
+    iconSize: [30, 30],
+    iconAnchor: [15, 15]
+  });
+  marqueurClient = L.marker(clientCoords, {icon: iconeClient}).addTo(carteSuivi);
+
+  // Icône Livreur (Moto)
+  const iconeLivreur = L.divIcon({
+    html: '<div style="background:var(--texte);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-motorcycle"></i></div>',
+    className: '',
+    iconSize: [30, 30],
+    iconAnchor: [15, 15]
+  });
+
+  if (statut === 'en_livraison') {
+    // Point de départ fictif (Kipé par exemple)
+    let livreurCoords = [9.5350, -13.6600];
+    marqueurLivreur = L.marker(livreurCoords, {icon: iconeLivreur}).addTo(carteSuivi);
+    
+    // Zoom pour englober les deux
+    const bounds = L.latLngBounds(clientCoords, livreurCoords);
+    carteSuivi.fitBounds(bounds, { padding: [30, 30] });
+
+    // Simulation de mouvement
+    simulateurInterval = setInterval(() => {
+      // Déplacement très basique vers le client
+      livreurCoords[0] += (clientCoords[0] - livreurCoords[0]) * 0.05;
+      livreurCoords[1] += (clientCoords[1] - livreurCoords[1]) * 0.05;
+      marqueurLivreur.setLatLng(livreurCoords);
+    }, 2000);
+  } else if (statut === 'livree') {
+    marqueurLivreur = L.marker(clientCoords, {icon: iconeLivreur}).addTo(carteSuivi);
+    carteSuivi.setView(clientCoords, 16);
+  } else if (statut === 'prete') {
+    // Commerce coords
+    let commerceCoords = [9.5350, -13.6600];
+    const iconeCommerce = L.divIcon({
+      html: '<div style="background:var(--info);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-store"></i></div>',
+      className: '',
+      iconSize: [30, 30],
+      iconAnchor: [15, 15]
+    });
+    L.marker(commerceCoords, {icon: iconeCommerce}).addTo(carteSuivi);
+    const bounds = L.latLngBounds(clientCoords, commerceCoords);
+    carteSuivi.fitBounds(bounds, { padding: [30, 30] });
+  }
+
+  // Patch pour éviter que la carte soit grise à cause de l'affichage display:none
+  setTimeout(() => { carteSuivi.invalidateSize(); }, 300);
+}
 
 // ── CHARGER COMMANDES EN COURS ──
 async function chargerCommandesEnCours() {
@@ -140,6 +245,9 @@ async function afficherSuivi(commandeId) {
     if (!['livree', 'annulee'].includes(c.statut)) {
       window.suiviInterval = setInterval(() => afficherSuivi(commandeId), 30000);
     }
+
+    // Initialisation de la carte Leaflet
+    initMap(c.statut);
 
   } catch (err) {
     console.error('Erreur suivi:', err);

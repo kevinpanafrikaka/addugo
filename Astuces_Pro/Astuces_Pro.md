@@ -593,3 +593,5 @@ assets/css/
 <link rel="stylesheet" href="../../assets/css/espace-admin/admin.css" />  ← En dernier !
 ```
 Le dernier fichier gagne en priorité CSS. C'est voulu.
+## Leaflet.js vs Google Maps pour le suivi en temps réel
+*Astuce Pro :* Pour implémenter une carte interactive (par exemple, pour le suivi d'une livraison), **Leaflet.js** couplé à **OpenStreetMap** est une excellente alternative à Google Maps. Contrairement à Google Maps qui nécessite une clé d'API et une carte bancaire, Leaflet est totalement gratuit, très léger et open source. Il est idéal pour construire des prototypes ou des applications avec un budget restreint tout en conservant une fluidité professionnelle.

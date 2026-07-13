@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -76,9 +76,18 @@
     <!-- CONTENU -->
     <main class="dashboard-contenu anime-slide-up">
 
-      <div class="dashboard-entete">
-        <h1>Statistiques <span class="orange">Plateforme</span></h1>
-        <p>Vue analytique complÃ¨te de l'activitÃ© AdduGo</p>
+      <div class="dashboard-entete" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <h1>Statistiques <span class="orange">Plateforme</span></h1>
+          <p>Vue analytique complÃ¨te de l'activitÃ© AdduGo</p>
+        </div>
+        <div class="filtre-periode">
+          <select id="select-periode" class="form-input" style="width:auto; cursor:pointer;">
+            <option value="7j">Les 7 derniers jours</option>
+            <option value="30j" selected>Les 30 derniers jours</option>
+            <option value="12m">Les 12 derniers mois</option>
+          </select>
+        </div>
       </div>
 
       <!-- KPIs PRINCIPAUX -->
@@ -126,6 +135,16 @@
             </div>
             <div class="stat-label">Produits rÃ©fÃ©rencÃ©s</div>
           </div>
+        </div>
+      </div>
+
+      <!-- GRAPHIQUE ÉVOLUTION -->
+      <div class="dashboard-section">
+        <div class="dashboard-section-entete">
+          <h3><i class="fas fa-chart-line"></i> Ã‰volution des Commandes & Revenus</h3>
+        </div>
+        <div style="background:var(--bg-secondaire); padding:1rem; border-radius:var(--rayon-lg); margin-top:1rem; height:350px;">
+          <canvas id="chart-evolution"></canvas>
         </div>
       </div>
 
@@ -186,6 +205,8 @@
     </main>
   </div>
 
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../../assets/js/commun/api.js"></script>
   <script src="../../assets/js/espace-admin/statistiques.js"></script>
 </body>

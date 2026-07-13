@@ -9,10 +9,25 @@ if (!token || !user) window.location.href = '../accueil/login.html';
 
 // ── INIT UTILISATEUR ──
 const initiales = `${user.nom?.[0] || ''}${user.prenom?.[0] || ''}`.toUpperCase();
-document.getElementById('user-avatar').textContent    = initiales;
+
+const avatarHtml = user.photo_profil 
+  ? `<img src="${user.photo_profil.startsWith('http') ? user.photo_profil : 'http://localhost:5000' + user.photo_profil}" alt="Profil" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />` 
+  : initiales;
+
+document.getElementById('user-avatar').innerHTML    = avatarHtml;
 document.getElementById('user-nom').textContent       = `${user.prenom} ${user.nom}`;
-document.getElementById('sidebar-avatar').textContent = initiales;
+document.getElementById('sidebar-avatar').innerHTML = avatarHtml;
 document.getElementById('sidebar-nom').textContent    = `${user.prenom} ${user.nom}`;
+
+// Simulation chargement notifications
+setTimeout(() => {
+  const notifBadge = document.querySelector('.notif-badge');
+  if (notifBadge) {
+    const notifs = Math.floor(Math.random() * 5) + 1;
+    notifBadge.textContent = notifs;
+    notifBadge.style.display = 'flex';
+  }
+}, 1000);
 
 // ── VARIABLES GLOBALES ──
 let listeUtilisateurs = [];
