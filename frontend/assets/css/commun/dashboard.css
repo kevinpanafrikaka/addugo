@@ -711,14 +711,14 @@
 }
 
 .carte-produit-infos {
-  padding: 12px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
 .carte-produit-titre {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 400;
   color: var(--texte);
   margin-bottom: 6px;
@@ -731,12 +731,14 @@
 }
 
 .carte-produit-prix {
-  font-size: 1.2rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--orange);
   margin-bottom: 6px;
   font-family: var(--police-titre);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .carte-produit-boutique {
