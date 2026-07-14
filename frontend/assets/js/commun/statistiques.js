@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         // -- Initialiser les Graphiques
-        initCharts(data.revenus_chart, data.categories_chart);
+        initCharts(data.revenus_chart, data.categories_chart, jours);
 
       } else {
         console.error(res.message);
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 let lineChart = null;
 let doughnutChart = null;
 
-function initCharts(revenusData, categoriesData) {
+function initCharts(revenusData, categoriesData, jours = 7) {
   // Détruire les anciens graphiques s'ils existent (Très important dans les filtres pour éviter les superpositions)
   if (lineChart) lineChart.destroy();
   if (doughnutChart) doughnutChart.destroy();
@@ -139,13 +139,14 @@ function initCharts(revenusData, categoriesData) {
   // 1. Graphique des Revenus (Ligne)
   const ctxRevenus = document.getElementById('chart-revenus').getContext('2d');
 
-  
   // Préparer les données
   const isMobile = window.innerWidth <= 768;
   const dateOptionsFull = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
-  const dateOptionsShort = { weekday: isMobile ? 'short' : 'long' }; // ex: "mer." sur mobile, "mercredi" sur desktop
+  const dateOptionsShort = { weekday: isMobile ? 'short' : 'long' }; 
   
-  const fullDates = []; // On stocke les dates complètes pour la bulle d'info
+  const fullDates = [];
+  
+  const len = jours === 0 ? 1 : (jours === 365 ? 12 : jours);
   
   const labelsRevenus = revenusData.length 
     ? revenusData.map(r => {
@@ -155,16 +156,24 @@ function initCharts(revenusData, categoriesData) {
         let s = d.toLocaleDateString('fr-FR', dateOptionsShort).replace('.', '');
         return s.charAt(0).toUpperCase() + s.slice(1);
       }) 
-    : Array.from({length: 7}).map((_, i) => {
+    : Array.from({length: len}).map((_, i) => {
         const d = new Date();
-        d.setDate(d.getDate() - (6 - i));
-        let f = d.toLocaleDateString('fr-FR', dateOptionsFull);
-        fullDates.push(f.charAt(0).toUpperCase() + f.slice(1));
-        let s = d.toLocaleDateString('fr-FR', dateOptionsShort).replace('.', '');
-        return s.charAt(0).toUpperCase() + s.slice(1);
+        if (jours === 365) {
+          d.setMonth(d.getMonth() - (11 - i));
+          let f = d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+          fullDates.push(f.charAt(0).toUpperCase() + f.slice(1));
+          let s = d.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
+          return s.charAt(0).toUpperCase() + s.slice(1);
+        } else {
+          d.setDate(d.getDate() - ((len - 1) - i));
+          let f = d.toLocaleDateString('fr-FR', dateOptionsFull);
+          fullDates.push(f.charAt(0).toUpperCase() + f.slice(1));
+          let s = d.toLocaleDateString('fr-FR', dateOptionsShort).replace('.', '');
+          return s.charAt(0).toUpperCase() + s.slice(1);
+        }
       });
       
-  const dataRevenus = revenusData.length ? revenusData.map(r => r.total) : [0, 0, 0, 0, 0, 0, 0];
+  const dataRevenus = revenusData.length ? revenusData.map(r => r.total) : Array(len).fill(0);
 
   // Créer un dégradé pour la courbe
   let gradientOrange = ctxRevenus.createLinearGradient(0, 0, 0, 400);
