@@ -258,23 +258,27 @@
 .produit-img-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  background: var(--fond);
+  aspect-ratio: 1 / 1; /* Format carré pour bien voir le produit */
+  background: #ede8d8;
   overflow: hidden;
 }
 
 .produit-badge-categorie {
   position: absolute;
-  top: 6px;
-  left: 6px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 2px 5px;
-  border-radius: 4px;
-  font-size: 0.65rem;
+  top: 5px;
+  left: 5px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.6rem; /* Étiquette très compacte */
   font-weight: 600;
   color: var(--texte);
   z-index: 2;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  max-width: 90%; /* Évite que l'étiquette longue déborde */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .produit-img {
@@ -297,23 +301,27 @@
 
 .produit-desc {
   font-size: 0.75rem;
-  color: var(--texte-gris);
+  color: #5a5a5a;
   margin-bottom: 6px;
-  line-height: 1.25;
+  line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3; /* 3 lignes exactement */
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-height: calc(0.75rem * 1.4 * 3); /* Hauteur fixe de 3 lignes pour aligner toutes les cartes */
 }
 
 .produit-prix-ligne {
-  margin-top: auto; /* Pousse le prix vers le bas */
+  margin-top: 4px;
 }
 
 .produit-prix {
   font-weight: 800;
   color: var(--orange);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  white-space: nowrap; /* Force prix + GNF sur une seule ligne */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .produit-actions {
