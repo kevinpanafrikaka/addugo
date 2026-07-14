@@ -96,6 +96,23 @@ body {
   color: var(--texte);
   line-height: 1.6;
   min-height: 100vh;
+  position: relative;
+}
+
+/* ── FOND "DOODLES" STYLE WHATSAPP ── */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Reste derrière tout le contenu */
+  pointer-events: none; /* Ne bloque pas les clics */
+  opacity: 0.04; /* Ultra-subtil, ne gêne pas la lecture */
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg stroke='%23000' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M25,20 L27,25 L32,25 L28,29 L30,34 L25,31 L20,34 L22,29 L18,25 L23,25 Z'/%3E%3Crect x='75' y='15' width='18' height='18' rx='3'/%3E%3Cline x1='75' y1='22' x2='93' y2='22'/%3E%3Cpath d='M20,75 L30,75 L40,85 L30,95 L20,95 Z'/%3E%3Ccircle cx='25' cy='85' r='2' fill='%23000'/%3E%3Cpath d='M85,80 L92,70 L99,80 L92,90 Z'/%3E%3Cpath d='M45,45 Q55,35 65,45 T85,45'/%3E%3C/g%3E%3Ccircle cx='55' cy='60' r='1.5' fill='%23000'/%3E%3Ccircle cx='105' cy='45' r='2' fill='%23000'/%3E%3Ccircle cx='15' cy='50' r='1' fill='%23000'/%3E%3Ccircle cx='80' cy='105' r='1.5' fill='%23000'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 120px;
 }
 
 a {
