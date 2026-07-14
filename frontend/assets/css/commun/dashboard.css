@@ -759,17 +759,17 @@
 
 .btn-carte {
   flex: 1;
-  padding: 8px 5px;
+  padding: 6px 4px;
   border-radius: 30px;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 3px;
 }
 
 .btn-carte-principal {
@@ -784,9 +784,9 @@
 }
 
 .btn-carte-secondaire {
-  flex: 0 0 36px;
-  width: 36px;
-  height: 36px;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
   padding: 0;
   background: var(--blanc);
   border: 2px solid var(--erreur);
