@@ -118,7 +118,7 @@ function afficherProduits() {
 
   // Compteur de résultats
   const compteur = document.getElementById('compteur-produits');
-  if (compteur) compteur.textContent = produits.length > 0 ? `${produits.length} produit${produits.length > 1 ? 's' : ''}` : '';
+  if (compteur) compteur.textContent = `${produits.length} produit${produits.length !== 1 ? 's' : ''}`;
 
   if (produits.length === 0) {
     liste.innerHTML = `
