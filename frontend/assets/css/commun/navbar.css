@@ -240,7 +240,7 @@
 }
 
 .produit-carte {
-  background: var(--blanc);
+  background: #F5F5DC; /* Couleur Beige demandée */
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
@@ -327,8 +327,8 @@
   align-items: center;
   gap: 4px;
   padding: 6px 8px;
-  background: #FAFAFA;
-  border-top: 1px solid var(--bordure);
+  background: rgba(0, 0, 0, 0.03); /* Légèrement plus foncé pour séparer du corps beige */
+  border-top: 1px solid rgba(0,0,0,0.06);
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--texte);
