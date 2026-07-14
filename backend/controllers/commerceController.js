@@ -352,12 +352,24 @@ exports.getCommerceStats = async (req, res) => {
     if (isNaN(jours)) {
         conditionRevenus = " AND c.date_creation >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ";
     }
+    
+    let selectDateStr = "DATE(c.date_creation)";
+    let groupByStr = "DATE(c.date_creation)";
+    
+    if (jours === 0) {
+        selectDateStr = "DATE_FORMAT(c.date_creation, '%Y-%m-%d %H:00:00')";
+        groupByStr = "DATE_FORMAT(c.date_creation, '%Y-%m-%d %H:00:00')";
+    } else if (jours === 365) {
+        selectDateStr = "DATE_FORMAT(c.date_creation, '%Y-%m-01')";
+        groupByStr = "YEAR(c.date_creation), MONTH(c.date_creation)";
+    }
+
     const revenusChart = await conn.query(`
-      SELECT DATE(c.date_creation) as date, SUM(c.montant_total) as total
+      SELECT ${selectDateStr} as date, SUM(c.montant_total) as total
       FROM commandes c
       WHERE c.commerce_id = ? AND c.statut = 'livree' ${conditionRevenus}
-      GROUP BY DATE(c.date_creation)
-      ORDER BY date ASC
+      GROUP BY ${groupByStr}
+      ORDER BY MIN(c.date_creation) ASC
     `, [commerceId]);
 
     // 4. Graphique Ventes par Catégorie

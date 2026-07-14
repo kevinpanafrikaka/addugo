@@ -139,41 +139,85 @@ function initCharts(revenusData, categoriesData, jours = 7) {
   // 1. Graphique des Revenus (Ligne)
   const ctxRevenus = document.getElementById('chart-revenus').getContext('2d');
 
-  // Préparer les données
+  // Préparer les données dynamiquement selon le filtre (jours)
   const isMobile = window.innerWidth <= 768;
-  const dateOptionsFull = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
-  const dateOptionsShort = { weekday: isMobile ? 'short' : 'long' }; 
-  
-  const fullDates = [];
-  
-  const len = jours === 0 ? 1 : (jours === 365 ? 12 : jours);
-  
-  const labelsRevenus = revenusData.length 
-    ? revenusData.map(r => {
-        const d = new Date(r.date);
-        let f = d.toLocaleDateString('fr-FR', dateOptionsFull);
-        fullDates.push(f.charAt(0).toUpperCase() + f.slice(1));
-        let s = d.toLocaleDateString('fr-FR', dateOptionsShort).replace('.', '');
-        return s.charAt(0).toUpperCase() + s.slice(1);
-      }) 
-    : Array.from({length: len}).map((_, i) => {
-        const d = new Date();
-        if (jours === 365) {
-          d.setMonth(d.getMonth() - (11 - i));
-          let f = d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
-          fullDates.push(f.charAt(0).toUpperCase() + f.slice(1));
-          let s = d.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
-          return s.charAt(0).toUpperCase() + s.slice(1);
-        } else {
-          d.setDate(d.getDate() - ((len - 1) - i));
-          let f = d.toLocaleDateString('fr-FR', dateOptionsFull);
-          fullDates.push(f.charAt(0).toUpperCase() + f.slice(1));
-          let s = d.toLocaleDateString('fr-FR', dateOptionsShort).replace('.', '');
-          return s.charAt(0).toUpperCase() + s.slice(1);
-        }
-      });
+  let labelsRevenus = [];
+  let fullDates = [];
+  let dataRevenus = [];
+
+  if (jours === 0) {
+    // Aujourd'hui: 00H à 23H
+    labelsRevenus = Array.from({length: 24}).map((_, i) => `${String(i).padStart(2, '0')}H`);
+    fullDates = Array.from({length: 24}).map((_, i) => `Aujourd'hui à ${String(i).padStart(2, '0')}H`);
+    dataRevenus = Array(24).fill(0);
+
+    revenusData.forEach(r => {
+      const h = new Date(r.date).getHours();
+      dataRevenus[h] += r.total;
+    });
+
+  } else if (jours === 7 || jours === undefined) {
+    // 7 Jours: Lundi à Dimanche (Les 7 derniers jours)
+    labelsRevenus = Array(7).fill('');
+    fullDates = Array(7).fill('');
+    dataRevenus = Array(7).fill(0);
+    
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const idx = 6 - i;
+      labelsRevenus[idx] = d.toLocaleDateString('fr-FR', { weekday: isMobile ? 'short' : 'long' }).replace('.', '');
+      labelsRevenus[idx] = labelsRevenus[idx].charAt(0).toUpperCase() + labelsRevenus[idx].slice(1);
       
-  const dataRevenus = revenusData.length ? revenusData.map(r => r.total) : Array(len).fill(0);
+      let f = d.toLocaleDateString('fr-FR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+      fullDates[idx] = f.charAt(0).toUpperCase() + f.slice(1);
+      
+      const match = revenusData.find(r => new Date(r.date).toDateString() === d.toDateString());
+      if (match) dataRevenus[idx] += match.total;
+    }
+
+  } else if (jours === 30) {
+    // 30 Jours: 4 Semaines
+    labelsRevenus = isMobile 
+      ? ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4']
+      : ['Semaine 1', 'Semaine 2', 'Semaine 3', 'Semaine 4'];
+    
+    fullDates = ['Semaine 1 (J-30 à J-22)', 'Semaine 2 (J-21 à J-15)', 'Semaine 3 (J-14 à J-8)', 'Semaine 4 (Les 7 derniers jours)'];
+    dataRevenus = Array(4).fill(0);
+    
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    
+    revenusData.forEach(r => {
+      const d = new Date(r.date);
+      d.setHours(0,0,0,0);
+      const diffDays = Math.floor((today - d) / (1000 * 60 * 60 * 24));
+      
+      if (diffDays <= 7) dataRevenus[3] += r.total;
+      else if (diffDays <= 14) dataRevenus[2] += r.total;
+      else if (diffDays <= 21) dataRevenus[1] += r.total;
+      else dataRevenus[0] += r.total;
+    });
+
+  } else if (jours === 365) {
+    // Année: Les 12 mois de l'année en cours
+    const currentYear = new Date().getFullYear();
+    labelsRevenus = Array(12).fill('');
+    fullDates = Array(12).fill('');
+    dataRevenus = Array(12).fill(0);
+    
+    for (let i = 0; i < 12; i++) {
+      const d = new Date(currentYear, i, 1);
+      labelsRevenus[i] = d.toLocaleDateString('fr-FR', { month: isMobile ? 'short' : 'long' }).replace('.', '');
+      labelsRevenus[i] = labelsRevenus[i].charAt(0).toUpperCase() + labelsRevenus[i].slice(1);
+      
+      fullDates[i] = d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+      fullDates[i] = fullDates[i].charAt(0).toUpperCase() + fullDates[i].slice(1);
+      
+      const match = revenusData.find(r => new Date(r.date).getMonth() === i && new Date(r.date).getFullYear() === currentYear);
+      if (match) dataRevenus[i] += match.total;
+    }
+  }
 
   // Créer un dégradé pour la courbe
   let gradientOrange = ctxRevenus.createLinearGradient(0, 0, 0, 400);
