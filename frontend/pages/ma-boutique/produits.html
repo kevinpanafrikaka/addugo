@@ -114,36 +114,140 @@
     <!-- CONTENU -->
     <main class="dashboard-contenu anime-slide-up" style="max-width: 100%; margin: 0 auto; padding: 15px 20px 15px 20px;">
 
-      <!-- EN-TÊTE PRODUITS REDESIGNÉE -->
-      <div class="entete-produits-v2" style="background: var(--blanc); border: 1px solid var(--bordure); border-radius: 18px; padding: 12px 18px; margin-bottom: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.02);">
+      <!-- STYLE PREMIUM POUR L'EN-TÊTE (CREATIVE DESIGN) -->
+      <style>
+        .entete-creative {
+          background: linear-gradient(135deg, #ffffff 0%, #fdfcfb 100%);
+          border: 1px solid rgba(255, 107, 0, 0.08);
+          border-radius: 24px;
+          padding: 16px 24px;
+          margin-bottom: 24px;
+          box-shadow: 0 12px 36px rgba(0,0,0,0.03), inset 0 2px 6px rgba(255,255,255,0.8);
+          position: relative;
+          overflow: hidden;
+        }
+        .entete-creative::before {
+          content: '';
+          position: absolute;
+          top: -60px;
+          left: -40px;
+          width: 200px;
+          height: 200px;
+          background: radial-gradient(circle, rgba(255,107,0,0.06) 0%, transparent 70%);
+          border-radius: 50%;
+          pointer-events: none;
+        }
+        .entete-creative::after {
+          content: '';
+          position: absolute;
+          bottom: -40px;
+          right: -20px;
+          width: 150px;
+          height: 150px;
+          background: radial-gradient(circle, rgba(0,0,0,0.02) 0%, transparent 70%);
+          border-radius: 50%;
+          pointer-events: none;
+        }
+        .segment-control {
+          display: inline-flex;
+          align-items: center;
+          background: rgba(0,0,0,0.02);
+          padding: 4px;
+          border-radius: 30px;
+          box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);
+          gap: 4px;
+          border: 1px solid rgba(0,0,0,0.02);
+        }
+        .segment-btn {
+          padding: 8px 18px;
+          font-size: 0.84rem;
+          border-radius: 24px;
+          font-weight: 600;
+          color: var(--texte-gris);
+          background: transparent;
+          border: none;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .segment-btn:hover {
+          color: var(--texte);
+          background: rgba(0,0,0,0.02);
+        }
+        .segment-btn.actif {
+          background: var(--blanc);
+          color: var(--orange);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          font-weight: 700;
+        }
+        .badge-glow {
+          background: rgba(255, 107, 0, 0.08);
+          color: var(--orange);
+          padding: 6px 14px;
+          border-radius: 20px;
+          font-weight: 800;
+          font-size: 0.85rem;
+          border: 1px solid rgba(255, 107, 0, 0.15);
+          white-space: nowrap;
+          box-shadow: 0 2px 8px rgba(255, 107, 0, 0.1);
+        }
+        .btn-gradient {
+          background: linear-gradient(135deg, var(--orange) 0%, #ff7300 100%);
+          box-shadow: 0 6px 16px rgba(255, 107, 0, 0.3);
+          color: #fff !important;
+          transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s;
+          border: none;
+        }
+        .btn-gradient:hover {
+          transform: translateY(-2px) scale(1.02);
+          box-shadow: 0 8px 24px rgba(255, 107, 0, 0.4);
+        }
+        .btn-dark {
+          background: var(--texte);
+          color: #fff !important;
+          box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+          transition: transform 0.25s, box-shadow 0.25s;
+          border: none;
+        }
+        .btn-dark:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+      </style>
+
+      <div class="entete-creative">
         
         <!-- EN-TÊTE : MESSAGE + FILTRES + BOUTONS D'ACTION -->
-        <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: nowrap;">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; position: relative; z-index: 2;">
           
           <!-- GAUCHE : MESSAGE DE BIENVENUE -->
-          <div style="flex: 1.2;">
-            <h1 id="titre-bienvenue" style="font-size: 1.2rem; color: var(--texte); font-family: var(--police-titre); font-weight: 800; margin: 0 0 2px 0; line-height: 1.2;">Chargement...</h1>
-            <p id="sous-titre-bienvenue" style="color: var(--texte-gris); font-size: 0.82rem; margin: 0; line-height: 1.3;">Gérez votre catalogue et développez votre activité en toute simplicité.</p>
+          <div style="flex: 1; min-width: 250px;">
+            <h1 id="titre-bienvenue" style="font-size: 1.35rem; color: var(--texte); font-family: var(--police-titre); font-weight: 900; margin: 0 0 4px 0; line-height: 1.2; letter-spacing: -0.3px;">Chargement...</h1>
+            <p id="sous-titre-bienvenue" style="color: var(--texte-gris); font-size: 0.85rem; margin: 0; line-height: 1.4; opacity: 0.9;">Gérez votre catalogue et développez votre activité en toute simplicité.</p>
           </div>
 
           <!-- MILIEU : COMPTEUR + FILTRES DE RECHERCHE -->
-          <div style="display: flex; align-items: center; gap: 12px; justify-content: center; flex: 1.5; white-space: nowrap;">
-            <span id="compteur-produits" class="compteur-style" style="font-weight: 700; color: var(--texte-gris); font-size: 0.86rem; margin: 0; border-right: 1px solid var(--bordure); padding-right: 12px;"></span>
+          <div style="display: flex; align-items: center; gap: 16px; justify-content: center; flex: 1.5; white-space: nowrap;">
+            <div class="badge-glow">
+              <span id="compteur-produits"></span>
+            </div>
             
-            <div class="filtres-produits" style="display: flex; gap: 6px;">
-              <button class="filtre-btn actif" data-filtre="tous" style="padding: 5px 12px; font-size: 0.8rem; border-radius: 20px;">Tous</button>
-              <button class="filtre-btn" data-filtre="disponible" style="padding: 5px 12px; font-size: 0.8rem; border-radius: 20px;"><i class="fas fa-check-circle" style="font-size: 0.75rem;"></i> Disponibles</button>
-              <button class="filtre-btn" data-filtre="indisponible" style="padding: 5px 12px; font-size: 0.8rem; border-radius: 20px;"><i class="fas fa-times-circle" style="font-size: 0.75rem;"></i> Indisponibles</button>
+            <div class="filtres-produits segment-control">
+              <button class="filtre-btn segment-btn actif" data-filtre="tous">Tous</button>
+              <button class="filtre-btn segment-btn" data-filtre="disponible"><i class="fas fa-check-circle"></i> Disponibles</button>
+              <button class="filtre-btn segment-btn" data-filtre="indisponible"><i class="fas fa-times-circle"></i> Indisponibles</button>
             </div>
           </div>
 
           <!-- DROITE : GROUPE BOUTONS D'ACTION -->
-          <div style="display: flex; align-items: center; gap: 8px; justify-content: flex-end; flex: 1.2; position: relative;" class="entete-boutons-groupe">
-            <a href="commandes.html" class="btn" style="border-radius: 12px; font-weight: 700; padding: 9px 18px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 0.86rem; background: var(--noir, #1A1A2E); color: #FFFFFF; box-shadow: 0 4px 14px rgba(26,26,46,0.22); transition: transform 0.2s ease;">
+          <div style="display: flex; align-items: center; gap: 12px; justify-content: flex-end; flex: 1.2; position: relative;" class="entete-boutons-groupe">
+            <a href="commandes.html" class="btn btn-dark" style="border-radius: 16px; font-weight: 700; padding: 10px 18px; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-size: 0.86rem;">
               <i class="fas fa-box" style="color: var(--orange);"></i> Voir mes commandes
             </a>
 
-            <button class="btn btn-orange" id="btn-ajouter-produit" style="border-radius: 12px; font-weight: 700; padding: 9px 18px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.86rem; box-shadow: 0 4px 14px rgba(255,107,0,0.25);">
+            <button class="btn btn-gradient" id="btn-ajouter-produit" style="border-radius: 16px; font-weight: 800; padding: 10px 18px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.86rem;">
               <i class="fas fa-plus"></i> Ajouter un produit
             </button>
             
