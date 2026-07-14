@@ -125,10 +125,17 @@ async function chargerCommandes() {
         return;
       }
 
-      liste.innerHTML = recentes.map(c => `
+      liste.innerHTML = recentes.map(c => {
+        const logoUrl = c.commerce_logo 
+          ? (c.commerce_logo.startsWith('http') ? c.commerce_logo : `https://addugo.up.railway.app${c.commerce_logo}`)
+          : null;
+        return `
         <div class="commande-item" style="display:flex; justify-content:space-between; align-items:center; padding:14px 18px; background:var(--blanc); border-radius:14px; border:1px solid var(--bordure); margin-bottom:10px;">
           <div class="commande-info" style="display:flex; align-items:center; gap:12px;">
-            <div class="commande-icone" style="width:40px; height:40px; border-radius:10px; background:rgba(255,107,0,0.1); color:var(--orange); display:flex; align-items:center; justify-content:center; font-size:1.1rem;"><i class="fas fa-shopping-cart" style="margin-right:4px;"></i></div>
+            ${logoUrl 
+              ? `<img src="${logoUrl}" alt="${c.commerce_nom || 'Boutique'}" style="width:40px; height:40px; border-radius:10px; object-fit:cover; border:1px solid var(--bordure);">`
+              : `<div class="commande-icone" style="width:40px; height:40px; border-radius:10px; background:rgba(255,107,0,0.1); color:var(--orange); display:flex; align-items:center; justify-content:center; font-size:1.1rem;"><i class="fas fa-shopping-cart" style="margin-right:4px;"></i></div>`
+            }
             <div>
               <div class="commande-nom" style="font-weight:700; font-family:var(--police-titre); font-size:0.95rem;">${c.commerce_nom || 'Boutique AdduGo'}</div>
               <div class="commande-date" style="font-size:0.78rem; color:var(--texte-clair);">${formatDate(c.date_creation)}</div>
@@ -138,7 +145,8 @@ async function chargerCommandes() {
             ${badgeStatut(c.statut)}
             <span class="commande-montant" style="font-weight:800; font-family:var(--police-titre); color:var(--orange); font-size:1.05rem;">${formatPrix(c.montant_total)}</span>
           </div>
-        </div>`).join('');
+        </div>`;
+      }).join('');
     }
 
   } catch (err) {
