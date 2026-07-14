@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Ajouter l'état actif sur le bouton cliqué
       e.target.classList.add('actif');
       
-      const jours = e.target.getAttribute('data-jours');
+      const jours = parseInt(e.target.getAttribute('data-jours'), 10);
       chargerStatistiques(jours);
     });
   });
@@ -141,6 +141,7 @@ function initCharts(revenusData, categoriesData, jours = 7) {
 
   // Préparer les données dynamiquement selon le filtre (jours)
   const isMobile = window.innerWidth <= 768;
+  jours = parseInt(jours, 10);
   let labelsRevenus = [];
   let fullDates = [];
   let dataRevenus = [];
