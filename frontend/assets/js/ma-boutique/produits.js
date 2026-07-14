@@ -18,17 +18,17 @@ async function initialiserBoutique() {
     if (data.success && data.commerces && data.commerces.length > 0) {
       const commerce = data.commerces[0];
       localStorage.setItem('addugo_commerce_id', commerce.id);
-      if(document.getElementById('titre-bienvenue')) document.getElementById('titre-bienvenue').innerHTML = `Bonjour ${user.prenom} 👋, bienvenue sur <span class="orange">${commerce.nom}</span> `;
+      if(document.getElementById('titre-bienvenue')) document.getElementById('titre-bienvenue').innerHTML = `Bonjour ${user.prenom}, bienvenue sur <span class="orange">${commerce.nom}</span> `;
     } else {
       if(document.getElementById('titre-bienvenue')) {
-        document.getElementById('titre-bienvenue').innerHTML = `Bonjour ${user.prenom} 👋, bienvenue dans votre Espace Vendeur !`;
+        document.getElementById('titre-bienvenue').innerHTML = `Bonjour ${user.prenom}, bienvenue dans votre Espace Vendeur !`;
         const sousTitre = document.getElementById('sous-titre-bienvenue');
         if(sousTitre) sousTitre.innerHTML = `Vous n'avez pas encore de boutique en ligne. <a href="#" class="lien-orange" id="creer-commerce" style="font-weight:700;">Cliquez ici pour créer votre commerce</a>.`;
       }
     }
   } catch (err) {
     console.error('Erreur chargement boutique:', err);
-    if(document.getElementById('titre-bienvenue')) document.getElementById('titre-bienvenue').innerHTML = `Bonjour ${user.prenom} 👋, bienvenue dans vos <span class="orange">Produits</span>`;
+    if(document.getElementById('titre-bienvenue')) document.getElementById('titre-bienvenue').innerHTML = `Bonjour ${user.prenom}, bienvenue dans vos <span class="orange">Produits</span>`;
   }
 }
 initialiserBoutique();
