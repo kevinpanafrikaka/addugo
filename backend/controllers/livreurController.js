@@ -278,7 +278,15 @@ exports.terminerLivraison = async (req, res) => {
       [commande_id]
     );
 
-    if (commandesInfo.length === 0 || commandesInfo[0].code_pin !== String(code_pin).trim()) {
+    if (commandesInfo.length === 0) {
+      await conn.rollback();
+      return res.status(404).json({ success: false, message: 'Commande introuvable.' });
+    }
+
+    const pinEnBase = commandesInfo[0].code_pin;
+    
+    // Si un code PIN existe en base, on le vérifie strictement
+    if (pinEnBase !== null && pinEnBase !== String(code_pin).trim()) {
       await conn.rollback();
       return res.status(400).json({
         success: false,
