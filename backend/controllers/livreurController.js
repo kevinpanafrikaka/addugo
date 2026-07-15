@@ -272,9 +272,9 @@ exports.terminerLivraison = async (req, res) => {
 
     const commande_id = Number(livraisons[0].commande_id);
 
-    // Vérifier le code PIN avec celui de la commande
+    // Vérifier le code PIN avec celui de la commande (SELECT * pour éviter erreur si colonne absente)
     const commandesInfo = await conn.query(
-      'SELECT code_pin FROM commandes WHERE id = ?',
+      'SELECT * FROM commandes WHERE id = ?',
       [commande_id]
     );
 
@@ -286,7 +286,7 @@ exports.terminerLivraison = async (req, res) => {
     const pinEnBase = commandesInfo[0].code_pin;
     
     // Si un code PIN existe en base, on le vérifie strictement
-    if (pinEnBase !== null && pinEnBase !== String(code_pin).trim()) {
+    if (pinEnBase !== undefined && pinEnBase !== null && String(pinEnBase).trim() !== String(code_pin).trim()) {
       await conn.rollback();
       return res.status(400).json({
         success: false,
