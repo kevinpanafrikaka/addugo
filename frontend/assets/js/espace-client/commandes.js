@@ -118,9 +118,10 @@ function afficherCommandes() {
           <button class="btn btn-sm" style="border-radius:10px; background:rgba(239,68,68,0.1); color:#EF4444; border:1px solid rgba(239,68,68,0.2); font-weight:700;" onclick="annulerCommande(${c.id})">
             <i class="fas fa-times"></i> Annuler la commande
           </button>` : ''}
+        ${c.statut !== 'en_livraison' ? `
         <button class="btn btn-contour-orange btn-sm" style="border-radius:10px; font-weight:700;" onclick="voirDetails(${c.id})">
           <i class="fas fa-eye"></i> Détails
-        </button>
+        </button>` : ''}
       </div>
     </div>`;
   }).join('');
