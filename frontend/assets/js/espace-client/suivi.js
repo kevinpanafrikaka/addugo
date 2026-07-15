@@ -263,21 +263,8 @@ async function afficherSuivi(commandeId) {
   }
 }
 
-// ── RETOUR LISTE ──
-document.getElementById('btn-retour-liste').addEventListener('click', () => {
-  if (window.suiviInterval) clearInterval(window.suiviInterval);
-  if (socketSuivi) { socketSuivi.disconnect(); socketSuivi = null; }
-  window.commandeActuelleId = null;
-  window.statutPrecedent = null;
-  document.getElementById('detail-suivi').classList.add('cache');
-  document.getElementById('commandes-en-cours').classList.remove('cache');
-});
-
-// ── RECHERCHE PAR ID ──
-document.getElementById('btn-rechercher-commande').addEventListener('click', () => {
-  const id = document.getElementById('input-commande-id').value.trim();
-  if (id) afficherSuivi(parseInt(id));
-});
+// ── BOUTONS SUPPRIMÉS ──
+// Le bouton retour et le bouton recherche ont été retirés de l'interface selon la demande.
 
 // ── DÉCONNEXION ──
 document.getElementById('btn-deconnexion')?.addEventListener('click', (e) => {

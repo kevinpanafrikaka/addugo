@@ -130,25 +130,16 @@
           </div>
         </div>
 
-        <!-- RECHERCHE COMMANDE -->
-        <div class="suivi-recherche" style="display: flex; gap: 10px; align-items: stretch; flex-wrap: wrap; flex: 1; max-width: 450px; margin: 0;">
-          <div class="input-groupe" style="flex: 1; margin: 0; position: relative;">
-            <i class="fas fa-hashtag" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--texte-clair);"></i>
-            <input
-              type="text"
-              id="input-commande-id"
-              placeholder="N° de commande (ex: 00001)"
-              style="width: 100%; height: 100%; padding: 14px 16px 14px 40px; border-radius: 12px; border: 1px solid #FFEDD5; background: white; font-size: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.02); outline: none; transition: 0.3s;"
-            />
-          </div>
-          <button class="btn btn-orange" id="btn-rechercher-commande" style="border-radius: 12px; padding: 0 24px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; font-size: 1rem;">
-            <i class="fas fa-search"></i>
-          </button>
+        <!-- BOUTON MES COMMANDES -->
+        <div>
+          <a href="commandes.html" class="btn btn-orange" style="border-radius: 12px; padding: 12px 24px; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; font-size: 1.05rem; box-shadow: 0 4px 10px rgba(255,107,0,0.2);">
+            <i class="fas fa-shopping-bag"></i> Mes commandes
+          </a>
         </div>
       </div>
 
       <!-- CARTE 2 : CONTENU DU SUIVI -->
-      <div class="suivi-conteneur-carte" style="background: var(--blanc); border: 1px solid var(--bordure); border-radius: 18px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.02); min-height: 400px;">
+      <div class="suivi-conteneur-carte" style="background: var(--blanc); border: 1px solid var(--bordure); border-radius: 18px; padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.02);">
 
       <!-- CONTENU SUIVI -->
       <div id="suivi-contenu">
@@ -280,15 +271,6 @@
               <div id="suivi-liste-articles"></div>
             </div>
 
-          </div>
-
-          <div class="flex gap-md mt-md">
-            <button class="btn btn-contour-orange" id="btn-retour-liste">
-              <i class="fas fa-arrow-left"></i> Retour
-            </button>
-            <a href="commandes.html" class="btn btn-orange">
-              <i class="fas fa-shopping-bag"></i> Mes commandes
-            </a>
           </div>
 
         </div>
