@@ -127,7 +127,7 @@ function afficherLivraisons() {
           </div>
         ` : l.statut === 'livree' ? '<span style="color:#10B981; font-weight:700; font-size:0.85rem;"><i class="fas fa-check"></i> Terminée</span>' : `
             <button class="btn btn-orange btn-sm" onclick="marquerLivree(${l.id})" style="border-radius:10px; font-weight:700; padding:6px 14px;">
-              <i class="fas fa-key"></i> Code PIN
+              <i class="fas fa-key"></i> Livraison Effectuée
             </button>
         `}
       </div>
