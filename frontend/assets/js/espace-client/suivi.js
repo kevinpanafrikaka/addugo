@@ -88,8 +88,8 @@ function initMap(commandeId, statut) {
 
   cartes[commandeId] = L.map(`map-suivi-${commandeId}`).setView(clientCoords, 14);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
   }).addTo(cartes[commandeId]);
 
   // Icônes
