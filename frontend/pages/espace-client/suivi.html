@@ -138,143 +138,16 @@
         </div>
       </div>
 
-      <!-- CARTE 2 : CONTENU DU SUIVI -->
-      <div class="suivi-conteneur-carte" style="background: var(--blanc); border: 1px solid var(--bordure); border-radius: 18px; padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.02);">
-
       <!-- CONTENU SUIVI -->
       <div id="suivi-contenu">
-
-        <!-- SÉLECTION COMMANDE EN COURS -->
-        <div id="commandes-en-cours">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid var(--bordure); padding-bottom: 15px;">
-            <h3 style="font-size: 1.3rem; font-family: var(--police-titre); display: flex; align-items: center; gap: 10px; margin: 0; color: var(--texte);">
-              <i class="fas fa-list-ul" style="color: var(--orange);"></i> Vos commandes en cours
-            </h3>
-            <span class="badge" style="background: var(--bg-orange); color: var(--orange); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Sélectionnez une commande</span>
-          </div>
-          <div id="liste-en-cours" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 15px;">
-            <!-- Squelettes de chargement (si le chargement tarde) -->
-            <div class="skeleton skeleton-carte" style="width:100%; height: 95px; border-radius: 12px;"></div>
-            <div class="skeleton skeleton-carte" style="width:100%; height: 95px; border-radius: 12px;"></div>
+        <div id="conteneur-cartes-commandes" style="display: flex; flex-direction: column; gap: 30px;">
+          <!-- Les cartes des commandes en cours seront générées ici par JS -->
+          <div class="chargement" style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="skeleton skeleton-carte" style="width:100%; height: 200px; border-radius: 18px;"></div>
+            <div class="skeleton skeleton-carte" style="width:100%; height: 200px; border-radius: 18px;"></div>
           </div>
         </div>
-
-        <!-- DÉTAIL SUIVI -->
-        <div id="detail-suivi" class="cache">
-
-          <!-- INFO COMMANDE -->
-          <div class="suivi-carte">
-            <div class="suivi-carte-entete">
-              <div>
-                <h3 id="suivi-commerce">Commerce</h3>
-                <span class="texte-sm gris" id="suivi-id">#00000</span>
-              </div>
-              <div id="suivi-badge"></div>
-            </div>
-
-            <!-- CARTE SUIVI EN DIRECT -->
-            <div id="map-suivi" style="width: 100%; height: 350px; border-radius: var(--rayon-lg); margin: 1.5rem 0; background: var(--bg-secondaire); z-index: 1;"></div>
-
-            <!-- TIMELINE STATUTS -->
-            <div class="timeline">
-              <div class="timeline-etape" id="etape-en_attente">
-                <div class="timeline-icone">
-                  <i class="fas fa-clock"></i>
-                </div>
-                <div class="timeline-contenu">
-                  <div class="timeline-titre">Commande reçue</div>
-                  <div class="timeline-desc">Votre commande a été passée</div>
-                </div>
-              </div>
-              <div class="timeline-etape" id="etape-confirmee">
-                <div class="timeline-icone">
-                  <i class="fas fa-check"></i>
-                </div>
-                <div class="timeline-contenu">
-                  <div class="timeline-titre">Commande confirmée</div>
-                  <div class="timeline-desc">Le commerce a confirmé votre commande</div>
-                </div>
-              </div>
-              <div class="timeline-etape" id="etape-en_preparation">
-                <div class="timeline-icone">
-                  <i class="fas fa-box-open"></i>
-                </div>
-                <div class="timeline-contenu">
-                  <div class="timeline-titre">En préparation</div>
-                  <div class="timeline-desc">Votre commande est en cours de préparation</div>
-                </div>
-              </div>
-              <div class="timeline-etape" id="etape-prete">
-                <div class="timeline-icone">
-                  <i class="fas fa-box"></i>
-                </div>
-                <div class="timeline-contenu">
-                  <div class="timeline-titre">Prête</div>
-                  <div class="timeline-desc">Votre commande attend un livreur</div>
-                </div>
-              </div>
-              <div class="timeline-etape" id="etape-en_livraison">
-                <div class="timeline-icone">
-                  <i class="fas fa-motorcycle"></i>
-                </div>
-                <div class="timeline-contenu">
-                  <div class="timeline-titre">En livraison</div>
-                  <div class="timeline-desc">Un livreur est en route vers vous</div>
-                </div>
-              </div>
-              <div class="timeline-etape" id="etape-livree">
-                <div class="timeline-icone">
-                  <i class="fas fa-home"></i>
-                </div>
-                <div class="timeline-contenu">
-                  <div class="timeline-titre">Livrée !</div>
-                  <div class="timeline-desc">Votre commande a été livrée avec succès</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- INFOS LIVRAISON -->
-            <div class="suivi-infos">
-              <div class="suivi-info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <div>
-                  <div class="suivi-info-label">Adresse de livraison</div>
-                  <div class="suivi-info-val" id="suivi-adresse">—</div>
-                </div>
-              </div>
-              <div class="suivi-info-item">
-                <i class="fas fa-money-bill-wave"></i>
-                <div>
-                  <div class="suivi-info-label">Montant total</div>
-                  <div class="suivi-info-val prix" id="suivi-montant">—</div>
-                </div>
-              </div>
-              <div class="suivi-info-item">
-                <i class="fas fa-calendar"></i>
-                <div>
-                  <div class="suivi-info-label">Date de commande</div>
-                  <div class="suivi-info-val" id="suivi-date">—</div>
-                </div>
-              </div>
-              <div class="suivi-info-item" id="info-livreur" style="display:none">
-                <i class="fas fa-motorcycle"></i>
-                <div>
-                  <div class="suivi-info-label">Votre livreur</div>
-                  <div class="suivi-info-val" id="suivi-livreur">—</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ARTICLES -->
-            <div class="suivi-articles">
-              <h4 class="mb-md">Articles commandés</h4>
-              <div id="suivi-liste-articles"></div>
-            </div>
-
-          </div>
-
-        </div>
-      </div> <!-- Fin Carte 2 -->
+      </div>
 
     </main>
   </div>

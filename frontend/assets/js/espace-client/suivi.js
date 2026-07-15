@@ -1,15 +1,11 @@
 // ============================================================
-// AdduGo — Suivi de Livraison Client
+// AdduGo — Suivi de Livraison Client (Architecture Multi-Cartes)
 // ============================================================
-
 
 const token = localStorage.getItem('addugo_token');
 const user  = JSON.parse(localStorage.getItem('addugo_user') || 'null');
 
 if (!token || !user) window.location.href = '../accueil/login.html';
-
-// ── INIT UTILISATEUR ──
-// L'avatar et le nom sont gérés par navbar.js
 
 // Simulation chargement notifications
 setTimeout(() => {
@@ -22,21 +18,16 @@ setTimeout(() => {
 }, 1000);
 
 // ── VARIABLES GLOBALES ──
-let carteSuivi = null;
-let marqueurLivreur = null;
-let marqueurClient = null;
-let socketSuivi = null;
+let cartes = {};
+let marqueursLivreur = {};
+let marqueursClient = {};
+let sockets = {};
+
+let refreshInterval = null;
 
 // ── UTILITAIRES ──
 function formatPrix(montant) {
   return new Intl.NumberFormat('fr-GN').format(montant) + ' GNF';
-}
-
-function formatDate(date) {
-  return new Intl.DateTimeFormat('fr-FR', {
-    day: '2-digit', month: 'short', year: 'numeric',
-    hour: '2-digit', minute: '2-digit'
-  }).format(new Date(date));
 }
 
 function badgeStatut(statut) {
@@ -53,218 +44,227 @@ function badgeStatut(statut) {
   return `<span class="badge ${c.classe}">${c.texte}</span>`;
 }
 
-// ── ORDRE DES STATUTS ──
 const ordreStatuts = [
   'en_attente', 'confirmee', 'en_preparation',
   'prete', 'en_livraison', 'livree'
 ];
 
-// ── INITIALISATION CARTE LEAFLET ──
-function initMap(statut) {
-  const mapContainer = document.getElementById('map-suivi');
+const configEtapes = {
+  'en_attente': { i: 'fas fa-clock', t: 'Reçue' },
+  'confirmee': { i: 'fas fa-check', t: 'Confirmée' },
+  'en_preparation': { i: 'fas fa-box-open', t: 'Préparation' },
+  'prete': { i: 'fas fa-box', t: 'Prête' },
+  'en_livraison': { i: 'fas fa-motorcycle', t: 'En route' },
+  'livree': { i: 'fas fa-home', t: 'Livrée' }
+};
+
+// ── INITIALISATION CARTE LEAFLET PAR COMMANDE ──
+function initMap(commandeId, statut) {
+  const mapContainer = document.getElementById(`map-suivi-${commandeId}`);
   if (!mapContainer) return;
 
-  if (carteSuivi) {
-    carteSuivi.remove();
-    carteSuivi = null;
-  }
-  
-  if (socketSuivi) {
-    socketSuivi.disconnect();
-    socketSuivi = null;
-  }
-
-  // Si on n'est pas au moins en cours de livraison ou prête, on ne montre pas la carte
-  if (!['prete', 'en_livraison', 'livree'].includes(statut)) {
+  // Astuce de Performance : Ne charger la carte Leaflet que lorsque la commande est "En livraison"
+  if (statut !== 'en_livraison') {
+    if (cartes[commandeId]) {
+      cartes[commandeId].remove();
+      delete cartes[commandeId];
+    }
+    if (sockets[commandeId]) {
+      sockets[commandeId].disconnect();
+      delete sockets[commandeId];
+    }
     mapContainer.style.display = 'none';
     return;
   }
+
+  // Rendre visible le conteneur
   mapContainer.style.display = 'block';
 
-  // Point de livraison fictif (Conakry centre)
-  const clientCoords = [9.509167, -13.712222];
-  
-  carteSuivi = L.map('map-suivi').setView(clientCoords, 14);
+  // Si déjà initialisée, ne rien faire
+  if (cartes[commandeId]) return;
+
+  const clientCoords = [9.509167, -13.712222]; // Fictif (centre Conakry)
+  let livreurCoords = [9.5350, -13.6600]; // Départ par défaut
+
+  cartes[commandeId] = L.map(`map-suivi-${commandeId}`).setView(clientCoords, 14);
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-  }).addTo(carteSuivi);
+  }).addTo(cartes[commandeId]);
 
-  // Icône Client (Maison)
+  // Icônes
   const iconeClient = L.divIcon({
     html: '<div style="background:var(--orange);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-home"></i></div>',
-    className: '',
-    iconSize: [30, 30],
-    iconAnchor: [15, 15]
+    className: '', iconSize: [30, 30], iconAnchor: [15, 15]
   });
-  marqueurClient = L.marker(clientCoords, {icon: iconeClient}).addTo(carteSuivi);
+  marqueursClient[commandeId] = L.marker(clientCoords, {icon: iconeClient}).addTo(cartes[commandeId]);
 
-  // Icône Livreur (Moto)
   const iconeLivreur = L.divIcon({
     html: '<div style="background:var(--texte);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-motorcycle"></i></div>',
-    className: '',
-    iconSize: [30, 30],
-    iconAnchor: [15, 15]
+    className: '', iconSize: [30, 30], iconAnchor: [15, 15]
+  });
+  marqueursLivreur[commandeId] = L.marker(livreurCoords, {icon: iconeLivreur}).addTo(cartes[commandeId]);
+
+  const bounds = L.latLngBounds(clientCoords, livreurCoords);
+  cartes[commandeId].fitBounds(bounds, { padding: [30, 30] });
+
+  // WebSockets multi-room
+  sockets[commandeId] = io('http://localhost:5000');
+  sockets[commandeId].on('connect', () => {
+    sockets[commandeId].emit('join_commande', commandeId);
+  });
+  sockets[commandeId].on('update_position', (data) => {
+    if (marqueursLivreur[commandeId]) {
+      marqueursLivreur[commandeId].setLatLng([data.lat, data.lng]);
+    }
   });
 
-  if (statut === 'en_livraison') {
-    // Point de départ par défaut du livreur (si pas encore de signal GPS)
-    let livreurCoords = [9.5350, -13.6600];
-    marqueurLivreur = L.marker(livreurCoords, {icon: iconeLivreur}).addTo(carteSuivi);
-    
-    // Zoom pour englober les deux
-    const bounds = L.latLngBounds(clientCoords, livreurCoords);
-    carteSuivi.fitBounds(bounds, { padding: [30, 30] });
-
-    // ── CONNEXION WEBSOCKET POUR LE SUIVI RÉEL ──
-    socketSuivi = io('http://localhost:5000');
-    
-    socketSuivi.on('connect', () => {
-      console.log('Client connecté au WebSocket. Join room: commande_', window.commandeActuelleId);
-      socketSuivi.emit('join_commande', window.commandeActuelleId);
-    });
-
-    socketSuivi.on('update_position', (data) => {
-      console.log('Nouvelle position reçue du livreur:', data);
-      const newCoords = [data.lat, data.lng];
-      
-      // Mettre à jour la position de la moto sur la carte
-      marqueurLivreur.setLatLng(newCoords);
-      
-      // Optionnel : Recadrer la carte pour toujours voir le livreur et le client
-      // const newBounds = L.latLngBounds(clientCoords, newCoords);
-      // carteSuivi.fitBounds(newBounds, { padding: [30, 30] });
-    });
-    
-  } else if (statut === 'livree') {
-    marqueurLivreur = L.marker(clientCoords, {icon: iconeLivreur}).addTo(carteSuivi);
-    carteSuivi.setView(clientCoords, 16);
-  } else if (statut === 'prete') {
-    // Commerce coords
-    let commerceCoords = [9.5350, -13.6600];
-    const iconeCommerce = L.divIcon({
-      html: '<div style="background:var(--info);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-store"></i></div>',
-      className: '',
-      iconSize: [30, 30],
-      iconAnchor: [15, 15]
-    });
-    L.marker(commerceCoords, {icon: iconeCommerce}).addTo(carteSuivi);
-    const bounds = L.latLngBounds(clientCoords, commerceCoords);
-    carteSuivi.fitBounds(bounds, { padding: [30, 30] });
-  }
-
-  // Patch pour éviter que la carte soit grise à cause de l'affichage display:none
-  setTimeout(() => { if(carteSuivi) carteSuivi.invalidateSize(); }, 400);
+  setTimeout(() => { if(cartes[commandeId]) cartes[commandeId].invalidateSize(); }, 400);
 }
 
-// ── CHARGER COMMANDES EN COURS ──
+// ── GENERATION HTML COMPLET CARTE ──
+function genererHtmlComplet(c) {
+  // Gestion du logo du commerce avec un fallback
+  let imageLogo = '../../medias/default-avatar.png';
+  if (c.commerce_logo) {
+    if (c.commerce_logo.startsWith('http') || c.commerce_logo.startsWith('data:')) {
+      imageLogo = c.commerce_logo;
+    } else {
+      imageLogo = `http://localhost:5000/uploads/commerces/${c.commerce_logo}`;
+    }
+  }
+
+  const indexActuel = ordreStatuts.indexOf(c.statut);
+  const progression = indexActuel > 0 ? (indexActuel / (ordreStatuts.length - 1)) * 100 : 0;
+
+  const etapesHtml = ordreStatuts.map((st, i) => {
+    let className = '';
+    if (i < indexActuel) className = 'done';
+    else if (i === indexActuel) className = 'active';
+    
+    return `
+      <div class="timeline-step ${className}" id="etape-${c.id}-${st}">
+        <div class="timeline-step-icone"><i class="${configEtapes[st].i}"></i></div>
+        <div class="timeline-step-texte">${configEtapes[st].t}</div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <!-- En-tête Boutique -->
+    <div class="carte-boutique-en-tete">
+      <img src="${imageLogo}" alt="Logo Boutique" class="carte-boutique-logo" onerror="this.src='../../medias/default-avatar.png'">
+      <div>
+        <h3 style="margin:0; font-size: 1.4rem; font-family: var(--police-titre); color: var(--texte);">${c.commerce_nom}</h3>
+        <div class="texte-sm gris" style="margin-top: 4px;">Commande #${String(c.id).padStart(5, '0')}</div>
+      </div>
+      <div style="margin-left: auto;" id="badge-statut-${c.id}">${badgeStatut(c.statut)}</div>
+    </div>
+
+    <!-- Timeline Horizontale -->
+    <div class="timeline-horizontale-container">
+      <div class="timeline-horizontale">
+        ${etapesHtml}
+      </div>
+      <div class="timeline-horizontale-ligne-active" id="timeline-ligne-${c.id}" style="width: ${progression}%;"></div>
+    </div>
+
+    <!-- CARTE SUIVI EN DIRECT -->
+    <div id="map-suivi-${c.id}" style="width: 100%; height: 350px; border-radius: var(--rayon-lg); margin: 2rem 0; background: var(--bg-secondaire); display: none; z-index: 1;"></div>
+    
+    <!-- INFOS LIVRAISON ET ARTICLES -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 1.5rem; background: #f8fafc; padding: 20px; border-radius: 16px;">
+      <div>
+        <div style="font-weight:600; margin-bottom:10px; color:var(--texte);"><i class="fas fa-map-marker-alt" style="color:var(--orange);"></i> Adresse de livraison</div>
+        <div style="color:var(--texte-gris); font-size: 0.95rem;">${c.adresse_livraison}</div>
+      </div>
+      <div>
+        <div style="font-weight:600; margin-bottom:10px; color:var(--texte);"><i class="fas fa-money-bill-wave" style="color:var(--orange);"></i> Montant Total</div>
+        <div class="prix" style="font-size: 1.1rem;">${formatPrix(c.montant_total)}</div>
+      </div>
+      <div>
+        <div style="font-weight:600; margin-bottom:10px; color:var(--texte);"><i class="fas fa-shopping-bag" style="color:var(--orange);"></i> Articles</div>
+        <div style="color:var(--texte-gris); font-size: 0.9rem; line-height: 1.5;">
+          ${(c.articles || []).map(a => `<span style="font-weight:600;color:var(--texte);">${a.quantite}x</span> ${a.produit_nom}`).join('<br>')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── LOGIQUE PRINCIPALE DE MISE A JOUR DOM ──
+function majCarte(c) {
+  const conteneurPrincipal = document.getElementById('conteneur-cartes-commandes');
+  let carte = document.getElementById(`carte-commande-${c.id}`);
+
+  // Création de la carte si elle n'existe pas
+  if (!carte) {
+    carte = document.createElement('div');
+    carte.id = `carte-commande-${c.id}`;
+    carte.className = 'suivi-conteneur-carte anime-slide-up';
+    carte.style.cssText = 'background: var(--blanc); border: 1px solid var(--bordure); border-radius: 18px; padding: 25px; box-shadow: 0 4px 16px rgba(0,0,0,0.02); position: relative; margin-bottom: 30px;';
+    
+    carte.innerHTML = genererHtmlComplet(c);
+    conteneurPrincipal.appendChild(carte);
+  } else {
+    // Si la carte existe, on met juste à jour l'état visuel sans détruire la div map-suivi (Leaflet)
+    document.getElementById(`badge-statut-${c.id}`).innerHTML = badgeStatut(c.statut);
+    
+    const indexActuel = ordreStatuts.indexOf(c.statut);
+    const progression = indexActuel > 0 ? (indexActuel / (ordreStatuts.length - 1)) * 100 : 0;
+    
+    document.getElementById(`timeline-ligne-${c.id}`).style.width = progression + '%';
+    
+    ordreStatuts.forEach((st, i) => {
+      const etape = document.getElementById(`etape-${c.id}-${st}`);
+      if (etape) {
+        etape.className = 'timeline-step';
+        if (i < indexActuel) etape.classList.add('done');
+        else if (i === indexActuel) etape.classList.add('active');
+      }
+    });
+  }
+
+  // Logique Leaflet & Socket
+  initMap(c.id, c.statut);
+}
+
+// ── BOUCLE DE CHARGEMENT ──
 async function chargerCommandesEnCours() {
   try {
     const res  = await apiFetch('/commandes/mes-commandes');
     const data = await res.json();
-
-    const liste = document.getElementById('liste-en-cours');
+    const conteneurPrincipal = document.getElementById('conteneur-cartes-commandes');
 
     if (data.success) {
       const enCours = data.commandes.filter(c =>
         !['livree', 'annulee'].includes(c.statut)
       );
 
+      // Si c'est le premier chargement (squelette présent) et qu'on a des données
+      const isInitialLoad = conteneurPrincipal.querySelector('.chargement') !== null;
+      if (isInitialLoad) conteneurPrincipal.innerHTML = '';
+
       if (enCours.length === 0) {
-        liste.innerHTML = `
-          <div class="vide">
-            <div class="vide-icone"><i class="fas fa-box"></i></div>
-            <p>Aucune commande en cours</p>
+        conteneurPrincipal.innerHTML = `
+          <div class="vide" style="background: white; border-radius: 18px; padding: 50px; text-align: center; border: 1px solid var(--bordure);">
+            <div class="vide-icone" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 20px;"><i class="fas fa-box-open"></i></div>
+            <p style="font-size: 1.1rem; color: var(--texte-gris);">Aucune commande en cours de livraison.</p>
             <a href="commandes.html" class="btn btn-orange mt-md">
-              Passer une commande
+              <i class="fas fa-shopping-bag"></i> Voir l'historique
             </a>
           </div>`;
         return;
       }
 
-      liste.innerHTML = enCours.map(c => `
-        <div class="commande-en-cours-carte" onclick="afficherSuivi(${c.id})">
-          <div>
-            <div style="font-weight:700;font-family:var(--police-titre)">${c.commerce_nom}</div>
-            <div class="texte-sm gris">#${String(c.id).padStart(5, '0')} — ${formatDate(c.date_creation)}</div>
-          </div>
-          <div class="flex gap-md" style="align-items:center">
-            ${badgeStatut(c.statut)}
-            <span class="prix">${formatPrix(c.montant_total)}</span>
-            <i class="fas fa-chevron-right" style="color:var(--texte-gris)"></i>
-          </div>
-        </div>`).join('');
+      // Mettre à jour ou créer chaque carte
+      enCours.forEach(c => majCarte(c));
     }
-
   } catch (err) {
-    document.getElementById('liste-en-cours').innerHTML =
-      '<div class="alerte alerte-erreur"><i class="fas fa-times-circle"></i> Erreur de chargement.</div>';
+    document.getElementById('conteneur-cartes-commandes').innerHTML =
+      '<div class="alerte alerte-erreur"><i class="fas fa-times-circle"></i> Erreur lors du chargement des commandes.</div>';
   }
 }
-
-// ── AFFICHER SUIVI DÉTAILLÉ ──
-async function afficherSuivi(commandeId) {
-  try {
-    const res  = await apiFetch(`/commandes/${commandeId}`);
-    const data = await res.json();
-
-    if (!data.success) return;
-
-    const c = data.commande;
-
-    // Basculer l'affichage
-    document.getElementById('commandes-en-cours').classList.add('cache');
-    document.getElementById('detail-suivi').classList.remove('cache');
-
-    // Infos commande
-    document.getElementById('suivi-commerce').textContent = c.commerce_nom;
-    document.getElementById('suivi-id').textContent       = `#${String(c.id).padStart(5, '0')}`;
-    document.getElementById('suivi-badge').innerHTML      = badgeStatut(c.statut);
-    document.getElementById('suivi-adresse').textContent  = c.adresse_livraison;
-    document.getElementById('suivi-montant').textContent  = formatPrix(c.montant_total);
-    document.getElementById('suivi-date').textContent     = formatDate(c.date_creation);
-
-    // Timeline
-    const indexActuel = ordreStatuts.indexOf(c.statut);
-    ordreStatuts.forEach((statut, index) => {
-      const etape = document.getElementById(`etape-${statut}`);
-      if (!etape) return;
-      etape.classList.remove('actif', 'complete');
-      if (index < indexActuel)  etape.classList.add('complete');
-      if (index === indexActuel) etape.classList.add('actif');
-    });
-
-    // Articles
-    document.getElementById('suivi-liste-articles').innerHTML =
-      (c.articles || []).map(a => `
-        <div class="suivi-article-item">
-          <div>
-            <div class="suivi-article-nom">${a.produit_nom}</div>
-            <div class="suivi-article-qte">Quantité : ${a.quantite}</div>
-          </div>
-          <div class="suivi-article-prix">${formatPrix(a.sous_total)}</div>
-        </div>`).join('');
-
-    // Rafraîchissement automatique toutes les 30s
-    if (window.suiviInterval) clearInterval(window.suiviInterval);
-    if (!['livree', 'annulee'].includes(c.statut)) {
-      window.suiviInterval = setInterval(() => afficherSuivi(commandeId), 30000);
-    }
-
-    // Initialisation de la carte Leaflet (uniquement si nouveau ou changement de statut)
-    if (window.commandeActuelleId !== commandeId || window.statutPrecedent !== c.statut) {
-      window.commandeActuelleId = commandeId;
-      window.statutPrecedent = c.statut;
-      initMap(c.statut);
-    }
-
-  } catch (err) {
-    console.error('Erreur suivi:', err);
-  }
-}
-
-// ── BOUTONS SUPPRIMÉS ──
-// Le bouton retour et le bouton recherche ont été retirés de l'interface selon la demande.
 
 // ── DÉCONNEXION ──
 document.getElementById('btn-deconnexion')?.addEventListener('click', (e) => {
@@ -272,10 +272,7 @@ document.getElementById('btn-deconnexion')?.addEventListener('click', (e) => {
   seDeconnecter();
 });
 
-// ── VÉRIFIER URL PARAMS ──
-const urlParams = new URLSearchParams(window.location.search);
-const commandeId = urlParams.get('id');
-
 // ── INIT ──
 chargerCommandesEnCours();
-if (commandeId) afficherSuivi(parseInt(commandeId));
+// Rafraichissement automatique du statut global (timeline) toutes les 30s
+refreshInterval = setInterval(chargerCommandesEnCours, 30000);
