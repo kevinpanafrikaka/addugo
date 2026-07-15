@@ -253,7 +253,7 @@
   top: 17px;
   left: 10%;
   height: 4px;
-  background: var(--orange);
+  background: #1a1a1a; /* Noir siphon */
   z-index: 0;
   border-radius: 4px;
   transition: width 0.5s ease;
@@ -278,6 +278,8 @@
   color: #cbd5e1;
   font-size: 1rem;
   transition: all 0.3s;
+  position: relative;
+  z-index: 2;
 }
 .timeline-step.done .timeline-step-icone {
   background: var(--blanc);
