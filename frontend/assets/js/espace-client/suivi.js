@@ -124,11 +124,14 @@ function initMap(commandeId, statut) {
 
 // ── GENERATION HTML COMPLET CARTE ──
 function genererHtmlComplet(c) {
-  // Gestion du logo du commerce avec un fallback
-  let imageLogo = '../../medias/default-avatar.png';
+  // Gestion du logo du commerce avec un fallback fiable
+  const fallbackLogo = `https://ui-avatars.com/api/?name=${encodeURIComponent(c.commerce_nom || 'Boutique')}&background=FFEDD5&color=FF6B00&size=100`;
+  let imageLogo = fallbackLogo;
   if (c.commerce_logo) {
     if (c.commerce_logo.startsWith('http') || c.commerce_logo.startsWith('data:')) {
       imageLogo = c.commerce_logo;
+    } else if (c.commerce_logo.startsWith('/')) {
+      imageLogo = `http://localhost:5000${c.commerce_logo}`;
     } else {
       imageLogo = `http://localhost:5000/uploads/commerces/${c.commerce_logo}`;
     }
@@ -153,7 +156,7 @@ function genererHtmlComplet(c) {
   return `
     <!-- En-tête Boutique -->
     <div class="carte-boutique-en-tete">
-      <img src="${imageLogo}" alt="Logo Boutique" class="carte-boutique-logo" onerror="this.src='../../medias/default-avatar.png'">
+      <img src="${imageLogo}" alt="Logo Boutique" class="carte-boutique-logo" onerror="this.src='${fallbackLogo}'">
       <div>
         <h3 style="margin:0; font-size: 1.4rem; font-family: var(--police-titre); color: var(--texte);">${c.commerce_nom}</h3>
         <div class="texte-sm gris" style="margin-top: 4px;">Commande #${String(c.id).padStart(5, '0')}</div>
