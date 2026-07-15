@@ -83,39 +83,33 @@ function initMap(commandeId, statut) {
   // Si déjà initialisée, ne rien faire
   if (cartes[commandeId]) return;
 
-  const clientCoords = [9.509167, -13.712222]; // Fictif (centre Conakry)
-  let livreurCoords = [9.5350, -13.6600]; // Départ par défaut
+  const centreConakry = [9.509167, -13.712222]; // Centre par défaut
 
-  cartes[commandeId] = L.map(`map-suivi-${commandeId}`).setView(clientCoords, 14);
+  cartes[commandeId] = L.map(`map-suivi-${commandeId}`).setView(centreConakry, 12);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(cartes[commandeId]);
 
-  // Icônes
-  const iconeClient = L.divIcon({
-    html: '<div style="background:var(--orange);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-home"></i></div>',
-    className: '', iconSize: [30, 30], iconAnchor: [15, 15]
-  });
-  marqueursClient[commandeId] = L.marker(clientCoords, {icon: iconeClient}).addTo(cartes[commandeId]);
-
-  const iconeLivreur = L.divIcon({
-    html: '<div style="background:var(--texte);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-motorcycle"></i></div>',
-    className: '', iconSize: [30, 30], iconAnchor: [15, 15]
-  });
-  marqueursLivreur[commandeId] = L.marker(livreurCoords, {icon: iconeLivreur}).addTo(cartes[commandeId]);
-
-  const bounds = L.latLngBounds(clientCoords, livreurCoords);
-  cartes[commandeId].fitBounds(bounds, { padding: [30, 30] });
-
-  // WebSockets multi-room
-  sockets[commandeId] = io('http://localhost:5000');
+  // WebSockets multi-room (connexion à la bonne adresse)
+  const baseUrl = typeof API_URL !== 'undefined' ? API_URL.replace('/api', '') : 'http://localhost:5000';
+  sockets[commandeId] = io(baseUrl);
   sockets[commandeId].on('connect', () => {
     sockets[commandeId].emit('join_commande', commandeId);
   });
+  
   sockets[commandeId].on('update_position', (data) => {
+    const latlng = [data.lat, data.lng];
     if (marqueursLivreur[commandeId]) {
-      marqueursLivreur[commandeId].setLatLng([data.lat, data.lng]);
+      marqueursLivreur[commandeId].setLatLng(latlng);
+    } else {
+      // Création du vrai marqueur seulement quand on a de vraies coordonnées
+      const iconeLivreur = L.divIcon({
+        html: '<div style="background:var(--texte);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-motorcycle"></i></div>',
+        className: '', iconSize: [30, 30], iconAnchor: [15, 15]
+      });
+      marqueursLivreur[commandeId] = L.marker(latlng, {icon: iconeLivreur}).addTo(cartes[commandeId]);
+      cartes[commandeId].setView(latlng, 15);
     }
   });
 
