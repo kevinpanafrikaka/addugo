@@ -74,11 +74,21 @@ function afficherCommandes() {
     return;
   }
 
-  liste.innerHTML = commandes.map(c => `
+  liste.innerHTML = commandes.map(c => {
+    const logoUrl = c.commerce_logo 
+      ? (c.commerce_logo.startsWith('http') ? c.commerce_logo : `https://addugo.up.railway.app${c.commerce_logo}`)
+      : null;
+    return `
     <div class="commande-carte">
       <div class="commande-carte-entete">
         <div>
-          <div class="commande-carte-commerce"><i class="fas fa-store" style="color:var(--orange);"></i> ${c.commerce_nom || 'Boutique AdduGo'}</div>
+          <div class="commande-carte-commerce" style="display:flex; align-items:center; gap:8px;">
+            ${logoUrl 
+              ? `<img src="${logoUrl}" alt="${c.commerce_nom}" style="width:24px; height:24px; border-radius:6px; object-fit:cover; border:1px solid var(--bordure);">`
+              : `<i class="fas fa-store" style="color:var(--orange);"></i>`
+            }
+            ${c.commerce_nom || 'Boutique AdduGo'}
+          </div>
           <div class="commande-carte-id">Commande #${String(c.id).padStart(5, '0')}</div>
         </div>
         ${badgeStatut(c.statut)}

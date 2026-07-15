@@ -113,8 +113,11 @@
     <!-- CONTENU PRINCIPAL -->
     <main class="dashboard-contenu anime-slide-up" style="max-width: 1200px; margin: 0 auto; padding: 30px 25px 25px 25px;">
 
-      <!-- ZONE TITRE ACCUEIL -->
-      <div class="client-titre-zone">
+      <!-- EN-TÊTE ET FILTRES FUSIONNÉS -->
+      <div class="entete-stats-v2" style="background: var(--blanc); border: 1px solid var(--bordure); border-radius: 18px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.02);">
+      
+        <!-- ZONE TITRE ACCUEIL -->
+        <div class="client-titre-zone" style="margin-bottom: 20px; border-bottom: 1px solid var(--bordure-claire, #F3F4F6); padding-bottom: 16px;">
         <div class="client-titre-gauche">
           <div class="client-titre-accent"></div>
           <div>
@@ -128,7 +131,7 @@
       </div>
 
       <!-- FILTRES PAR STATUT -->
-      <div class="filtres-barre">
+      <div class="filtres-barre" style="margin-bottom: 0;">
         <div class="filtres-gauche">
           <button class="filtre-btn actif" data-statut="tous">
             Toutes
@@ -147,6 +150,7 @@
           </button>
         </div>
       </div>
+      </div> <!-- Fin entete-stats-v2 -->
 
       <!-- LISTE DES COMMANDES -->
       <div id="liste-commandes" class="commandes-grid">
