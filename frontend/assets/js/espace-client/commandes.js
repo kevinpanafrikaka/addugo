@@ -122,7 +122,8 @@ function afficherCommandes() {
           <i class="fas fa-eye"></i> Détails
         </button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // ── FILTRES ──
