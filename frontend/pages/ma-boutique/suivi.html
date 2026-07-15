@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdduGo — Suivi de Livraison (Boutique)</title>
+  <link rel="stylesheet" href="../../assets/css/commun/style.css" />
+  <link rel="stylesheet" href="../../assets/css/commun/navbar.css" />
+  <link rel="stylesheet" href="../../assets/css/commun/dashboard.css" />
+  <link rel="stylesheet" href="../../assets/css/ma-boutique/commandes.css" />
+  <link rel="stylesheet" href="../../assets/css/commun/suivi.css" />
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Favicon Standard -->
+  <link rel="icon" type="image/png" href="../../favicon.png?v=1783501557603" />
+  <link rel="shortcut icon" type="image/png" href="../../favicon.png?v=1783501557603" />
+  <link rel="apple-touch-icon" href="../../favicon.png?v=1783501557603" />
+</head>
+<body class="dashboard-body">
+
+  <!-- NAVBAR UNIFIÉE (Marchand) -->
+  <nav class="navbar-home">
+    <div class="navbar-home-gauche">
+      <button class="btn-mobile-menu" id="btn-mobile-menu-home" style="padding: 0; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 2px solid var(--orange);">
+        <img src="../../medias/default-avatar.png" alt="Profil" id="mobile-top-avatar" style="width: 100%; height: 100%; object-fit: cover;" />
+      </button>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="../mes-shoppings/home.html" class="navbar-home-logo" style="display: flex; align-items: center;">
+          <img src="../../medias/AdduGo_Logo.png" alt="AdduGo" style="height: 38px; width: auto; object-fit: contain;" />
+        </a>
+        <div style="height: 22px; width: 2px; background-color: var(--bordure-dark, #d1d5db); border-radius: 2px; margin: 0 6px; flex-shrink: 0;"></div>
+        <div class="navbar-titre-page">
+          <span>Ma</span><span style="color: var(--orange);">Boutique</span> 
+          <i class="fas fa-store" style="color:var(--orange);"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-home-droite">
+      <a href="../espace-client/dashboard.html" class="nav-icone icone-client" title="Mon Espace Client">
+        <i class="fas fa-user-circle" style="color: #7A3E1D;"></i>
+      </a>
+      <div class="icon-wrapper" style="position: relative;" title="Messages">
+        <a href="../espace-client/messages.html?from=commerce" class="nav-icone icone-messages">
+          <i class="fas fa-envelope" style="color: #3B82F6;"></i>
+          <span class="nav-badge" id="badge-messages" style="display: none;">0</span>
+        </a>
+      </div>
+      <a href="produits.html" class="nav-icone icone-produits" title="Ma Boutique">
+        <i class="fas fa-store" style="color: #10B981;"></i>
+      </a>
+      <div class="profil-wrapper" id="profil-wrapper">
+        <div class="navbar-profil-btn" id="btn-profil-toggle">
+          <img src="../../medias/default-avatar.png" alt="Profil" id="navbar-top-avatar" />
+        </div>
+        <div class="profil-dropdown" id="profil-dropdown">
+          <div class="dropdown-header">
+            <img src="../../medias/default-avatar.png" alt="Profil" id="dropdown-avatar" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+            <div class="dropdown-infos">
+              <div class="dropdown-nom" id="dropdown-nom">Chargement...</div>
+              <div class="dropdown-role" id="dropdown-roles-badges">Commerce</div>
+            </div>
+          </div>
+          <div class="dropdown-menu-container">
+            <a href="../espace-client/profil.html" class="sidebar-lien" style="margin-top: 8px;">
+              <i class="fas fa-user"></i> Mon Profil
+            </a>
+            <a href="produits.html" class="sidebar-lien">
+              <i class="fas fa-store"></i> Ma Boutique
+            </a>
+            <a href="../espace-client/dashboard.html" class="sidebar-lien">
+              <i class="fas fa-user-circle"></i> Mon Espace Client
+            </a>
+            <div style="border-top: 1px solid var(--bordure); margin-top: 8px; padding-top: 8px;">
+              <a href="#" class="sidebar-lien btn-deconnexion" id="btn-logout" style="color: #dc3545;">
+                <i class="fas fa-sign-out-alt"></i> Se déconnecter
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- LAYOUT SANS SIDEBAR -->
+  <div class="home-layout" style="background-color: var(--fond-tres-clair); min-height: calc(100vh - 70px);">
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="dashboard-contenu anime-slide-up" style="max-width: 1200px; margin: 0 auto; padding: 30px 25px 25px 25px;">
+
+      <!-- CARTE 1 : EN-TÊTE ET RECHERCHE -->
+      <div class="carte-entete-suivi" style="background: linear-gradient(135deg, var(--blanc) 0%, #FFF7ED 100%); border: 1px solid #FFEDD5; border-radius: 18px; padding: 30px; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.02); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <div style="width: 70px; height: 70px; background: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(255,107,0,0.15);">
+            <i class="fas fa-map-marked-alt" style="font-size: 2.2rem; color: var(--orange);"></i>
+          </div>
+          <div>
+            <h1 style="font-size: 1.8rem; font-weight: 800; color: var(--texte); margin-bottom: 5px; font-family: var(--police-titre);">Suivi de <span class="orange">Livraison</span></h1>
+            <p style="color: var(--texte-gris); font-size: 0.95rem; margin: 0;">Suivez la livraison de la commande en temps réel.</p>
+          </div>
+        </div>
+
+        <!-- BOUTON MES COMMANDES -->
+        <div>
+          <a href="commandes.html" class="btn btn-orange" style="border-radius: 12px; padding: 12px 24px; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; font-size: 1.05rem; box-shadow: 0 4px 10px rgba(255,107,0,0.2);">
+            <i class="fas fa-box"></i> Retour aux commandes
+          </a>
+        </div>
+      </div>
+
+      <!-- CONTENU SUIVI -->
+      <div id="suivi-contenu">
+        <div id="conteneur-cartes-commandes" style="display: flex; flex-direction: column; gap: 30px;">
+          <div class="chargement" style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="skeleton skeleton-carte" style="width:100%; height: 200px; border-radius: 18px;"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Socket.io pour la réception GPS en temps réel -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="../../assets/js/commun/api.js"></script>
+  <script src="../../assets/js/commun/navbar.js"></script>
+  <script src="../../assets/js/ma-boutique/suivi.js"></script>
+</body>
+</html>

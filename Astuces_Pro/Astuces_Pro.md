@@ -618,3 +618,27 @@ Dans une application de livraison comme AdduGo, afficher la position exacte du l
      - 🏠 Le Client (point d'arrivée, coordonnées fixes)
      - 🛵 Le Livreur (point mobile).
    - À chaque nouvelle coordonnée reçue via le WebSocket, le code JS du client met à jour la position du marqueur 🛵, ce qui l'anime en direct sur la carte sous les yeux du client !
+
+---
+
+### Astuce #30 : Le piège des cartes Leaflet invisibles (Gros blocs blancs)
+*Date : 15 Juillet 2026*
+
+**Le problème :** Quand tu ouvres une carte interactive Leaflet qui était auparavant cachée (dans une `div` avec `display: none`), la carte s'affiche souvent de façon "cassée", avec la carte en tout petit dans un coin et d'immenses blocs gris ou blancs autour.
+
+**Pourquoi ça arrive ?**
+Au moment de l'initialisation de la carte, Leaflet calcule les dimensions de son conteneur (la `div`) pour savoir combien d'images (tuiles) il doit télécharger. Mais si la `div` est en `display: none`, sa taille est de `0x0` pixels. Quand tu affiches la div (en passant en `display: block`), la carte ne se redimensionne pas toute seule et garde sa taille d'origine (très petite).
+
+**La solution des pros : `invalidateSize()`**
+Il faut forcer Leaflet à recalculer sa taille **après** avoir rendu la carte visible. Mais attention, le navigateur met quelques millisecondes à calculer la nouvelle taille de la `div` ! Il faut donc utiliser un petit délai (`setTimeout`) :
+
+```javascript
+// 1. On rend la div visible
+mapContainer.style.display = 'block';
+
+// 2. On laisse le temps au navigateur de dessiner la div (ex: 1 seconde), puis on force Leaflet à se redimensionner
+setTimeout(() => { 
+  if(maCarte) maCarte.invalidateSize(); 
+}, 1000);
+```
+C'est exactement ce que nous avons fait pour réparer l'affichage de ta carte de suivi sur AdduGo !

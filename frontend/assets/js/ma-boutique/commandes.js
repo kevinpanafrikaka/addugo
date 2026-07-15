@@ -155,6 +155,10 @@ function afficherCommandes() {
           onclick="voirDetail(${c.id})">
           <i class="fas fa-eye"></i> Voir détail
         </button>
+        ${c.statut === 'en_livraison' ? `
+        <a href="suivi.html?id=${c.id}" class="btn btn-sm btn-orange" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+          <i class="fas fa-map-marker-alt"></i> Suivre la livraison
+        </a>` : ''}
         ${prochainsStatuts(c.statut).map(s => `
           <button class="btn btn-sm ${s === 'annulee' ? '' : 'btn-bleu'}"
             style="${s === 'annulee' ? 'background:var(--erreur-bg);color:var(--erreur)' : ''}"
