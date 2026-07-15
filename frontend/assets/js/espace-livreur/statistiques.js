@@ -44,7 +44,8 @@ function filtrerParPeriode(livraisons, periode) {
   const debutJournee = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate());
 
   return livraisons.filter(l => {
-    const d = new Date(l.date_assignation || l.date_creation);
+    // Si la commande est livrée, on utilise la date de livraison, sinon on retombe sur l'assignation/création
+    const d = new Date(l.date_livraison || l.date_assignation || l.date_creation);
     if (periode === 'aujourdhui') {
       return d >= debutJournee;
     } else if (periode === '7jours') {
@@ -73,7 +74,7 @@ function obtenirStructureGraphique(livraisons, periode) {
 
   livraisons.forEach(l => {
     if (l.statut === 'livree') {
-      const d = new Date(l.date_assignation || l.date_creation);
+      const d = new Date(l.date_livraison || l.date_assignation || l.date_creation);
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
       mapGains[key] = (mapGains[key] || 0) + (Number(l.montant_total) || 0);
     }
@@ -119,7 +120,7 @@ function obtenirStructureGraphique(livraisons, periode) {
 
     livraisons.forEach(l => {
       if (l.statut === 'livree') {
-        const d = new Date(l.date_assignation || l.date_creation);
+        const d = new Date(l.date_livraison || l.date_assignation || l.date_creation);
         const diffJours = Math.floor((debutAujourdhui - d.getTime()) / unJourMs);
         if (diffJours >= 0 && diffJours < 28) {
           const idxSemaine = 3 - Math.floor(diffJours / 7);
@@ -146,7 +147,7 @@ function obtenirStructureGraphique(livraisons, periode) {
 
     livraisons.forEach(l => {
       if (l.statut === 'livree') {
-        const d = new Date(l.date_assignation || l.date_creation);
+        const d = new Date(l.date_livraison || l.date_assignation || l.date_creation);
         if (d.getFullYear() === anneeEncours) {
           const m = d.getMonth();
           dataPoints[m] += Number(l.montant_total) || 0;
