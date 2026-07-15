@@ -143,7 +143,8 @@ exports.mesCommandes = async (req, res) => {
     conn = await pool.getConnection();
     const commandes = await conn.query(
       `SELECT c.*, com.nom as commerce_nom,
-              com.adresse as commerce_adresse
+              com.adresse as commerce_adresse,
+              com.logo as commerce_logo
        FROM commandes c
        JOIN commerces com ON c.commerce_id = com.id
        WHERE c.client_id = ?
