@@ -163,7 +163,7 @@ function initMap(statut) {
   }
 
   // Patch pour éviter que la carte soit grise à cause de l'affichage display:none
-  setTimeout(() => { carteSuivi.invalidateSize(); }, 300);
+  setTimeout(() => { if(carteSuivi) carteSuivi.invalidateSize(); }, 400);
 }
 
 // ── CHARGER COMMANDES EN COURS ──
@@ -260,9 +260,12 @@ async function afficherSuivi(commandeId) {
       window.suiviInterval = setInterval(() => afficherSuivi(commandeId), 30000);
     }
 
-    // Initialisation de la carte Leaflet
-    window.commandeActuelleId = commandeId;
-    initMap(c.statut);
+    // Initialisation de la carte Leaflet (uniquement si nouveau ou changement de statut)
+    if (window.commandeActuelleId !== commandeId || window.statutPrecedent !== c.statut) {
+      window.commandeActuelleId = commandeId;
+      window.statutPrecedent = c.statut;
+      initMap(c.statut);
+    }
 
   } catch (err) {
     console.error('Erreur suivi:', err);
@@ -273,6 +276,8 @@ async function afficherSuivi(commandeId) {
 document.getElementById('btn-retour-liste').addEventListener('click', () => {
   if (window.suiviInterval) clearInterval(window.suiviInterval);
   if (socketSuivi) { socketSuivi.disconnect(); socketSuivi = null; }
+  window.commandeActuelleId = null;
+  window.statutPrecedent = null;
   document.getElementById('detail-suivi').classList.add('cache');
   document.getElementById('commandes-en-cours').classList.remove('cache');
 });
