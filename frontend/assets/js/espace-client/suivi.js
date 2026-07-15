@@ -128,12 +128,13 @@ function genererHtmlComplet(c) {
   const fallbackLogo = `https://ui-avatars.com/api/?name=${encodeURIComponent(c.commerce_nom || 'Boutique')}&background=FFEDD5&color=FF6B00&size=100`;
   let imageLogo = fallbackLogo;
   if (c.commerce_logo) {
+    const baseUrl = typeof API_URL !== 'undefined' ? API_URL.replace('/api', '') : 'http://localhost:5000';
     if (c.commerce_logo.startsWith('http') || c.commerce_logo.startsWith('data:')) {
       imageLogo = c.commerce_logo;
     } else if (c.commerce_logo.startsWith('/')) {
-      imageLogo = `http://localhost:5000${c.commerce_logo}`;
+      imageLogo = `${baseUrl}${c.commerce_logo}`;
     } else {
-      imageLogo = `http://localhost:5000/uploads/commerces/${c.commerce_logo}`;
+      imageLogo = `${baseUrl}/uploads/commerces/${c.commerce_logo}`;
     }
   }
 
@@ -168,8 +169,8 @@ function genererHtmlComplet(c) {
     <div class="timeline-horizontale-container">
       <div class="timeline-horizontale">
         ${etapesHtml}
+        <div class="timeline-horizontale-ligne-active" id="timeline-ligne-${c.id}" style="width: ${progression}%;"></div>
       </div>
-      <div class="timeline-horizontale-ligne-active" id="timeline-ligne-${c.id}" style="width: ${progression}%;"></div>
     </div>
 
     <!-- CARTE SUIVI EN DIRECT -->
