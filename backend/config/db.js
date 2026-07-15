@@ -21,7 +21,6 @@ async function testerConnexion() {
     conn = await pool.getConnection();
     console.log('Connexion à la base de données AdduGo réussie !');
     
-    // Migration automatique : ajouter la colonne derniere_activite si absente
     try {
       await conn.query(
         'ALTER TABLE utilisateurs ADD COLUMN derniere_activite DATETIME NULL DEFAULT NULL'
@@ -30,6 +29,18 @@ async function testerConnexion() {
     } catch (migErr) {
       if (migErr.errno !== 1060) { // 1060 = colonne déjà existante
         console.warn('Migration derniere_activite :', migErr.message);
+      }
+    }
+
+    // Migration automatique : ajouter la colonne code_pin à commandes
+    try {
+      await conn.query(
+        'ALTER TABLE commandes ADD COLUMN code_pin VARCHAR(4) DEFAULT NULL AFTER montant_total'
+      );
+      console.log('Migration : colonne code_pin ajoutée à la table commandes.');
+    } catch (migErr) {
+      if (migErr.errno !== 1060) {
+        console.warn('Migration code_pin :', migErr.message);
       }
     }
 

@@ -60,11 +60,14 @@ exports.creerCommande = async (req, res) => {
       montant_total += Number(produits[0].prix) * article.quantite;
     }
 
+    // Générer un code PIN à 4 chiffres
+    const code_pin = String(Math.floor(1000 + Math.random() * 9000));
+
     // Créer la commande
     const result = await conn.query(
-      `INSERT INTO commandes (client_id, commerce_id, adresse_livraison, montant_total)
-       VALUES (?, ?, ?, ?)`,
-      [req.utilisateur.id, commerce_id, adresse_livraison, montant_total]
+      `INSERT INTO commandes (client_id, commerce_id, adresse_livraison, montant_total, code_pin)
+       VALUES (?, ?, ?, ?, ?)`,
+      [req.utilisateur.id, commerce_id, adresse_livraison, montant_total, code_pin]
     );
 
     const commande_id = Number(result.insertId);

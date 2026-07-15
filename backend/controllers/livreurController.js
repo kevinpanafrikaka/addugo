@@ -237,12 +237,19 @@ exports.mettreAJourPosition = async (req, res) => {
 exports.terminerLivraison = async (req, res) => {
   let conn;
   try {
-    const { livraison_id, notes } = req.body;
+    const { livraison_id, notes, code_pin } = req.body;
 
     if (!livraison_id) {
       return res.status(400).json({
         success: false,
         message: 'L\'identifiant de la livraison est obligatoire.'
+      });
+    }
+
+    if (!code_pin) {
+      return res.status(400).json({
+        success: false,
+        message: 'Le code PIN du client est obligatoire pour valider la livraison.'
       });
     }
 
@@ -264,6 +271,20 @@ exports.terminerLivraison = async (req, res) => {
     }
 
     const commande_id = Number(livraisons[0].commande_id);
+
+    // Vérifier le code PIN avec celui de la commande
+    const commandesInfo = await conn.query(
+      'SELECT code_pin FROM commandes WHERE id = ?',
+      [commande_id]
+    );
+
+    if (commandesInfo.length === 0 || commandesInfo[0].code_pin !== String(code_pin).trim()) {
+      await conn.rollback();
+      return res.status(400).json({
+        success: false,
+        message: 'Le code PIN saisi est incorrect. Demandez au client de vérifier son application.'
+      });
+    }
 
     // Mettre à jour la livraison
     await conn.query(

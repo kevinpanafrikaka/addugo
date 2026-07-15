@@ -170,6 +170,19 @@ function genererHtmlComplet(c) {
       </div>
     </div>
 
+    <!-- ENCART CODE PIN SI EN LIVRAISON -->
+    ${c.statut === 'en_livraison' && c.code_pin ? `
+      <div style="background: linear-gradient(135deg, var(--noir), #2a2a2a); color: white; border-radius: 12px; padding: 20px; margin: 2rem 0 0 0; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.15); flex-wrap: wrap; gap: 15px;">
+        <div style="flex: 1; min-width: 250px;">
+          <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;"><i class="fas fa-lock"></i> Code secret de livraison (Côté Client)</div>
+          <div style="font-size: 1.05rem; line-height: 1.4;">Le livreur demandera ce code à votre client pour valider la livraison.</div>
+        </div>
+        <div style="background: white; color: var(--noir); font-size: 2.2rem; font-weight: 900; letter-spacing: 4px; padding: 10px 25px; border-radius: 8px; font-family: monospace; text-align: center;">
+          ${c.code_pin}
+        </div>
+      </div>
+    ` : ''}
+
     <!-- CARTE SUIVI EN DIRECT -->
     <div id="map-suivi-${c.id}" style="width: 100%; height: 350px; border-radius: var(--rayon-lg); margin: 2rem 0; background: var(--bg-secondaire); display: none; z-index: 1;"></div>
     

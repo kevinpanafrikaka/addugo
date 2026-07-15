@@ -126,9 +126,9 @@ function afficherLivraisons() {
             </button>
           </div>
         ` : l.statut === 'livree' ? '<span style="color:#10B981; font-weight:700; font-size:0.85rem;"><i class="fas fa-check"></i> Terminée</span>' : `
-          <button class="btn btn-orange btn-sm" onclick="marquerLivree(${l.id})" style="border-radius:10px; font-weight:700; padding:6px 14px;">
-            <i class="fas fa-check-circle"></i> Marquer livrée
-          </button>
+            <button class="btn btn-orange btn-sm" onclick="marquerLivree(${l.id})" style="border-radius:10px; font-weight:700; padding:6px 14px;">
+              <i class="fas fa-key"></i> Code PIN
+            </button>
         `}
       </div>
     </div>`).join('');
@@ -144,14 +144,18 @@ document.querySelectorAll('.filtres-barre .filtre-btn').forEach(btn => {
   });
 });
 
-// ── MARQUER LIVRÉE ──
+// ── MARQUER LIVRÉE (AVEC CODE PIN) ──
 window.marquerLivree = async (id) => {
-  if (!confirm('Confirmez-vous que cette commande a été livrée au client ?')) return;
+  const code_pin = prompt('Pour valider cette livraison, veuillez entrer le code PIN secret fourni par le client :');
+  if (!code_pin || code_pin.trim() === '') {
+    alert('Validation annulée. Le code PIN est obligatoire.');
+    return;
+  }
 
   try {
-    const res = await apiFetch(`/livreurs/statut-livraison/${id}`, {
+    const res = await apiFetch(`/livreurs/terminer`, {
       method: 'PUT',
-      body: JSON.stringify({ statut: 'livree' })
+      body: JSON.stringify({ livraison_id: id, code_pin: code_pin.trim() })
     });
     const data = await res.json();
     if (data.success) {
