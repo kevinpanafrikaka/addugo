@@ -146,7 +146,8 @@ const selectCommerce = document.getElementById('select-commerce');
 let articlesSelectionnes = {};
 let produitsDisponibles  = [];
 
-btnNouvelle?.addEventListener('click', async () => {
+btnNouvelle?.addEventListener('click', async (e) => {
+  e.preventDefault();
   if (modal) modal.style.display = 'block';
   await chargerCommerces();
 });
