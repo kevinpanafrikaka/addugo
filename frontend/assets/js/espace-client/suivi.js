@@ -59,7 +59,7 @@ const configEtapes = {
 };
 
 // ── INITIALISATION CARTE LEAFLET PAR COMMANDE ──
-function initMap(commandeId, statut) {
+function initMap(commandeId, statut, adresseLivraison) {
   const mapContainer = document.getElementById(`map-suivi-${commandeId}`);
   if (!mapContainer) return;
 
@@ -113,7 +113,28 @@ function initMap(commandeId, statut) {
     }
   });
 
-  setTimeout(() => { if(cartes[commandeId]) cartes[commandeId].invalidateSize(); }, 400);
+  // Géocodage de l'adresse de livraison pour placer la vraie icône Maison
+  if (adresseLivraison) {
+    // On ajoute 'Conakry' si ce n'est pas précisé pour aider la recherche
+    const query = adresseLivraison.toLowerCase().includes('conakry') ? adresseLivraison : `${adresseLivraison}, Conakry`;
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const clientCoords = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+          const iconeClient = L.divIcon({
+            html: '<div style="background:var(--orange);color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,0.3);"><i class="fas fa-home"></i></div>',
+            className: '', iconSize: [30, 30], iconAnchor: [15, 15]
+          });
+          marqueursClient[commandeId] = L.marker(clientCoords, {icon: iconeClient}).addTo(cartes[commandeId]);
+          cartes[commandeId].setView(clientCoords, 14);
+        }
+      })
+      .catch(err => console.error("Erreur géocodage:", err));
+  }
+
+  // Force le recalcul de la taille après l'affichage pour éviter les bugs de tuiles grises
+  setTimeout(() => { if(cartes[commandeId]) cartes[commandeId].invalidateSize(); }, 1000);
 }
 
 // ── GENERATION HTML COMPLET CARTE ──
