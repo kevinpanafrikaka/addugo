@@ -595,3 +595,26 @@ assets/css/
 Le dernier fichier gagne en priorité CSS. C'est voulu.
 ## Leaflet.js vs Google Maps pour le suivi en temps réel
 *Astuce Pro :* Pour implémenter une carte interactive (par exemple, pour le suivi d'une livraison), **Leaflet.js** couplé à **OpenStreetMap** est une excellente alternative à Google Maps. Contrairement à Google Maps qui nécessite une clé d'API et une carte bancaire, Leaflet est totalement gratuit, très léger et open source. Il est idéal pour construire des prototypes ou des applications avec un budget restreint tout en conservant une fluidité professionnelle.
+
+---
+
+### Astuce #29 : Géolocalisation et Suivi en Temps Réel (WebSockets & GPS)
+*Date : 15 Juillet 2026*
+
+Dans une application de livraison comme AdduGo, afficher la position exacte du livreur en mouvement sur la carte du client est une fonctionnalité premium (style Uber). Voici l'architecture technique exacte pour y parvenir :
+
+1. **La position du Commerçant et du Client (Points Fixes)** :
+   - Ces adresses sont statiques. Lors de la création de la boutique ou lors de la commande, on utilise une API de **géocodage** pour convertir l'adresse saisie en texte (ex: "Sonfonia") en **Latitude et Longitude**. Ces deux coordonnées précises sont enregistrées dans la base de données.
+
+2. **La position du Livreur (Point Mobile en Temps Réel)** :
+   - C'est la clé du système. Le livreur utilise son application sur son smartphone pendant le trajet.
+   - Le code Javascript du livreur utilise l'API native du navigateur : `navigator.geolocation.watchPosition()`. Cette fonction est magique car elle "écoute" la puce GPS du téléphone et exécute un bout de code **à chaque fois que le téléphone se déplace**.
+   - À chaque mouvement, le téléphone du livreur envoie instantanément ses nouvelles coordonnées (Lat/Lng) au serveur (sur Railway) en utilisant une technologie appelée **WebSockets** (par exemple avec la librairie `Socket.io`). Contrairement à HTTP (où il faut recharger la page), une connexion WebSocket reste ouverte en permanence comme un "tuyau", permettant un transfert de données en l'espace d'une milliseconde !
+
+3. **L'affichage sur l'écran du Client (`suivi.html`)** :
+   - Le client est également connecté à ce même WebSocket. Dès que le serveur backend reçoit la nouvelle position du livreur, il la rediffuse (*broadcast*) instantanément vers l'écran du client.
+   - Sur l'écran du client, on utilise une librairie de cartographie gratuite (comme **Leaflet.js** et *OpenStreetMap*). La carte est initialisée avec 3 marqueurs (Pins) :
+     - 🏪 La Boutique (point de départ, coordonnées fixes)
+     - 🏠 Le Client (point d'arrivée, coordonnées fixes)
+     - 🛵 Le Livreur (point mobile).
+   - À chaque nouvelle coordonnée reçue via le WebSocket, le code JS du client met à jour la position du marqueur 🛵, ce qui l'anime en direct sur la carte sous les yeux du client !

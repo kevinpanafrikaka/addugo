@@ -34,7 +34,7 @@ setTimeout(() => {
 let carteSuivi = null;
 let marqueurLivreur = null;
 let marqueurClient = null;
-let simulateurInterval = null;
+let socketSuivi = null;
 
 // ── UTILITAIRES ──
 function formatPrix(montant) {
@@ -78,8 +78,9 @@ function initMap(statut) {
     carteSuivi = null;
   }
   
-  if (simulateurInterval) {
-    clearInterval(simulateurInterval);
+  if (socketSuivi) {
+    socketSuivi.disconnect();
+    socketSuivi = null;
   }
 
   // Si on n'est pas au moins en cours de livraison ou prête, on ne montre pas la carte
@@ -116,7 +117,7 @@ function initMap(statut) {
   });
 
   if (statut === 'en_livraison') {
-    // Point de départ fictif (Kipé par exemple)
+    // Point de départ par défaut du livreur (si pas encore de signal GPS)
     let livreurCoords = [9.5350, -13.6600];
     marqueurLivreur = L.marker(livreurCoords, {icon: iconeLivreur}).addTo(carteSuivi);
     
@@ -124,13 +125,26 @@ function initMap(statut) {
     const bounds = L.latLngBounds(clientCoords, livreurCoords);
     carteSuivi.fitBounds(bounds, { padding: [30, 30] });
 
-    // Simulation de mouvement
-    simulateurInterval = setInterval(() => {
-      // Déplacement très basique vers le client
-      livreurCoords[0] += (clientCoords[0] - livreurCoords[0]) * 0.05;
-      livreurCoords[1] += (clientCoords[1] - livreurCoords[1]) * 0.05;
-      marqueurLivreur.setLatLng(livreurCoords);
-    }, 2000);
+    // ── CONNEXION WEBSOCKET POUR LE SUIVI RÉEL ──
+    socketSuivi = io('http://localhost:5000');
+    
+    socketSuivi.on('connect', () => {
+      console.log('Client connecté au WebSocket. Join room: commande_', window.commandeActuelleId);
+      socketSuivi.emit('join_commande', window.commandeActuelleId);
+    });
+
+    socketSuivi.on('update_position', (data) => {
+      console.log('Nouvelle position reçue du livreur:', data);
+      const newCoords = [data.lat, data.lng];
+      
+      // Mettre à jour la position de la moto sur la carte
+      marqueurLivreur.setLatLng(newCoords);
+      
+      // Optionnel : Recadrer la carte pour toujours voir le livreur et le client
+      // const newBounds = L.latLngBounds(clientCoords, newCoords);
+      // carteSuivi.fitBounds(newBounds, { padding: [30, 30] });
+    });
+    
   } else if (statut === 'livree') {
     marqueurLivreur = L.marker(clientCoords, {icon: iconeLivreur}).addTo(carteSuivi);
     carteSuivi.setView(clientCoords, 16);
@@ -247,6 +261,7 @@ async function afficherSuivi(commandeId) {
     }
 
     // Initialisation de la carte Leaflet
+    window.commandeActuelleId = commandeId;
     initMap(c.statut);
 
   } catch (err) {
@@ -257,6 +272,7 @@ async function afficherSuivi(commandeId) {
 // ── RETOUR LISTE ──
 document.getElementById('btn-retour-liste').addEventListener('click', () => {
   if (window.suiviInterval) clearInterval(window.suiviInterval);
+  if (socketSuivi) { socketSuivi.disconnect(); socketSuivi = null; }
   document.getElementById('detail-suivi').classList.add('cache');
   document.getElementById('commandes-en-cours').classList.remove('cache');
 });

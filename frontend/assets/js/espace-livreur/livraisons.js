@@ -116,11 +116,20 @@ function afficherLivraisons() {
       </div>
       <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:12px; border-top:1px solid #F3F4F6;">
         <span style="font-size:1.1rem; font-weight:800; font-family:var(--police-titre); color:var(--orange);">${formatPrix(l.montant_total)}</span>
-        ${l.statut !== 'livree' ? `
+        ${l.statut === 'en_livraison' ? `
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-noir btn-sm" onclick="demarrerGPS(${l.id})" id="btn-gps-${l.id}" style="border-radius:10px; font-weight:700; padding:6px 14px; background:var(--noir); color:white;">
+              <i class="fas fa-location-arrow"></i> Démarrer GPS
+            </button>
+            <button class="btn btn-orange btn-sm" onclick="marquerLivree(${l.id})" style="border-radius:10px; font-weight:700; padding:6px 14px;">
+              <i class="fas fa-check-circle"></i> Livrée
+            </button>
+          </div>
+        ` : l.statut === 'livree' ? '<span style="color:#10B981; font-weight:700; font-size:0.85rem;"><i class="fas fa-check"></i> Terminée</span>' : `
           <button class="btn btn-orange btn-sm" onclick="marquerLivree(${l.id})" style="border-radius:10px; font-weight:700; padding:6px 14px;">
             <i class="fas fa-check-circle"></i> Marquer livrée
           </button>
-        ` : '<span style="color:#10B981; font-weight:700; font-size:0.85rem;"><i class="fas fa-check"></i> Terminée</span>'}
+        `}
       </div>
     </div>`).join('');
 }
@@ -156,9 +165,75 @@ window.marquerLivree = async (id) => {
   }
 };
 
+// ── SUIVI GPS TEMPS RÉEL (WEBSOCKETS) ──
+let watchId = null;
+let socket = null;
+
+window.demarrerGPS = (commandeId) => {
+  const btn = document.getElementById(`btn-gps-${commandeId}`);
+  
+  if (!navigator.geolocation) {
+    alert("Votre navigateur ne supporte pas la géolocalisation.");
+    return;
+  }
+
+  // Si on est déjà en train de suivre cette commande, on arrête
+  if (watchId !== null) {
+    navigator.geolocation.clearWatch(watchId);
+    watchId = null;
+    if (socket) {
+      socket.disconnect();
+      socket = null;
+    }
+    btn.innerHTML = '<i class="fas fa-location-arrow"></i> Démarrer GPS';
+    btn.style.background = 'var(--noir)';
+    alert("Le suivi GPS a été arrêté.");
+    return;
+  }
+
+  // Connexion au WebSocket
+  socket = io('http://localhost:5000');
+  
+  socket.on('connect', () => {
+    console.log('Connecté au serveur WebSocket !');
+    
+    // On commence à "écouter" la position GPS
+    watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        
+        console.log(`Nouvelle position: ${lat}, ${lng}`);
+        
+        // On envoie la position au serveur pour cette commande
+        socket.emit('livreur_position', {
+          commandeId: commandeId,
+          lat: lat,
+          lng: lng
+        });
+      },
+      (error) => {
+        console.error("Erreur GPS:", error);
+        alert("Erreur de géolocalisation: " + error.message);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
+    
+    // Mettre à jour visuellement le bouton
+    btn.innerHTML = '<i class="fas fa-broadcast-tower"></i> GPS en cours...';
+    btn.style.background = '#10B981'; // Vert succès
+  });
+};
+
 // ── DÉCONNEXION ──
 document.getElementById('btn-deconnexion')?.addEventListener('click', (e) => {
   e?.preventDefault();
+  if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+  if (socket) socket.disconnect();
   seDeconnecter();
 });
 
