@@ -1,6 +1,6 @@
 /* ============================================================
    AdduGo — doodles.js
-   Générateur de motifs aléatoires en arrière-plan
+   Générateur de motifs aléatoires en arrière-plan (Style WhatsApp)
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', initRandomDoodles);
@@ -17,41 +17,42 @@ function initRandomDoodles() {
   container.style.pointerEvents = 'none';
   container.style.overflow = 'hidden';
   
-  // Gris neutre avec très faible transparence
+  // Gris neutre pour un effet filigrane (watermark)
   const doodleColor = '#888888';
-  const doodleOpacity = '0.04';
+  const doodleOpacity = '0.06'; // Légèrement plus visible pour l'effet WhatsApp
 
+  // Sélection d'icônes évoquant le style WhatsApp (nature, objets du quotidien, fun)
   const icons = [
-    'fa-shopping-cart', 'fa-box-open', 'fa-heart', 'fa-coffee', 'fa-star', 
-    'fa-gift', 'fa-motorcycle', 'fa-truck', 'fa-store', 'fa-wallet',
-    'fa-camera', 'fa-music', 'fa-paper-plane', 'fa-smile', 'fa-gem',
-    'fa-crown', 'fa-bolt', 'fa-gamepad', 'fa-pizza-slice', 'fa-mug-hot',
-    'fa-ice-cream', 'fa-comment-dots', 'fa-envelope', 'fa-tag', 'fa-ticket-alt',
-    'fa-fire', 'fa-clock', 'fa-compass', 'fa-map-marker-alt', 'fa-globe',
-    'fa-shopping-bag', 'fa-store-alt', 'fa-tags', 'fa-receipt', 'fa-tshirt',
-    'fa-shoe-prints', 'fa-headphones', 'fa-laptop', 'fa-mobile-alt', 'fa-glasses',
-    'fa-hamburger', 'fa-leaf', 'fa-sun', 'fa-moon', 'fa-bicycle', 'fa-car',
-    'fa-plane', 'fa-rocket', 'fa-umbrella', 'fa-magic', 'fa-key', 'fa-lock'
+    'fa-bicycle', 'fa-leaf', 'fa-moon', 'fa-paw', 'fa-music', 'fa-headphones', 
+    'fa-lightbulb', 'fa-coffee', 'fa-utensils', 'fa-camera', 'fa-video', 
+    'fa-book', 'fa-pencil-alt', 'fa-paper-plane', 'fa-bus', 'fa-car', 
+    'fa-cat', 'fa-dog', 'fa-feather', 'fa-guitar', 'fa-motorcycle', 
+    'fa-plane', 'fa-ship', 'fa-train', 'fa-tv', 'fa-umbrella', 'fa-anchor', 
+    'fa-basketball-ball', 'fa-bell', 'fa-bolt', 'fa-bomb', 'fa-cloud', 
+    'fa-compass', 'fa-crown', 'fa-drum', 'fa-futbol', 'fa-ghost', 'fa-hammer', 
+    'fa-key', 'fa-lemon', 'fa-magnet', 'fa-meteor', 'fa-puzzle-piece', 
+    'fa-robot', 'fa-rocket', 'fa-seedling', 'fa-star', 'fa-sun', 'fa-trophy', 
+    'fa-truck', 'fa-umbrella-beach', 'fa-heart', 'fa-smile', 'fa-gamepad'
   ];
 
-  // Quantité dynamique selon la taille de l'écran pour bien remplir l'espace
+  // Densité augmentée pour ressembler à la fresque WhatsApp
   const screenArea = window.innerWidth * window.innerHeight;
-  const numDoodles = Math.min(Math.floor(screenArea / 12000), 100);
+  const numDoodles = Math.min(Math.floor(screenArea / 6000), 200);
 
   for (let i = 0; i < numDoodles; i++) {
     const iconClass = icons[Math.floor(Math.random() * icons.length)];
     const iElem = document.createElement('i');
     iElem.className = `fas ${iconClass}`;
     
-    // Position totalement chaotique
+    // Position chaotique
     const top = Math.random() * 100;
     const left = Math.random() * 100;
     
-    // Rotation créative (0 à 360)
-    const rotation = Math.random() * 360;
+    // Rotation plus douce pour garder une certaine cohérence visuelle
+    const rotation = (Math.random() * 60) - 30; // -30° à +30°
     
-    // Taille variée (0.5 à 2.5)
-    const scale = 0.5 + Math.random() * 2;
+    // Taille plus homogène (comme sur WhatsApp)
+    const scale = 0.8 + Math.random() * 0.7; // 0.8x à 1.5x
 
     iElem.style.position = 'absolute';
     iElem.style.top = `${top}%`;
@@ -60,6 +61,10 @@ function initRandomDoodles() {
     iElem.style.color = doodleColor;
     iElem.style.opacity = doodleOpacity;
     iElem.style.fontSize = '24px';
+    
+    // Effet "dessin au trait" simulé
+    iElem.style.webkitTextStroke = '0.5px #888';
+    // iElem.style.color = 'transparent'; // Optionnel : pour rendre l'intérieur transparent, mais avec FontAwesome Free, Solid rend mieux avec juste une couleur.
 
     container.appendChild(iElem);
   }
