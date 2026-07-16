@@ -47,7 +47,7 @@ app.get('/api/fix-db', async (req, res) => {
   const mariadb = require('mariadb');
   let conn;
   try {
-    const urlBaseDeDonnees = 'mariadb://root:FucQdFylVdwVzuPiYbbKPjKPRtSxvbvx@hayabusa.proxy.rlwy.net:26647/railway';
+    const urlBaseDeDonnees = 'mariadb://root:FucQdFylVdwVzuPiYbbKPjKPRtSxvbvx@hayabusa.proxy.rlwy.net:26647/addugo';
     const pool = mariadb.createPool(urlBaseDeDonnees);
     conn = await pool.getConnection();
     await conn.query('ALTER TABLE commandes ADD COLUMN code_pin VARCHAR(4) DEFAULT NULL AFTER montant_total');
