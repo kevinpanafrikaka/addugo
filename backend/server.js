@@ -43,26 +43,6 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/api/fix-old-pins', async (req, res) => {
-  const pool = require('./config/db');
-  let conn;
-  try {
-    conn = await pool.getConnection();
-    const rows = await conn.query('SELECT id FROM commandes WHERE code_pin IS NULL');
-    let count = 0;
-    for(let r of rows) {
-      const pin = String(Math.floor(1000 + Math.random() * 9000));
-      await conn.query('UPDATE commandes SET code_pin = ? WHERE id = ?', [pin, r.id]);
-      count++;
-    }
-    res.json({ success: true, message: `${count} commandes anciennes ont reçu un code PIN avec succès.` });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  } finally {
-    if (conn) conn.release();
-  }
-});
-
 // ============================================================
 // WEBSOCKETS (SOCKET.IO) POUR LE SUIVI GPS
 // ============================================================
