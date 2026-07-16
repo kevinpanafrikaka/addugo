@@ -76,5 +76,22 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       seDeconnecter();
     });
-  });
 });
+});
+
+// ============================================================
+// INJECTION AUTOMATIQUE DU GÉNÉRATEUR DE DOODLES
+// ============================================================
+(function() {
+  const scripts = document.getElementsByTagName('script');
+  let apiSrc = '';
+  for(let s of scripts) {
+    if(s.src && s.src.includes('api.js')) apiSrc = s.src;
+  }
+  if (apiSrc) {
+    const doodleSrc = apiSrc.replace('api.js', 'doodles.js');
+    const script = document.createElement('script');
+    script.src = doodleSrc;
+    document.head.appendChild(script);
+  }
+})();

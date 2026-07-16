@@ -204,7 +204,7 @@ function renderPanierPage() {
               Total à régler chez ${boutique.nom_boutique}
             </div>
             <div style="font-size:1.4rem; font-weight:900; color:var(--texte); font-family:var(--police-titre);">
-              ${boutique.total.toLocaleString('fr-FR')} <span style="font-size:0.9rem; font-weight:600;">GNF</span>
+              ${boutique.total.toLocaleString('fr-FR')}&nbsp;<span style="font-size:0.9rem; font-weight:600;">GNF</span>
             </div>
           </div>
           <button onclick="validerCommandeBoutique(${commerceId}, '${boutique.nom_boutique.replace(/'/g, "\\'")}')"
@@ -235,8 +235,7 @@ function renderPanierPage() {
             Total de vos achats · ${nbBoutiques} boutiques · ${totalArticles} article${totalArticles > 1 ? 's' : ''}
           </div>
           <div style="font-size:1.8rem; font-weight:900; color:var(--texte); font-family:var(--police-titre);">
-            ${totalGlobal.toLocaleString('fr-FR')}
-            <span style="font-size:1rem; font-weight:600; color:var(--texte-gris);">GNF</span>
+            ${totalGlobal.toLocaleString('fr-FR')}&nbsp;<span style="font-size:1rem; font-weight:600; color:var(--texte-gris);">GNF</span>
           </div>
         </div>
         <div style="font-size:0.8rem; color:var(--texte-gris); max-width:270px;
