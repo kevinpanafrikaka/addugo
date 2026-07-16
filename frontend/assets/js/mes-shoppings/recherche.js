@@ -209,7 +209,7 @@ function afficherProduits(resultats) {
 
   let html = '';
   resultats.forEach(p => {
-    const prixFormate = new Intl.NumberFormat('fr-FR').format(p.prix || 0) + ' GNF';
+    const prixFormate = new Intl.NumberFormat('fr-FR').format(p.prix || 0) + '\u00A0GNF';
 
     // Image du produit
     let image = '../../images/AdduGo_Logo.png';

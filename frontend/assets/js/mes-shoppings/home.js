@@ -85,7 +85,7 @@ async function chargerProduits() {
       // CONDITION B : Rendu de la carte Produit avec Image, Description, Prix, Catégorie, Photo boutique + Nom en gras
       let html = '';
       produitsAffiches.forEach(p => {
-        const prixFormate = new Intl.NumberFormat('fr-FR').format(p.prix || 0) + ' GNF';
+        const prixFormate = new Intl.NumberFormat('fr-FR').format(p.prix || 0) + '\u00A0GNF';
         
         // Image du produit
         let image = '../../images/AdduGo_Logo.png'; // Placeholder fallback

@@ -53,7 +53,7 @@ function formatDate(isoStr) {
 }
 
 function formatPrix(montant) {
-  return new Intl.NumberFormat('fr-GN').format(montant) + ' GNF';
+  return new Intl.NumberFormat('fr-GN').format(montant) + '\u00A0GNF';
 }
 
 function badgeStatut(statut) {

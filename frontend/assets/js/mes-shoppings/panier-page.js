@@ -107,7 +107,7 @@ function renderPanierPage() {
           <div style="text-align:right; flex-shrink:0;">
             <div style="font-size:0.75rem; color:var(--texte-gris); margin-bottom:2px;">Sous-total</div>
             <div style="font-size:1.2rem; font-weight:900; color:var(--orange);">
-              ${boutique.total.toLocaleString('fr-FR')} GNF
+              ${boutique.total.toLocaleString('fr-FR')}&nbsp;GNF
             </div>
           </div>
         </div>
@@ -139,12 +139,12 @@ function renderPanierPage() {
               ${item.nom}
             </div>
             <div style="font-size:1.1rem; color:var(--orange); font-weight:800; margin-bottom:5px;">
-              ${item.prix.toLocaleString('fr-FR')} GNF
+              ${item.prix.toLocaleString('fr-FR')}&nbsp;GNF
             </div>
             <div style="font-size:0.82rem; color:var(--texte-gris);">
               Sous-total :
               <strong style="color:var(--texte); font-weight:700;">
-                ${sousTotal.toLocaleString('fr-FR')} GNF
+                ${sousTotal.toLocaleString('fr-FR')}&nbsp;GNF
               </strong>
             </div>
           </div>

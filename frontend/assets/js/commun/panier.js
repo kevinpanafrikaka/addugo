@@ -150,7 +150,7 @@ function renderPanierSidebar() {
           <img src="${item.image}" alt="${item.nom}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="this.src='../../images/AdduGo_Logo.png'">
           <div style="flex: 1; min-width: 0;">
             <div style="font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.nom}</div>
-            <div style="font-size: 0.85rem; color: var(--orange); font-weight: bold; margin-top: 4px;">${item.prix.toLocaleString('fr-FR')} GNF</div>
+            <div style="font-size: 0.85rem; color: var(--orange); font-weight: bold; margin-top: 4px;">${item.prix.toLocaleString('fr-FR')}&nbsp;GNF</div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
               
               <div style="display: flex; align-items: center; background: #f5f5f5; border-radius: 6px; padding: 2px;">
@@ -173,7 +173,7 @@ function renderPanierSidebar() {
         </div>
         <div style="margin-top: 15px; border-top: 1px dashed var(--bordure); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
           <span style="font-weight: 600; color: var(--texte-gris);">Sous-total:</span>
-          <span style="font-weight: 800; font-size: 1.1rem; color: var(--texte);">${boutique.total.toLocaleString('fr-FR')} GNF</span>
+          <span style="font-weight: 800; font-size: 1.1rem; color: var(--texte);">${boutique.total.toLocaleString('fr-FR')}&nbsp;GNF</span>
         </div>
         <button onclick="validerCommandeBoutique(${commerceId}, '${boutique.nom_boutique.replace(/'/g, "\\'")}')" style="width: 100%; margin-top: 12px; padding: 12px; background: #1A1A2E; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">
           Valider ma commande
@@ -200,51 +200,178 @@ window.validerCommandeBoutique = async function(commerceId, nomBoutique) {
   }
   const user = JSON.parse(userStr);
 
-  // Demander l'adresse
-  const adresseSaisie = prompt(`Entrez votre adresse de livraison pour votre commande chez ${nomBoutique} :\n(Ex: Kaloum, Conakry)`, user.adresse || "");
+  // Inject or show modal
+  let modal = document.getElementById('addugo-adresse-modal');
+  if (!modal) {
+    const modalHtml = `
+      <div id="addugo-adresse-modal" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;font-family:'Inter',sans-serif;">
+        <div style="background:var(--blanc);border-radius:16px;width:100%;max-width:400px;padding:25px;box-shadow:0 10px 25px rgba(0,0,0,0.1);position:relative;">
+          <button id="addugo-modal-close" style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:1.5rem;color:var(--texte-gris);cursor:pointer;">&times;</button>
+          
+          <h3 style="margin-top:0;font-family:var(--police-titre);color:var(--texte);font-size:1.4rem;">Adresse de livraison</h3>
+          <p style="color:var(--texte-gris);font-size:0.9rem;margin-bottom:20px;line-height:1.4;">Où souhaitez-vous être livré pour votre commande chez <b><span id="addugo-modal-boutique-nom"></span></b> ?</p>
+          
+          <div style="margin-bottom:15px;">
+            <button id="addugo-modal-gps-btn" type="button" style="width:100%;border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid var(--orange);color:var(--orange);background:rgba(255,107,0,0.05);font-weight:700;font-size:0.95rem;cursor:pointer;transition:all 0.2s;">
+              <i class="fas fa-map-marker-alt"></i> Utiliser ma position actuelle
+            </button>
+          </div>
+          
+          <div style="display:flex;align-items:center;margin:15px 0;color:var(--texte-clair);font-size:0.85rem;">
+            <div style="flex:1;height:1px;background:var(--bordure);"></div>
+            <span style="padding:0 10px;">OU</span>
+            <div style="flex:1;height:1px;background:var(--bordure);"></div>
+          </div>
+          
+          <div style="margin-bottom:20px;">
+            <label style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--texte);">Votre adresse complète</label>
+            <input type="text" id="addugo-modal-adresse-input" placeholder="Ex: Kaloum, Conakry" style="width:100%;padding:12px 15px;border:1px solid var(--bordure);border-radius:10px;font-family:inherit;font-size:0.95rem;outline:none;" />
+          </div>
+          
+          <button id="addugo-modal-valider-btn" style="width:100%;border-radius:10px;padding:14px;font-weight:700;font-size:1rem;border:none;color:white;background:var(--orange);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;">
+            <i class="fas fa-check"></i> Confirmer la commande
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    modal = document.getElementById('addugo-adresse-modal');
+  }
+
+  // Setup UI
+  document.getElementById('addugo-modal-boutique-nom').textContent = nomBoutique;
+  const adresseInput = document.getElementById('addugo-modal-adresse-input');
+  adresseInput.value = user.adresse || "";
   
-  if (!adresseSaisie || adresseSaisie.trim() === "") {
-    return; // Annulé par l'utilisateur
-  }
-
-  try {
-    const articlesToSend = articlesBoutique.map(a => ({
-      produit_id: a.produit_id,
-      quantite: a.quantite
-    }));
-
-    const res = await fetchApi('/commandes', {
-      method: 'POST',
-      body: JSON.stringify({
-        commerce_id: commerceId,
-        adresse_livraison: adresseSaisie.trim(),
-        articles: articlesToSend
-      })
+  modal.style.display = 'flex';
+  
+  return new Promise((resolve) => {
+    const btnClose = document.getElementById('addugo-modal-close');
+    const btnGps = document.getElementById('addugo-modal-gps-btn');
+    const btnValider = document.getElementById('addugo-modal-valider-btn');
+    
+    // Nettoyage des anciens événements (clonage)
+    const cloneClose = btnClose.cloneNode(true);
+    btnClose.parentNode.replaceChild(cloneClose, btnClose);
+    const cloneGps = btnGps.cloneNode(true);
+    btnGps.parentNode.replaceChild(cloneGps, btnGps);
+    const cloneValider = btnValider.cloneNode(true);
+    btnValider.parentNode.replaceChild(cloneValider, btnValider);
+    
+    cloneClose.addEventListener('click', () => {
+      modal.style.display = 'none';
+      resolve(null);
     });
-
-    const data = await res.json();
-
-    if (data.success) {
-      alert(`Commande validée avec succès chez ${nomBoutique} !`);
+    
+    cloneGps.addEventListener('click', () => {
+      if (!navigator.geolocation) {
+        alert("La géolocalisation n'est pas supportée par votre navigateur.");
+        return;
+      }
       
-      // Enlever ces articles du panier
-      const nouveauPanier = panier.filter(i => String(i.commerce_id) !== String(commerceId));
-      savePanier(nouveauPanier);
+      cloneGps.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Géolocalisation en cours...';
+      cloneGps.style.opacity = '0.7';
+      cloneGps.disabled = true;
       
-      // Fermer le tiroir
-      const sidebar = document.getElementById('panier-sidebar');
-      const overlay = document.getElementById('panier-overlay');
-      if (sidebar) sidebar.classList.remove('ouvert');
-      if (overlay) overlay.classList.remove('ouvert');
-
-    } else {
-      alert("Erreur lors de la validation : " + (data.message || "inconnue"));
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`);
+          const data = await res.json();
+          
+          if (data && data.display_name) {
+            let nomLieu = "";
+            if (data.address.neighbourhood) nomLieu += data.address.neighbourhood + ", ";
+            else if (data.address.suburb) nomLieu += data.address.suburb + ", ";
+            else if (data.address.road) nomLieu += data.address.road + ", ";
+            
+            if (data.address.city) nomLieu += data.address.city;
+            else if (data.address.town) nomLieu += data.address.town;
+            else if (data.address.village) nomLieu += data.address.village;
+            
+            if (!nomLieu) nomLieu = data.display_name;
+            
+            adresseInput.value = nomLieu;
+          } else {
+            alert("Impossible de déterminer l'adresse avec précision.");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Erreur de connexion au service de carte.");
+        } finally {
+          cloneGps.innerHTML = '<i class="fas fa-map-marker-alt"></i> Utiliser ma position actuelle';
+          cloneGps.style.opacity = '1';
+          cloneGps.disabled = false;
+        }
+      }, (error) => {
+        alert("Veuillez autoriser l'accès à votre position pour utiliser cette fonctionnalité.");
+        cloneGps.innerHTML = '<i class="fas fa-map-marker-alt"></i> Utiliser ma position actuelle';
+        cloneGps.style.opacity = '1';
+        cloneGps.disabled = false;
+      }, { enableHighAccuracy: true });
+    });
+    
+    cloneValider.addEventListener('click', () => {
+      const adresseSaisie = adresseInput.value.trim();
+      if (!adresseSaisie) {
+        alert("Veuillez renseigner votre adresse de livraison.");
+        return;
+      }
+      
+      cloneValider.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validation...';
+      cloneValider.disabled = true;
+      
+      resolve(adresseSaisie);
+    });
+  }).then(async (adresseSaisie) => {
+    // Reset valider button style after resolve
+    const btnValider = document.getElementById('addugo-modal-valider-btn');
+    if (btnValider) {
+      btnValider.innerHTML = '<i class="fas fa-check"></i> Confirmer la commande';
+      btnValider.disabled = false;
     }
+    
+    if (!adresseSaisie) return; // Annulé
 
-  } catch (error) {
-    console.error('Erreur valider commande:', error);
-    alert("Erreur de connexion. Veuillez réessayer.");
-  }
+    try {
+      modal.style.display = 'none';
+
+      const articlesToSend = articlesBoutique.map(a => ({
+        produit_id: a.produit_id,
+        quantite: a.quantite
+      }));
+
+      const res = await fetchApi('/commandes', {
+        method: 'POST',
+        body: JSON.stringify({
+          commerce_id: commerceId,
+          adresse_livraison: adresseSaisie,
+          articles: articlesToSend
+        })
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert(`Commande validée avec succès chez ${nomBoutique} !`);
+        
+        const nouveauPanier = panier.filter(i => String(i.commerce_id) !== String(commerceId));
+        savePanier(nouveauPanier);
+        
+        const sidebar = document.getElementById('panier-sidebar');
+        const overlay = document.getElementById('panier-overlay');
+        if (sidebar) sidebar.classList.remove('ouvert');
+        if (overlay) overlay.classList.remove('ouvert');
+
+      } else {
+        alert("Erreur lors de la validation : " + (data.message || "inconnue"));
+      }
+
+    } catch (error) {
+      console.error('Erreur valider commande:', error);
+      alert("Erreur de connexion. Veuillez réessayer.");
+    }
+  });
 };
 
 // ── BADGE GLOBAL DU PANIER ──

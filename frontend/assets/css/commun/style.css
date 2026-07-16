@@ -716,6 +716,7 @@ p  { font-size: 1rem;    font-weight: 400; line-height: 1.7; }
   font-family: var(--police-mono);
   font-weight: 700;
   color: var(--orange);
+  white-space: nowrap;
 }
 
 /* ============================================================

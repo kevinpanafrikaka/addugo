@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const data = res.data;
         
         // -- Mettre à jour les KPIs
-        document.getElementById('kpi-ca').textContent = new Intl.NumberFormat('fr-GN').format(data.kpis.chiffre_affaires) + ' GNF';
+        document.getElementById('kpi-ca').textContent = new Intl.NumberFormat('fr-GN').format(data.kpis.chiffre_affaires) + '\u00A0GNF';
         document.getElementById('kpi-commandes').textContent = data.kpis.commandes_total;
         document.getElementById('kpi-attente').textContent = data.kpis.commandes_attente;
         document.getElementById('kpi-produits').textContent = data.kpis.produits_actifs;
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
               </div>
               <div style="font-weight: 700; color: var(--orange);">
-                ${new Intl.NumberFormat('fr-GN').format(prod.revenu_genere)} GNF
+                ${new Intl.NumberFormat('fr-GN').format(prod.revenu_genere)}&nbsp;GNF
               </div>
             `;
             listeTop.appendChild(div);
@@ -262,7 +262,7 @@ function initCharts(revenusData, categoriesData, jours = 7) {
             },
             label: function(context) {
               let value = context.raw || 0;
-              return 'Revenus : ' + new Intl.NumberFormat('fr-GN').format(value) + ' GNF';
+              return 'Revenus : ' + new Intl.NumberFormat('fr-GN').format(value) + '\u00A0GNF';
             }
           }
         }

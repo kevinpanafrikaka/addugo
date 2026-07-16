@@ -16,7 +16,7 @@ if (document.getElementById('sidebar-nom')) document.getElementById('sidebar-nom
 
 // ── UTILITAIRES ──
 function formatPrix(montant) {
-  return new Intl.NumberFormat('fr-GN').format(montant || 0) + ' GNF';
+  return new Intl.NumberFormat('fr-GN').format(montant || 0) + '\u00A0GNF';
 }
 
 function formatDate(date) {
