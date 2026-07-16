@@ -361,7 +361,7 @@ exports.getCommerceStats = async (req, res) => {
         groupByStr = "DATE_FORMAT(c.date_creation, '%Y-%m-%d %H:00:00')";
     } else if (jours === 365) {
         selectDateStr = "DATE_FORMAT(c.date_creation, '%Y-%m-01')";
-        groupByStr = "YEAR(c.date_creation), MONTH(c.date_creation)";
+        groupByStr = "DATE_FORMAT(c.date_creation, '%Y-%m-01')";
     }
 
     const revenusChart = await conn.query(`
