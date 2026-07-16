@@ -44,12 +44,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/fix-db', async (req, res) => {
-  const pool = require('./config/db');
+  const mariadb = require('mariadb');
   let conn;
   try {
+    const urlBaseDeDonnees = 'mariadb://root:FucQdFylVdwVzuPiYbbKPjKPRtSxvbvx@hayabusa.proxy.rlwy.net:26647/railway';
+    const pool = mariadb.createPool(urlBaseDeDonnees);
     conn = await pool.getConnection();
     await conn.query('ALTER TABLE commandes ADD COLUMN code_pin VARCHAR(4) DEFAULT NULL AFTER montant_total');
-    res.json({ success: true, message: 'Colonne code_pin ajoutée avec succès !' });
+    res.json({ success: true, message: 'Colonne code_pin ajoutée avec succès via root !' });
   } catch (err) {
     if (err.errno === 1060) {
       res.json({ success: true, message: 'La colonne code_pin existe déjà.' });
