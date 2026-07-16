@@ -55,12 +55,12 @@ function mettreAJourUI() {
 
   if (estDisponible) {
     carte.classList.remove('indisponible');
-    icone.textContent = '<i class="fas fa-circle" style="color:#10B981;font-size:0.7rem;"></i>';
+    icone.innerHTML = '<i class="fas fa-circle" style="color:#10B981;font-size:0.7rem;"></i>';
     titre.textContent = 'Vous êtes disponible';
     desc.textContent  = 'Vous pouvez recevoir des livraisons';
   } else {
     carte.classList.add('indisponible');
-    icone.textContent = '<i class="fas fa-circle" style="color:#EF4444;font-size:0.7rem;"></i>';
+    icone.innerHTML = '<i class="fas fa-circle" style="color:#EF4444;font-size:0.7rem;"></i>';
     titre.textContent = 'Vous êtes indisponible';
     desc.textContent  = 'Vous ne recevrez pas de nouvelles livraisons';
   }

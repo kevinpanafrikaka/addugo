@@ -76,7 +76,7 @@ function obtenirStructureGraphique(livraisons, periode) {
     if (l.statut === 'livree') {
       const d = new Date(l.date_livraison || l.date_assignation || l.date_creation);
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      mapGains[key] = (mapGains[key] || 0) + (Number(l.montant_total) || 0);
+      mapGains[key] = (mapGains[key] || 0) + 30000;
     }
   });
 
@@ -85,7 +85,7 @@ function obtenirStructureGraphique(livraisons, periode) {
     const dateMaj = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
     labels = [`Aujourd'hui`];
     fullDates = [dateMaj];
-    const totalAujourdhui = livraisons.filter(l => l.statut === 'livree').reduce((sum, l) => sum + (Number(l.montant_total) || 0), 0);
+    const totalAujourdhui = livraisons.filter(l => l.statut === 'livree').length * 30000;
     dataPoints = [totalAujourdhui];
   } 
   else if (periode === '7jours') {
@@ -125,7 +125,7 @@ function obtenirStructureGraphique(livraisons, periode) {
         if (diffJours >= 0 && diffJours < 28) {
           const idxSemaine = 3 - Math.floor(diffJours / 7);
           if (idxSemaine >= 0 && idxSemaine < 4) {
-            dataPoints[idxSemaine] += Number(l.montant_total) || 0;
+            dataPoints[idxSemaine] += 30000;
           }
         }
       }
@@ -150,7 +150,7 @@ function obtenirStructureGraphique(livraisons, periode) {
         const d = new Date(l.date_livraison || l.date_assignation || l.date_creation);
         if (d.getFullYear() === anneeEncours) {
           const m = d.getMonth();
-          dataPoints[m] += Number(l.montant_total) || 0;
+          dataPoints[m] += 30000;
         }
       }
     });
@@ -164,7 +164,7 @@ function calculerEtAfficherStatistiques() {
   const livraisonsFiltrees = filtrerParPeriode(toutesLivraisons, periodeActive);
   const livrees = livraisonsFiltrees.filter(l => l.statut === 'livree');
   
-  const totalGains = livrees.reduce((sum, l) => sum + (Number(l.montant_total) || 0), 0);
+  const totalGains = livrees.length * 30000;
   const nombreLivrees = livrees.length;
   const totalCourses = livraisonsFiltrees.length;
   

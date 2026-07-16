@@ -192,21 +192,8 @@ async function initialiserNavbar() {
     if (dropdownMenu) {
       const currentPath = window.location.pathname;
 
-      // Détermine le préfixe relatif selon l'emplacement de la page courante
-      let prefix = '';
-      if (currentPath.includes('/espace-client/') || currentPath.includes('/client/')) {
-        prefix = '../espace-client/';
-        // Les chemins vers d'autres espaces depuis espace-client
-      } else if (currentPath.includes('/ma-boutique/') || currentPath.includes('/commerce/')) {
-        prefix = '../';
-      } else if (currentPath.includes('/espace-livreur/') || currentPath.includes('/livreur/')) {
-        prefix = '../';
-      } else if (currentPath.includes('/espace-admin/') || currentPath.includes('/admin/')) {
-        prefix = '../';
-      } else {
-        // Pages dans /mes-shoppings/, /accueil/, ou racine frontend
-        prefix = '../';
-      }
+      // Détermine le préfixe relatif (toutes les pages HTML étant à profondeur identique dans /pages/)
+      let prefix = '../';
 
       // Chemins vers chaque espace
       const pathClient  = prefix + 'espace-client/dashboard.html';
@@ -290,8 +277,8 @@ async function initialiserNavbar() {
     // ── GESTION DE LA 1ÈRE ICÔNE NAVBAR (TOUJOURS ACCUEIL) ──
     const premiereIcone = document.getElementById('nav-premiere-icone');
     if (premiereIcone) {
-      const isClientPage = window.location.pathname.includes('/client/');
-      const basePath = isClientPage ? '../' : '';
+      const isHomeArea = window.location.pathname.includes('/mes-shoppings/');
+      const basePath = isHomeArea ? '' : '../mes-shoppings/';
       premiereIcone.outerHTML = `
         <a href="${basePath}home.html" class="nav-icone icone-accueil" title="Accueil" id="nav-premiere-icone">
           <i class="fas fa-house-user" style="color: #0D9488;"></i>
@@ -330,8 +317,8 @@ async function initialiserNavbar() {
         // Mise à jour du contenu du dropdown
         const dropdownListe = document.getElementById('messages-dropdown-liste');
         if (dropdownListe) {
-          const isClientPage = window.location.pathname.includes('/client/') || window.location.pathname.includes('/commerce/') || window.location.pathname.includes('/livreur/') || window.location.pathname.includes('/admin/');
-          const basePath = isClientPage ? '' : 'client/';
+          const isClientPage = window.location.pathname.includes('/espace-client/');
+          const basePath = isClientPage ? '' : '../espace-client/';
 
           if (conversations.length === 0) {
             dropdownListe.innerHTML = `<div style="padding: 20px; text-align: center; color: var(--texte-clair); font-size: 0.9rem;">Aucun message.</div>`;

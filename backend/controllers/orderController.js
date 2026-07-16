@@ -64,11 +64,25 @@ exports.creerCommande = async (req, res) => {
     const code_pin = String(Math.floor(1000 + Math.random() * 9000));
 
     // Créer la commande
-    const result = await conn.query(
-      `INSERT INTO commandes (client_id, commerce_id, adresse_livraison, montant_total, code_pin)
-       VALUES (?, ?, ?, ?, ?)`,
-      [req.utilisateur.id, commerce_id, adresse_livraison, montant_total, code_pin]
-    );
+    let result;
+    try {
+      result = await conn.query(
+        `INSERT INTO commandes (client_id, commerce_id, adresse_livraison, montant_total, code_pin)
+         VALUES (?, ?, ?, ?, ?)`,
+        [req.utilisateur.id, commerce_id, adresse_livraison, montant_total, code_pin]
+      );
+    } catch (insertErr) {
+      // Si la colonne code_pin n'existe pas dans la base de données, on réessaie sans
+      if (insertErr.errno === 1054 || insertErr.code === 'ER_BAD_FIELD_ERROR' || String(insertErr.message).includes('code_pin')) {
+        result = await conn.query(
+          `INSERT INTO commandes (client_id, commerce_id, adresse_livraison, montant_total)
+           VALUES (?, ?, ?, ?)`,
+          [req.utilisateur.id, commerce_id, adresse_livraison, montant_total]
+        );
+      } else {
+        throw insertErr;
+      }
+    }
 
     const commande_id = Number(result.insertId);
 

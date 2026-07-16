@@ -75,7 +75,14 @@ exports.modifierProfil = async (req, res) => {
            telephone = COALESCE(?, telephone),
            adresse = COALESCE(?, adresse)
        WHERE id = ?`,
-      [nom, prenom, genre, telephone, adresse, req.utilisateur.id]
+      [
+        nom !== undefined ? nom : null,
+        prenom !== undefined ? prenom : null,
+        genre !== undefined ? genre : null,
+        telephone !== undefined ? telephone : null,
+        adresse !== undefined ? adresse : null,
+        req.utilisateur.id
+      ]
     );
 
     return res.status(200).json({

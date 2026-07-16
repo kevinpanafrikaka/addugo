@@ -642,3 +642,44 @@ setTimeout(() => {
 }, 1000);
 ```
 C'est exactement ce que nous avons fait pour réparer l'affichage de ta carte de suivi sur AdduGo !
+
+---
+
+### Astuce #31 : Le piège de `textContent` vs `innerHTML` en JavaScript
+*Date : 16 Juillet 2026*
+
+Lorsque tu manipules le contenu d'un élément HTML en JavaScript, deux propriétés principales te permettent d'insérer du texte : **`textContent`** et **`innerHTML`**. Se tromper de propriété est une source fréquente de bugs d'affichage visuel (ou de code brut qui apparaît sur l'écran).
+
+**Le piège :**
+Si tu tentes d'insérer des balises HTML en utilisant `textContent`, le navigateur va désactiver l'interprétation HTML. Il va encoder les caractères `<` et `>` (en `&lt;` et `&gt;`) et afficher la chaîne brute directement à l'écran, faisant apparaître du code (ex: `<i class="fas fa..."></i>`) au lieu de dessiner l'icône attendue.
+
+- **`textContent` (Sécurisé par défaut) :** À utiliser uniquement lorsque tu veux afficher du texte pur (par exemple un nom d'utilisateur, un prix). Il protège également contre les attaques XSS car il n'interprète aucun script malveillant.
+- **`innerHTML` (Interprété par le navigateur) :** À utiliser impérativement quand tu insères des structures de balises HTML (par exemple pour insérer une icône FontAwesome, un conteneur personnalisé de mise en page).
+
+**Exemple d'application dans AdduGo (Pastille de disponibilité) :**
+```javascript
+// ❌ Affichera le texte brut sur la page :
+icone.textContent = '<i class="fas fa-circle" style="color:#10B981;"></i>';
+
+// ✅ Affichera la pastille de couleur verte attendue :
+icone.innerHTML = '<i class="fas fa-circle" style="color:#10B981;"></i>';
+```
+
+---
+
+### Astuce #32 : Simplifier les liens relatifs dans les architectures de dossiers symétriques
+*Date : 16 Juillet 2026*
+
+Dans une application web organisée en plusieurs espaces (ex: `/pages/espace-client/`, `/pages/ma-boutique/`, `/pages/espace-livreur/`), tous tes fichiers se trouvent souvent au même niveau de profondeur par rapport à la racine.
+
+**Le problème classique :**
+Essayer de calculer dynamiquement des préfixes différents selon le sous-dossier actuel (ex: utiliser `../` dans certains cas, ou `../client/` dans d'autres) complexifie inutilement ton code de navigation (`navbar.js`) et conduit presque toujours à des liens brisés (404) ou des boucles de dossiers infinies (ex: `../espace-client/espace-client/dashboard.html`).
+
+**La bonne pratique des pros :**
+Puisque toutes les pages résident à une profondeur identique dans l'arborescence, le chemin relatif pour "sortir" d'un dossier et "entrer" dans un autre est **toujours le même** : `../`.
+- Pour aller de `espace-client/` à `mes-shoppings/` ➔ `../mes-shoppings/`
+- Pour aller de `ma-boutique/` à `espace-client/` ➔ `../espace-client/`
+- Pour aller de `espace-livreur/` à `espace-admin/` ➔ `../espace-admin/`
+
+En appliquant un préfixe uniforme `let prefix = '../';` à tous tes calculs de liens, tu simplifies ton code à 100% et résous définitivement les liens brisés sur l'ensemble de tes barres de navigation et menus de profil !
+
