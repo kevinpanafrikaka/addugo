@@ -23,7 +23,15 @@ exports.creerCommande = async (req, res) => {
       [commerce_id]
     );
 
-    if (commerceOwner.length > 0 && Number(commerceOwner[0].utilisateur_id) === Number(req.utilisateur.id)) {
+    if (commerceOwner.length === 0) {
+      if (conn) conn.release();
+      return res.status(404).json({
+        success: false,
+        message: 'Cette boutique n\'existe plus. Veuillez vider votre panier.'
+      });
+    }
+
+    if (Number(commerceOwner[0].utilisateur_id) === Number(req.utilisateur.id)) {
       if (conn) conn.release();
       return res.status(403).json({
         success: false,
