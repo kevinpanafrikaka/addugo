@@ -189,14 +189,21 @@ function genererHtmlComplet(c) {
     </div>
 
     <!-- ENCART CODE PIN SI EN LIVRAISON -->
-    <div id="encart-pin-${c.id}" style="display: ${c.statut === 'en_livraison' && c.code_pin ? 'flex' : 'none'}; background: linear-gradient(135deg, var(--noir), #2a2a2a); color: white; border-radius: 12px; padding: 20px; margin: 2rem 0 0 0; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.15); flex-wrap: wrap; gap: 15px;">
-      <div style="flex: 1; min-width: 250px;">
-        <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 5px;"><i class="fas fa-lock"></i> Code secret de livraison</div>
-        <div style="font-size: 1.05rem; line-height: 1.4;">Veuillez donner ce code au livreur à son arrivée pour valider la réception du colis.</div>
+    <div id="encart-pin-${c.id}" style="display: ${c.statut === 'en_livraison' && c.code_pin ? 'flex' : 'none'}; background: linear-gradient(135deg, #1f1f1f 0%, #3a3a3a 100%); border: 2px solid var(--orange); box-shadow: 0 0 20px rgba(255,107,0,0.4); color: white; border-radius: 16px; padding: 25px; margin: 2rem 0 0 0; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; position: relative; overflow: hidden;">
+      <div style="display: flex; align-items: center; gap: 15px; z-index: 1;">
+        <div style="background: rgba(255,107,0,0.2); padding: 15px; border-radius: 50%; display: flex; justify-content: center; align-items: center;">
+          <i class="fas fa-lock" style="color: var(--orange); font-size: 1.8rem;"></i>
+        </div>
+        <div>
+          <h4 style="margin: 0; font-size: 1.2rem; font-weight: 700; color: white;">Code PIN Sécurisé</h4>
+          <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #ddd; max-width: 250px;">Communiquez ce code au livreur uniquement lors de la réception.</p>
+        </div>
       </div>
-      <div style="background: white; color: var(--noir); font-size: 2.2rem; font-weight: 900; letter-spacing: 4px; padding: 10px 25px; border-radius: 8px; font-family: monospace; text-align: center;">
-        ${c.code_pin || '----'}
+      <div style="background: rgba(0,0,0,0.4); padding: 15px 30px; border-radius: 12px; border: 1px dashed var(--orange); z-index: 1;">
+        <span class="pin-code-display" style="font-size: 2.5rem; font-weight: 800; letter-spacing: 8px; color: var(--orange); text-shadow: 0 0 10px rgba(255,107,0,0.5);">${c.code_pin || '----'}</span>
       </div>
+      <!-- Décoration de fond -->
+      <i class="fas fa-shield-alt" style="position: absolute; right: -20px; bottom: -20px; font-size: 8rem; color: rgba(255,255,255,0.03); z-index: 0; transform: rotate(-15deg);"></i>
     </div>
 
     <!-- CARTE SUIVI EN DIRECT -->
@@ -259,7 +266,7 @@ function majCarte(c) {
     if (encartPin) {
       encartPin.style.display = (c.statut === 'en_livraison' && c.code_pin) ? 'flex' : 'none';
       if (c.code_pin) {
-        encartPin.querySelector('div:last-child').innerText = c.code_pin;
+        encartPin.querySelector('.pin-code-display').innerText = c.code_pin;
       }
     }
   }

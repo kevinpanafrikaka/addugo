@@ -237,11 +237,14 @@ exports.commandesCommerce = async (req, res) => {
     return res.status(200).json({
       success: true,
       total: commandes.length,
-      commandes: commandes.map(c => ({
-        ...c,
-        id: Number(c.id),
-        montant_total: Number(c.montant_total)
-      }))
+      commandes: commandes.map(c => {
+        const { code_pin, ...rest } = c;
+        return {
+          ...rest,
+          id: Number(c.id),
+          montant_total: Number(c.montant_total)
+        };
+      })
     });
 
   } catch (err) {
@@ -299,6 +302,12 @@ exports.voirCommande = async (req, res) => {
     );
 
     const commande = commandes[0];
+    
+    // Sécurité: Ne pas renvoyer le code_pin si l'utilisateur n'est pas le client
+    if (req.utilisateur.id !== Number(commande.client_id)) {
+      delete commande.code_pin;
+    }
+
     return res.status(200).json({
       success: true,
       commande: {

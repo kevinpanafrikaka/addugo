@@ -86,7 +86,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (prod.images) {
               try {
                 const images = typeof prod.images === 'string' ? JSON.parse(prod.images) : prod.images;
-                if (images.length > 0) imageUrl = images[0];
+                if (images.length > 0) {
+                  imageUrl = images[0].startsWith('http') 
+                    ? images[0] 
+                    : `https://addugo.up.railway.app${images[0].startsWith('/') ? '' : '/'}${images[0]}`;
+                }
               } catch (e) {}
             }
 
