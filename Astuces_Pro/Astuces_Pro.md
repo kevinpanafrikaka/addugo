@@ -683,3 +683,18 @@ Puisque toutes les pages résident à une profondeur identique dans l'arborescen
 
 En appliquant un préfixe uniforme `let prefix = '../';` à tous tes calculs de liens, tu simplifies ton code à 100% et résous définitivement les liens brisés sur l'ensemble de tes barres de navigation et menus de profil !
 
+---
+
+### Astuce #33 : Comprendre et contourner l'erreur "ALTER command denied" sur Railway
+*Date : 16 Juillet 2026*
+
+**Le problème :** Lors d'un déploiement sur une plateforme comme Railway, il arrive qu'une migration automatique de base de données (comme ajouter une nouvelle colonne avec `ALTER TABLE`) échoue avec le message : `ALTER command denied to user 'nom_utilisateur'`. 
+
+**Pourquoi ça arrive ?**
+Pour des raisons de sécurité, les hébergeurs cloud donnent souvent des **permissions limitées** aux utilisateurs d'application classiques (ex: `addugo_admin`). Ces utilisateurs ont le droit de faire des `SELECT`, `INSERT`, `UPDATE` (lire et écrire des données), mais ils n'ont pas les droits d'administration globaux pour modifier la structure même de la base de données (comme `ALTER` ou `DROP`).
+
+**La solution des pros : L'élévation de privilèges temporaire (Root)**
+Plutôt que de donner les droits `root` (administrateur absolu) à toute l'application en permanence, ce qui est très dangereux en cas de piratage, la bonne pratique est de :
+1. Créer une route d'API secrète ou temporaire (ex: `/api/fix-db`).
+2. À l'intérieur de cette route **uniquement**, utiliser l'utilisateur `root` et son mot de passe pour forcer l'exécution de la requête `ALTER TABLE`.
+3. Une fois la structure de la table modifiée, on **supprime la route** ou le script de migration pour refermer la faille de sécurité. L'application principale continue ainsi de fonctionner avec l'utilisateur classique limité et sécurisé !

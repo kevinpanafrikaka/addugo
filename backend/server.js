@@ -43,25 +43,6 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/api/fix-db', async (req, res) => {
-  const mariadb = require('mariadb');
-  let conn;
-  try {
-    const urlBaseDeDonnees = 'mariadb://root:FucQdFylVdwVzuPiYbbKPjKPRtSxvbvx@hayabusa.proxy.rlwy.net:26647/addugo';
-    const pool = mariadb.createPool(urlBaseDeDonnees);
-    conn = await pool.getConnection();
-    await conn.query('ALTER TABLE commandes ADD COLUMN code_pin VARCHAR(4) DEFAULT NULL AFTER montant_total');
-    res.json({ success: true, message: 'Colonne code_pin ajoutée avec succès via root !' });
-  } catch (err) {
-    if (err.errno === 1060) {
-      res.json({ success: true, message: 'La colonne code_pin existe déjà.' });
-    } else {
-      res.status(500).json({ success: false, error: err.message });
-    }
-  } finally {
-    if (conn) conn.release();
-  }
-});
 
 // ============================================================
 // WEBSOCKETS (SOCKET.IO) POUR LE SUIVI GPS
