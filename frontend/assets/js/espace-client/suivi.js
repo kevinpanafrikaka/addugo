@@ -265,7 +265,7 @@ function majCarte(c) {
   }
 
   // Logique Leaflet & Socket
-  initMap(c.id, c.statut);
+  initMap(c.id, c.statut, c.adresse_livraison);
 }
 
 // ── BOUCLE DE CHARGEMENT ──
