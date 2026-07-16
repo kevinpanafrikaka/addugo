@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const div = document.createElement('div');
       div.className = `conversation-item ${currentOtherUserId === conv.autre_id ? 'active' : ''}`;
       
-      const avatarUrl = conv.photo_profil 
+      const avatarUrl = (conv.photo_profil && !conv.photo_profil.includes('default-avatar.png'))
         ? (conv.photo_profil.startsWith('http') ? conv.photo_profil : `https://addugo.up.railway.app${conv.photo_profil.startsWith('/') ? '' : '/'}${conv.photo_profil}`)
         : '../../assets/img/default-avatar.png';
 
@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     currentMessagesJson = messagesJson;
 
-    const avatarUrl = autreUtilisateur.photo_profil 
+    const avatarUrl = (autreUtilisateur.photo_profil && !autreUtilisateur.photo_profil.includes('default-avatar.png'))
       ? (autreUtilisateur.photo_profil.startsWith('http') ? autreUtilisateur.photo_profil : `https://addugo.up.railway.app${autreUtilisateur.photo_profil.startsWith('/') ? '' : '/'}${autreUtilisateur.photo_profil}`)
       : '../../assets/img/default-avatar.png';
 
