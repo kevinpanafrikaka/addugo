@@ -157,14 +157,18 @@ exports.accepterLivraison = async (req, res) => {
       [commande_id]
     );
 
-    await conn.query(
-      `INSERT INTO notifications (utilisateur_id, titre, message)
-       VALUES (?, '<i class="fas fa-bicycle" style="color:var(--orange);margin-right:4px;"></i>Livreur en route !', ?)`,
-      [
-        Number(commandeInfo[0].client_id),
-        `Un livreur a pris en charge votre commande #${commande_id}`
-      ]
-    );
+    try {
+      await conn.query(
+        `INSERT INTO notifications (utilisateur_id, titre, message)
+         VALUES (?, '<i class="fas fa-bicycle" style="color:var(--orange);margin-right:4px;"></i>Livreur en route !', ?)`,
+        [
+          Number(commandeInfo[0].client_id),
+          `Un livreur a pris en charge votre commande #${commande_id}`
+        ]
+      );
+    } catch (notifErr) {
+      console.warn('Notifications non disponibles:', notifErr.message);
+    }
 
     await conn.commit();
 
@@ -328,14 +332,18 @@ exports.terminerLivraison = async (req, res) => {
       [commande_id]
     );
 
-    await conn.query(
-      `INSERT INTO notifications (utilisateur_id, titre, message)
-       VALUES (?, 'Commande livrée !', ?)`,
-      [
-        Number(commandeInfo[0].client_id),
-        `Votre commande #${commande_id} a été livrée avec succès !`
-      ]
-    );
+    try {
+      await conn.query(
+        `INSERT INTO notifications (utilisateur_id, titre, message)
+         VALUES (?, 'Commande livrée !', ?)`,
+        [
+          Number(commandeInfo[0].client_id),
+          `Votre commande #${commande_id} a été livrée avec succès !`
+        ]
+      );
+    } catch (notifErr) {
+      console.warn('Notifications non disponibles:', notifErr.message);
+    }
 
     await conn.commit();
 

@@ -21,6 +21,7 @@ async function testerConnexion() {
     conn = await pool.getConnection();
     console.log('Connexion à la base de données AdduGo réussie !');
     
+    // 1. Migration: colonne derniere_activite
     try {
       await conn.query(
         'ALTER TABLE utilisateurs ADD COLUMN derniere_activite DATETIME NULL DEFAULT NULL'
@@ -28,8 +29,28 @@ async function testerConnexion() {
       console.log('Migration : colonne derniere_activite ajoutée.');
     } catch (migErr) {
       if (migErr.errno !== 1060) { // 1060 = colonne déjà existante
-        console.warn('Migration derniere_activite :', migErr.message);
+        console.error('Erreur migration derniere_activite:', migErr);
       }
+    }
+
+    // 2. Migration: table notifications
+    try {
+      await conn.query(`
+        CREATE TABLE IF NOT EXISTS notifications (
+          id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+          utilisateur_id INT UNSIGNED NOT NULL,
+          titre VARCHAR(255) NOT NULL,
+          message TEXT NOT NULL,
+          lue TINYINT(1) NOT NULL DEFAULT 0,
+          date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          PRIMARY KEY (id),
+          INDEX idx_notif_utilisateur (utilisateur_id),
+          CONSTRAINT fk_notif_utilisateur FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs (id) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+      `);
+      console.log('Migration : table notifications vérifiée/créée.');
+    } catch (migErr) {
+      console.error('Erreur migration table notifications:', migErr);
     }
 
     // Migration automatique : ajouter la colonne code_pin à commandes

@@ -118,13 +118,17 @@ exports.creerCommande = async (req, res) => {
     );
 
     // Créer une notification pour le commerce
-    await conn.query(
-      `INSERT INTO notifications (utilisateur_id, titre, message)
-       SELECT utilisateur_id, '<i class="fas fa-shopping-cart" style="margin-right:4px;"></i>Nouvelle commande !', 
-              CONCAT('Vous avez reçu une nouvelle commande #', ?)
-       FROM commerces WHERE id = ?`,
-      [commande_id, commerce_id]
-    );
+    try {
+      await conn.query(
+        `INSERT INTO notifications (utilisateur_id, titre, message)
+         SELECT utilisateur_id, '<i class="fas fa-shopping-cart" style="margin-right:4px;"></i>Nouvelle commande !', 
+                CONCAT('Vous avez reçu une nouvelle commande #', ?)
+         FROM commerces WHERE id = ?`,
+        [commande_id, commerce_id]
+      );
+    } catch (notifErr) {
+      console.warn('Notifications non disponibles:', notifErr.message);
+    }
 
     await conn.commit();
 
@@ -356,14 +360,18 @@ exports.changerStatut = async (req, res) => {
     );
 
     if (commandes.length > 0) {
-      await conn.query(
-        `INSERT INTO notifications (utilisateur_id, titre, message)
-         VALUES (?, '<i class="fas fa-box" style="margin-right:4px;"></i>Statut de commande mis à jour', ?)`,
-        [
-          Number(commandes[0].client_id),
-          `Votre commande #${id} est maintenant : ${statut}`
-        ]
-      );
+      try {
+        await conn.query(
+          `INSERT INTO notifications (utilisateur_id, titre, message)
+           VALUES (?, '<i class="fas fa-box" style="margin-right:4px;"></i>Statut de commande mis à jour', ?)`,
+          [
+            Number(commandes[0].client_id),
+            `Votre commande #${id} est maintenant : ${statut}`
+          ]
+        );
+      } catch (notifErr) {
+        console.warn('Notifications non disponibles:', notifErr.message);
+      }
     }
 
     return res.status(200).json({

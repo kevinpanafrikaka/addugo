@@ -318,7 +318,8 @@
 .produit-prix {
   font-weight: 800;
   color: var(--orange);
-  font-size: 0.9rem;
+  font-size: 0.78rem;
+  letter-spacing: -0.2px;
   white-space: nowrap; /* Force prix + GNF sur une seule ligne */
   overflow: hidden;
   text-overflow: ellipsis;

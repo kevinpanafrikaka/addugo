@@ -731,7 +731,8 @@
 }
 
 .carte-produit-prix {
-  font-size: 0.95rem;
+  font-size: 0.82rem;
+  letter-spacing: -0.2px;
   font-weight: 700;
   color: var(--orange);
   margin-bottom: 6px;
