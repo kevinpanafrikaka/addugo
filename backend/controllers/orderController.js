@@ -148,7 +148,7 @@ exports.creerCommande = async (req, res) => {
     console.error('Erreur creerCommande:', err);
     return res.status(500).json({
       success: false,
-      message: 'Erreur serveur.'
+      message: `Erreur serveur: ${err.message}`
     });
   } finally {
     if (conn) conn.release();
