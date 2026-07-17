@@ -4,9 +4,14 @@
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Ne pas afficher sur index.html
+  // Ne pas afficher sur index.html, login.html et register.html
   const path = window.location.pathname;
-  if (path === '/' || path.endsWith('index.html')) return;
+  if (
+    path === '/' ||
+    path.endsWith('index.html') ||
+    path.endsWith('login.html') ||
+    path.endsWith('register.html')
+  ) return;
 
   initDoodles();
 });
