@@ -1,542 +1,708 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
-  <defs>
-    <style>
-      .d {
-        fill: none;
-        stroke: #FF6000;
-        stroke-width: 1.2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        opacity: 0.18;
-      }
-    </style>
-  </defs>
-
-  <!-- ========== LIGNE 1 ========== -->
-
-  <!-- Moto -->
-  <g class="d" transform="translate(5,5)">
-    <ellipse cx="8" cy="18" rx="7" ry="7"/>
-    <ellipse cx="32" cy="18" rx="7" ry="7"/>
-    <path d="M8 18 L15 10 L25 10 L32 18"/>
-    <path d="M15 10 L18 4 L24 4"/>
-    <path d="M20 10 L20 15"/>
-  </g>
-
-  <!-- Colis -->
-  <g class="d" transform="translate(55,5)">
-    <rect x="0" y="6" width="24" height="18" rx="1"/>
-    <path d="M0 6 L12 0 L24 6"/>
-    <path d="M12 0 L12 24"/>
-    <path d="M6 9 L18 9"/>
-  </g>
-
-  <!-- Maison -->
-  <g class="d" transform="translate(105,5)">
-    <path d="M12 2 L22 12 L22 24 L2 24 L2 12 Z"/>
-    <path d="M0 12 L12 2 L24 12"/>
-    <rect x="8" y="16" width="8" height="8"/>
-  </g>
-
-  <!-- Localisation -->
-  <g class="d" transform="translate(155,3)">
-    <path d="M12 2 C7 2 3 6 3 11 C3 17 12 26 12 26 C12 26 21 17 21 11 C21 6 17 2 12 2Z"/>
-    <circle cx="12" cy="11" r="4"/>
-  </g>
-
-  <!-- Sac shopping -->
-  <g class="d" transform="translate(205,5)">
-    <path d="M4 8 L20 8 L18 24 L6 24 Z"/>
-    <path d="M8 8 C8 8 8 3 12 3 C16 3 16 8 16 8"/>
-    <path d="M8 13 L16 13"/>
-  </g>
-
-  <!-- Étoile -->
-  <g class="d" transform="translate(252,4)">
-    <path d="M12 2 L14.5 9 L22 9 L16 14 L18.5 21 L12 17 L5.5 21 L8 14 L2 9 L9.5 9 Z"/>
-  </g>
-
-  <!-- Téléphone -->
-  <g class="d" transform="translate(300,3)">
-    <rect x="4" y="1" width="16" height="26" rx="3"/>
-    <path d="M4 5 L20 5"/>
-    <path d="M4 22 L20 22"/>
-    <circle cx="12" cy="25" r="1.5"/>
-  </g>
-
-  <!-- Camion -->
-  <g class="d" transform="translate(340,5)">
-    <rect x="0" y="6" width="22" height="14" rx="1"/>
-    <path d="M22 10 L28 10 L32 14 L32 20 L22 20"/>
-    <ellipse cx="6" cy="22" rx="4" ry="4"/>
-    <ellipse cx="26" cy="22" rx="4" ry="4"/>
-    <path d="M0 14 L22 14"/>
-  </g>
-
-  <!-- ========== LIGNE 2 ========== -->
-
-  <!-- Coeur -->
-  <g class="d" transform="translate(5,55)">
-    <path d="M12 20 C12 20 2 13 2 7 C2 4 4 2 7 2 C9 2 11 3 12 5 C13 3 15 2 17 2 C20 2 22 4 22 7 C22 13 12 20 12 20Z"/>
-  </g>
-
-  <!-- Cloche -->
-  <g class="d" transform="translate(55,53)">
-    <path d="M12 2 C8 2 5 5 5 9 L5 16 L2 19 L22 19 L19 16 L19 9 C19 5 16 2 12 2Z"/>
-    <path d="M9 19 C9 21 10.5 22 12 22 C13.5 22 15 21 15 19"/>
-  </g>
-
-  <!-- Tag -->
-  <g class="d" transform="translate(105,53)">
-    <path d="M4 4 L14 4 L22 12 L14 20 L4 20 Z"/>
-    <circle cx="8" cy="8" r="2"/>
-    <path d="M10 14 L18 6"/>
-  </g>
-
-  <!-- Portefeuille -->
-  <g class="d" transform="translate(155,55)">
-    <rect x="1" y="5" width="26" height="18" rx="2"/>
-    <path d="M1 10 L27 10"/>
-    <rect x="18" y="12" width="8" height="6" rx="1"/>
-    <circle cx="22" cy="15" r="1.5"/>
-  </g>
-
-  <!-- Vélo -->
-  <g class="d" transform="translate(205,55)">
-    <circle cx="6" cy="18" r="6"/>
-    <circle cx="26" cy="18" r="6"/>
-    <path d="M6 18 L16 8 L26 18"/>
-    <path d="M16 8 L20 4"/>
-    <path d="M16 8 L16 14"/>
-    <circle cx="16" cy="14" r="2"/>
-  </g>
-
-  <!-- Flèche -->
-  <g class="d" transform="translate(255,60)">
-    <path d="M2 12 L20 12"/>
-    <path d="M14 6 L20 12 L14 18"/>
-  </g>
-
-  <!-- Reçu -->
-  <g class="d" transform="translate(300,53)">
-    <path d="M3 2 L21 2 L21 26 L18 24 L15 26 L12 24 L9 26 L6 24 L3 26 Z"/>
-    <path d="M7 8 L17 8"/>
-    <path d="M7 12 L17 12"/>
-    <path d="M7 16 L13 16"/>
-  </g>
-
-  <!-- Cadeau -->
-  <g class="d" transform="translate(345,53)">
-    <rect x="2" y="10" width="20" height="14" rx="1"/>
-    <path d="M2 10 L22 10 L22 14 L2 14 Z"/>
-    <path d="M12 10 L12 24"/>
-    <path d="M12 10 C12 10 8 6 10 4 C12 2 14 4 12 8"/>
-    <path d="M12 10 C12 10 16 6 14 4 C12 2 10 4 12 8"/>
-  </g>
-
-  <!-- ========== LIGNE 3 ========== -->
-
-  <!-- Couronne -->
-  <g class="d" transform="translate(5,105)">
-    <path d="M2 20 L6 8 L12 14 L18 6 L22 14 L26 20 Z"/>
-    <path d="M2 20 L26 20"/>
-    <circle cx="6" cy="8" r="2"/>
-    <circle cx="18" cy="6" r="2"/>
-    <circle cx="26" cy="14" r="2"/>
-  </g>
-
-  <!-- Loupe -->
-  <g class="d" transform="translate(55,105)">
-    <circle cx="10" cy="10" r="8"/>
-    <path d="M16 16 L24 24"/>
-  </g>
-
-  <!-- Avion papier -->
-  <g class="d" transform="translate(105,108)">
-    <path d="M2 12 L26 4 L18 26 L12 16 Z"/>
-    <path d="M12 16 L26 4"/>
-  </g>
-
-  <!-- Trophée -->
-  <g class="d" transform="translate(155,105)">
-    <path d="M6 2 L18 2 L18 14 C18 18 15 20 12 20 C9 20 6 18 6 14 Z"/>
-    <path d="M6 6 L2 6 L2 10 C2 12 4 14 6 14"/>
-    <path d="M18 6 L22 6 L22 10 C22 12 20 14 18 14"/>
-    <path d="M9 20 L9 24 L15 24 L15 20"/>
-    <path d="M6 24 L18 24"/>
-  </g>
-
-  <!-- Carte -->
-  <g class="d" transform="translate(205,108)">
-    <rect x="1" y="4" width="26" height="18" rx="2"/>
-    <path d="M1 9 L27 9"/>
-    <path d="M5 14 L10 14"/>
-    <path d="M5 17 L14 17"/>
-  </g>
-
-  <!-- Soleil -->
-  <g class="d" transform="translate(255,105)">
-    <circle cx="12" cy="12" r="5"/>
-    <path d="M12 2 L12 5"/>
-    <path d="M12 19 L12 22"/>
-    <path d="M2 12 L5 12"/>
-    <path d="M19 12 L22 12"/>
-    <path d="M4.9 4.9 L7 7"/>
-    <path d="M17 17 L19.1 19.1"/>
-    <path d="M19.1 4.9 L17 7"/>
-    <path d="M7 17 L4.9 19.1"/>
-  </g>
-
-  <!-- Fusée -->
-  <g class="d" transform="translate(303,103)">
-    <path d="M12 2 C12 2 20 6 20 14 L16 18 L8 18 L4 14 C4 6 12 2 12 2Z"/>
-    <circle cx="12" cy="10" r="3"/>
-    <path d="M8 18 L6 24 L12 20 L18 24 L16 18"/>
-    <path d="M4 14 L1 16"/>
-    <path d="M20 14 L23 16"/>
-  </g>
-
-  <!-- Bouclier -->
-  <g class="d" transform="translate(348,105)">
-    <path d="M12 2 L22 6 L22 14 C22 19 17 23 12 25 C7 23 2 19 2 14 L2 6 Z"/>
-    <path d="M8 12 L11 15 L16 9"/>
-  </g>
-
-  <!-- ========== LIGNE 4 ========== -->
-
-  <!-- Café -->
-  <g class="d" transform="translate(5,155)">
-    <path d="M4 8 L20 8 L18 22 L6 22 Z"/>
-    <path d="M20 10 L24 10 C24 10 26 14 22 16"/>
-    <path d="M8 4 C8 4 6 2 8 0"/>
-    <path d="M12 4 C12 4 10 2 12 0"/>
-    <path d="M16 4 C16 4 14 2 16 0"/>
-  </g>
-
-  <!-- Horloge -->
-  <g class="d" transform="translate(55,155)">
-    <circle cx="12" cy="12" r="10"/>
-    <path d="M12 6 L12 12 L16 16"/>
-  </g>
-
-  <!-- Nuage -->
-  <g class="d" transform="translate(105,158)">
-    <path d="M5 16 C2 16 0 14 0 11 C0 8 2 6 5 6 C5 3 8 1 11 2 C13 1 16 2 17 5 C20 5 22 7 22 10 C22 13 20 16 17 16 Z"/>
-  </g>
-
-  <!-- Éclair -->
-  <g class="d" transform="translate(160,155)">
-    <path d="M14 2 L6 13 L12 13 L10 24 L18 11 L12 11 Z"/>
-  </g>
-
-  <!-- Calculatrice -->
-  <g class="d" transform="translate(205,155)">
-    <rect x="2" y="1" width="20" height="26" rx="2"/>
-    <rect x="5" y="4" width="14" height="6" rx="1"/>
-    <circle cx="7" cy="15" r="1.5"/>
-    <circle cx="12" cy="15" r="1.5"/>
-    <circle cx="17" cy="15" r="1.5"/>
-    <circle cx="7" cy="20" r="1.5"/>
-    <circle cx="12" cy="20" r="1.5"/>
-    <circle cx="17" cy="20" r="1.5"/>
-  </g>
-
-  <!-- Diamant -->
-  <g class="d" transform="translate(255,158)">
-    <path d="M12 2 L22 9 L18 22 L6 22 L2 9 Z"/>
-    <path d="M2 9 L22 9"/>
-    <path d="M7 2 L2 9"/>
-    <path d="M17 2 L22 9"/>
-  </g>
-
-  <!-- Carte géo -->
-  <g class="d" transform="translate(305,155)">
-    <path d="M2 4 L9 2 L15 5 L22 3 L22 22 L15 24 L9 21 L2 23 Z"/>
-    <path d="M9 2 L9 21"/>
-    <path d="M15 5 L15 24"/>
-  </g>
-
-  <!-- Poignée de main -->
-  <g class="d" transform="translate(348,158)">
-    <path d="M2 14 L8 8 L13 10 L18 8 L26 14"/>
-    <path d="M8 8 L8 4 L13 2 L13 10"/>
-    <path d="M2 14 L2 18 L10 22 L18 18 L26 14 L26 18 L18 22"/>
-  </g>
-
-  <!-- ========== LIGNE 5 ========== -->
-
-  <!-- Smartphone -->
-  <g class="d" transform="translate(5,205)">
-    <rect x="3" y="1" width="18" height="28" rx="3"/>
-    <path d="M3 5 L21 5"/>
-    <path d="M3 23 L21 23"/>
-    <circle cx="12" cy="26" r="1.5"/>
-    <rect x="7" y="8" width="10" height="12" rx="1"/>
-  </g>
-
-  <!-- Boussole -->
-  <g class="d" transform="translate(55,205)">
-    <circle cx="12" cy="12" r="10"/>
-    <path d="M12 4 L12 6"/>
-    <path d="M12 18 L12 20"/>
-    <path d="M4 12 L6 12"/>
-    <path d="M18 12 L20 12"/>
-    <path d="M9 9 L12 15 L15 9 L12 12 Z"/>
-  </g>
-
-  <!-- Entrepôt -->
-  <g class="d" transform="translate(105,205)">
-    <path d="M1 10 L12 2 L23 10 L23 26 L1 26 Z"/>
-    <path d="M8 26 L8 16 L16 16 L16 26"/>
-    <path d="M1 10 L23 10"/>
-    <rect x="10" y="13" width="4" height="4"/>
-  </g>
-
-  <!-- Pouce levé -->
-  <g class="d" transform="translate(155,208)">
-    <path d="M10 20 L4 20 L4 12 L8 12 L12 4 C14 4 16 5 16 8 L14 8 L14 12 L20 12 L20 20 L10 20Z"/>
-  </g>
-
-  <!-- Graphique -->
-  <g class="d" transform="translate(205,205)">
-    <path d="M2 22 L2 4"/>
-    <path d="M2 22 L24 22"/>
-    <path d="M5 18 L9 12 L13 15 L17 8 L21 10"/>
-    <circle cx="5" cy="18" r="1.5"/>
-    <circle cx="9" cy="12" r="1.5"/>
-    <circle cx="13" cy="15" r="1.5"/>
-    <circle cx="17" cy="8" r="1.5"/>
-    <circle cx="21" cy="10" r="1.5"/>
-  </g>
-
-  <!-- Recyclage -->
-  <g class="d" transform="translate(255,205)">
-    <path d="M12 3 L17 12 L14 12 L14 18 L10 18 L10 12 L7 12 Z"/>
-    <path d="M19 15 L14 24 L12 21 L7 24 L9 18"/>
-    <path d="M5 15 L3 18 L7 24 L10 21"/>
-  </g>
-
-  <!-- Sablier -->
-  <g class="d" transform="translate(305,205)">
-    <path d="M4 2 L20 2 L20 4 L14 10 L14 14 L20 20 L20 22 L4 22 L4 20 L10 14 L10 10 L4 4 Z"/>
-    <path d="M4 2 L20 2"/>
-    <path d="M4 22 L20 22"/>
-  </g>
-
-  <!-- Médaille -->
-  <g class="d" transform="translate(350,205)">
-    <circle cx="12" cy="18" r="8"/>
-    <path d="M8 10 L8 2 L16 2 L16 10"/>
-    <path d="M9 14 L12 20 L15 14"/>
-    <path d="M10 2 L14 2"/>
-  </g>
-
-  <!-- ========== LIGNE 6 ========== -->
-
-  <!-- Clé -->
-  <g class="d" transform="translate(5,255)">
-    <circle cx="8" cy="8" r="6"/>
-    <path d="M12 12 L22 22"/>
-    <path d="M18 18 L20 16"/>
-    <path d="M20 20 L22 18"/>
-  </g>
-
-  <!-- Signalisation -->
-  <g class="d" transform="translate(55,255)">
-    <path d="M12 2 L12 26"/>
-    <path d="M12 6 L22 6 L22 14 L12 14"/>
-    <path d="M12 16 L2 16 L2 22 L12 22"/>
-  </g>
-
-  <!-- Livre -->
-  <g class="d" transform="translate(105,255)">
-    <path d="M4 2 L20 2 L20 26 L4 26 C4 26 2 24 2 22 L2 4 C2 2 4 2 4 2Z"/>
-    <path d="M4 2 L4 26"/>
-    <path d="M8 8 L16 8"/>
-    <path d="M8 12 L16 12"/>
-    <path d="M8 16 L13 16"/>
-  </g>
-
-  <!-- Ampoule -->
-  <g class="d" transform="translate(155,255)">
-    <path d="M12 2 C8 2 5 5 5 9 C5 13 8 15 9 17 L15 17 C16 15 19 13 19 9 C19 5 16 2 12 2Z"/>
-    <path d="M9 17 L9 20 L15 20 L15 17"/>
-    <path d="M10 20 L10 22 L14 22 L14 20"/>
-    <path d="M12 22 L12 24"/>
-  </g>
-
-  <!-- Courrier -->
-  <g class="d" transform="translate(205,258)">
-    <rect x="1" y="4" width="26" height="18" rx="2"/>
-    <path d="M1 4 L14 14 L27 4"/>
-    <path d="M1 22 L9 14"/>
-    <path d="M27 22 L19 14"/>
-  </g>
-
-  <!-- Casque -->
-  <g class="d" transform="translate(255,255)">
-    <path d="M4 14 C4 8 8 3 12 3 C16 3 20 8 20 14"/>
-    <rect x="1" y="12" width="5" height="8" rx="2"/>
-    <rect x="18" y="12" width="5" height="8" rx="2"/>
-    <path d="M20 18 C20 22 16 24 12 24"/>
-    <path d="M12 24 L12 26 L10 26"/>
-  </g>
-
-  <!-- Avion -->
-  <g class="d" transform="translate(305,258)">
-    <path d="M22 12 L2 6 L8 12 L2 18 Z"/>
-    <path d="M8 12 L14 14 L12 20"/>
-    <path d="M8 12 L10 6 L14 8"/>
-  </g>
-
-  <!-- Ruban -->
-  <g class="d" transform="translate(350,255)">
-    <circle cx="12" cy="10" r="8"/>
-    <path d="M6 16 L2 26 L12 22 L22 26 L18 16"/>
-    <path d="M9 10 L12 13 L15 10 L12 7 Z"/>
-  </g>
-
-  <!-- ========== LIGNE 7 ========== -->
-
-  <!-- Chariot -->
-  <g class="d" transform="translate(5,305)">
-    <path d="M2 4 L6 4 L10 18 L22 18"/>
-    <path d="M8 8 L22 8 L20 16 L10 16"/>
-    <circle cx="12" cy="22" r="3"/>
-    <circle cx="20" cy="22" r="3"/>
-  </g>
-
-  <!-- Montgolfière -->
-  <g class="d" transform="translate(55,302)">
-    <path d="M12 2 C7 2 3 6 3 11 C3 16 7 20 12 20 C17 20 21 16 21 11 C21 6 17 2 12 2Z"/>
-    <path d="M8 20 L10 26 L14 26 L16 20"/>
-    <path d="M10 26 L14 26"/>
-    <path d="M6 11 L18 11"/>
-    <path d="M7 7 L17 7"/>
-    <path d="M5 15 L19 15"/>
-  </g>
-
-  <!-- Drapeau -->
-  <g class="d" transform="translate(108,305)">
-    <path d="M4 2 L4 26"/>
-    <path d="M4 2 L20 6 L4 12"/>
-  </g>
-
-  <!-- Wifi -->
-  <g class="d" transform="translate(155,308)">
-    <path d="M2 10 C6 6 18 6 22 10"/>
-    <path d="M5 14 C8 11 16 11 19 14"/>
-    <path d="M8 18 C10 16 14 16 16 18"/>
-    <circle cx="12" cy="22" r="2"/>
-  </g>
-
-  <!-- Palette -->
-  <g class="d" transform="translate(200,305)">
-    <path d="M12 2 C7 2 2 7 2 12 C2 17 7 22 12 22 C14 22 15 20 14 18 C13 16 14 14 16 14 C20 14 22 11 22 9 C22 5 17 2 12 2Z"/>
-    <circle cx="7" cy="9" r="2"/>
-    <circle cx="12" cy="5" r="2"/>
-    <circle cx="17" cy="8" r="2"/>
-  </g>
-
-  <!-- Crayon -->
-  <g class="d" transform="translate(255,305)">
-    <path d="M18 2 L22 6 L8 20 L2 22 L4 16 Z"/>
-    <path d="M16 4 L20 8"/>
-    <path d="M4 16 L8 20"/>
-  </g>
-
-  <!-- Ancre -->
-  <g class="d" transform="translate(305,305)">
-    <circle cx="12" cy="6" r="4"/>
-    <path d="M12 10 L12 26"/>
-    <path d="M6 14 L18 14"/>
-    <path d="M12 26 C12 26 4 22 4 18"/>
-    <path d="M12 26 C12 26 20 22 20 18"/>
-  </g>
-
-  <!-- Puzzle -->
-  <g class="d" transform="translate(350,305)">
-    <path d="M2 2 L12 2 L12 6 C14 6 16 7 16 9 C16 11 14 12 12 12 L12 16 L2 16 Z"/>
-    <path d="M12 2 L22 2 L22 12 L18 12 C18 14 17 16 15 16 C13 16 12 14 12 12 L12 2"/>
-    <path d="M2 16 L12 16 L12 22 C10 22 8 21 8 19 C8 17 10 16 12 16 L12 26 L2 26 Z"/>
-    <path d="M12 16 L22 16 L22 26 L12 26 L12 22 C14 22 16 21 16 19 C16 17 14 16 12 16"/>
-  </g>
-
-  <!-- ========== LIGNE 8 ========== -->
-
-  <!-- Planète -->
-  <g class="d" transform="translate(5,355)">
-    <circle cx="12" cy="12" r="9"/>
-    <ellipse cx="12" cy="12" rx="14" ry="5" transform="rotate(-20 12 12)"/>
-  </g>
-
-  <!-- Palmier -->
-  <g class="d" transform="translate(55,352)">
-    <path d="M12 26 L12 10"/>
-    <path d="M12 10 C12 10 6 6 4 2 C8 2 12 6 12 10"/>
-    <path d="M12 10 C12 10 18 6 20 2 C16 2 12 6 12 10"/>
-    <path d="M12 14 C12 14 6 10 2 8 C4 12 10 14 12 14"/>
-    <path d="M12 14 C12 14 18 10 22 8 C20 12 14 14 12 14"/>
-  </g>
-
-  <!-- Flocon -->
-  <g class="d" transform="translate(108,355)">
-    <path d="M12 2 L12 22"/>
-    <path d="M2 12 L22 12"/>
-    <path d="M5 5 L19 19"/>
-    <path d="M19 5 L5 19"/>
-    <path d="M12 2 L9 5 M12 2 L15 5"/>
-    <path d="M12 22 L9 19 M12 22 L15 19"/>
-    <path d="M2 12 L5 9 M2 12 L5 15"/>
-    <path d="M22 12 L19 9 M22 12 L19 15"/>
-  </g>
-
-  <!-- Courbe tendance -->
-  <g class="d" transform="translate(155,358)">
-    <path d="M2 18 C6 14 10 8 14 10 C18 12 20 6 24 4"/>
-    <path d="M20 4 L24 4 L24 8"/>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="400" height="400"
+     viewBox="0 0 400 400">
+
+  <!-- motorbike -->
+  <g transform="translate(11, 11)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M2 16a3 3 0 1 0 6 0a3 3 0 1 0-6 0m14 0a3 3 0 1 0 6 0a3 3 0 1 0-6 0m-8.5-2h5l4-4H6m1.5 4l4-4"/><path d="M13 6h2l1.5 3l2 4"/></g>
+  </g>
+
+  <!-- package -->
+  <g transform="translate(61, 11)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 3l8 4.5v9L12 21l-8-4.5v-9zm0 9l8-4.5M12 12v9m0-9L4 7.5m12-2.25l-8 4.5"/>
+  </g>
+
+  <!-- truck-delivery -->
+  <g transform="translate(111, 11)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0-4 0m10 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M5 17H3v-4M2 5h11v12m-4 0h6m4 0h2v-6h-8m0-5h5l3 5M3 9h4"/></g>
+  </g>
+
+  <!-- map-pin -->
+  <g transform="translate(161, 11)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M17.657 16.657L13.414 20.9a2 2 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0"/></g>
+  </g>
+
+  <!-- home -->
+  <g transform="translate(211, 11)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 12H3l9-9l9 9h-2M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/><path d="M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6"/></g>
+  </g>
+
+  <!-- shopping-bag -->
+  <g transform="translate(261, 11)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M6.331 8H17.67a2 2 0 0 1 1.977 2.304l-1.255 8.152A3 3 0 0 1 15.426 21H8.574a3 3 0 0 1-2.965-2.544l-1.255-8.152A2 2 0 0 1 6.331 8"/><path d="M9 11V6a3 3 0 0 1 6 0v5"/></g>
+  </g>
+
+  <!-- shopping-cart -->
+  <g transform="translate(311, 11)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 19a2 2 0 1 0 4 0a2 2 0 1 0-4 0m11 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M17 17H6V3H4"/><path d="m6 5l14 1l-1 7H6"/></g>
+  </g>
+
+  <!-- receipt -->
+  <g transform="translate(361, 11)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-3-2l-2 2l-2-2l-2 2l-2-2zM9 7h6m-6 4h6m-2 4h2"/>
+  </g>
+
+  <!-- building-store -->
+  <g transform="translate(11, 61)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3l2-4h14l2 4M5 21V10.85M19 21V10.85M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/>
+  </g>
+
+  <!-- tag -->
+  <g transform="translate(61, 61)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M6.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/><path d="M3 6v5.172a2 2 0 0 0 .586 1.414l7.71 7.71a2.41 2.41 0 0 0 3.408 0l5.592-5.592a2.41 2.41 0 0 0 0-3.408l-7.71-7.71A2 2 0 0 0 11.172 3H6a3 3 0 0 0-3 3"/></g>
+  </g>
+
+  <!-- wallet -->
+  <g transform="translate(111, 61)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M17 8V5a1 1 0 0 0-1-1H6a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2V6"/><path d="M20 12v4h-4a2 2 0 0 1 0-4z"/></g>
+  </g>
+
+  <!-- credit-card -->
+  <g transform="translate(161, 61)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zm0 2h18M7 15h.01M11 15h2"/>
+  </g>
+
+  <!-- coin -->
+  <g transform="translate(211, 61)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M14.8 9A2 2 0 0 0 13 8h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1-1.8-1M12 7v10"/></g>
+  </g>
+
+  <!-- cash -->
+  <g transform="translate(261, 61)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 15H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M7 10a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1z"/><path d="M12 14a2 2 0 1 0 4 0a2 2 0 0 0-4 0"/></g>
+  </g>
+
+  <!-- chart-line -->
+  <g transform="translate(311, 61)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19h16M4 15l4-6l4 2l4-5l4 4"/>
+  </g>
+
+  <!-- chart-bar -->
+  <g transform="translate(361, 61)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm12-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zM9 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zM4 20h14"/>
+  </g>
+
+  <!-- bell -->
+  <g transform="translate(11, 111)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17v1a3 3 0 0 0 6 0v-1"/>
+  </g>
+
+  <!-- message -->
+  <g transform="translate(61, 111)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9h8m-8 4h6m4-9a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-5l-5 3v-3H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z"/>
+  </g>
+
+  <!-- phone -->
+  <g transform="translate(111, 111)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>
+  </g>
+
+  <!-- mail -->
+  <g transform="translate(161, 111)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="m3 7l9 6l9-6"/></g>
+  </g>
+
+  <!-- send -->
+  <g transform="translate(211, 111)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14L21 3m0 0l-6.5 18a.55.55 0 0 1-1 0L10 14l-7-3.5a.55.55 0 0 1 0-1z"/>
+  </g>
+
+  <!-- search -->
+  <g transform="translate(261, 111)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6"/>
+  </g>
+
+  <!-- eye -->
+  <g transform="translate(311, 111)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0"/><path d="M21 12q-3.6 6-9 6t-9-6q3.6-6 9-6t9 6"/></g>
+  </g>
+
+  <!-- lock -->
+  <g transform="translate(361, 111)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 13a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0-2 0m-3-5V7a4 4 0 1 1 8 0v4"/></g>
+  </g>
+
+  <!-- star -->
+  <g transform="translate(11, 161)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 17.75l-6.172 3.245l1.179-6.873l-5-4.867l6.9-1l3.086-6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"/>
+  </g>
+
+  <!-- heart -->
+  <g transform="translate(61, 161)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 12.572L12 20l-7.5-7.428A5 5 0 1 1 12 6.006a5 5 0 1 1 7.5 6.572"/>
+  </g>
+
+  <!-- gift -->
+  <g transform="translate(111, 161)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 9a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zm9-1v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7m2.5-4a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5a2.5 2.5 0 0 1 0 5"/></g>
+  </g>
+
+  <!-- crown -->
+  <g transform="translate(161, 161)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 6l4 6l5-4l-2 10H5L3 8l5 4z"/>
+  </g>
+
+  <!-- diamond -->
+  <g transform="translate(211, 161)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M6 5h12l3 5l-8.5 9.5a.7.7 0 0 1-1 0L3 10z"/><path d="M10 12L8 9.8l.6-1"/></g>
+  </g>
+
+  <!-- trophy -->
+  <g transform="translate(261, 161)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21h8m-4-4v4M7 4h10m0 0v8a5 5 0 0 1-10 0V4M3 9a2 2 0 1 0 4 0a2 2 0 1 0-4 0m14 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/>
+  </g>
+
+  <!-- coffee -->
+  <g transform="translate(311, 161)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 14c.83.642 2.077 1.017 3.5 1c1.423.017 2.67-.358 3.5-1s2.077-1.017 3.5-1c1.423-.017 2.67.358 3.5 1M8 3a2.4 2.4 0 0 0-1 2a2.4 2.4 0 0 0 1 2m4-4a2.4 2.4 0 0 0-1 2a2.4 2.4 0 0 0 1 2"/><path d="M3 10h14v5a6 6 0 0 1-6 6H9a6 6 0 0 1-6-6z"/><path d="M16.746 16.726a3 3 0 1 0 .252-5.555"/></g>
+  </g>
+
+  <!-- pizza -->
+  <g transform="translate(361, 161)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 21.5c-3.04 0-5.952-.714-8.5-1.983L12 3l8.5 16.517A19.1 19.1 0 0 1 12 21.5"/><path d="M5.38 15.866a14.94 14.94 0 0 0 6.815 1.634a14.94 14.94 0 0 0 6.502-1.479M13 11.01V11m-2 3v-.01"/></g>
+  </g>
+
+  <!-- sun -->
+  <g transform="translate(11, 211)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0-8 0m-5 0h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7l-.7.7m0 11.4l.7.7m-12.1-.7l-.7.7"/>
+  </g>
+
+  <!-- moon -->
+  <g transform="translate(61, 211)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3h.393a7.5 7.5 0 0 0 7.92 12.446A9 9 0 1 1 12 2.992z"/>
+  </g>
+
+  <!-- leaf -->
+  <g transform="translate(111, 211)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 21c.5-4.5 2.5-8 7-10"/><path d="M9 18c6.218 0 10.5-3.288 11-12V4h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5z"/></g>
+  </g>
+
+  <!-- cloud -->
+  <g transform="translate(161, 211)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.657 18C4.085 18 2 15.993 2 13.517s2.085-4.482 4.657-4.482c.393-1.762 1.794-3.2 3.675-3.773c1.88-.572 3.956-.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486s-1.551 3.487-3.465 3.487H6.657"/>
+  </g>
+
+  <!-- bolt -->
+  <g transform="translate(211, 211)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 3v7h6l-8 11v-7H5z"/>
+  </g>
+
+  <!-- flame -->
+  <g transform="translate(261, 211)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10.941c2.333-3.308.167-7.823-1-8.941c0 3.395-2.235 5.299-3.667 6.706C5.903 10.114 5 12 5 14.294C5 17.998 8.134 21 12 21s7-3.002 7-6.706c0-1.712-1.232-4.403-2.333-5.588c-2.084 3.353-3.257 3.353-4.667 2.235"/>
+  </g>
+
+  <!-- snowflake -->
+  <g transform="translate(311, 211)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m10 4l2 1l2-1"/><path d="M12 2v6.5l3 1.72m2.928-3.952l.134 2.232l1.866 1.232"/><path d="m20.66 7l-5.629 3.25l.01 3.458m4.887.56L18.062 15.5l-.134 2.232"/><path d="m20.66 17l-5.629-3.25l-2.99 1.738M14 20l-2-1l-2 1"/><path d="M12 22v-6.5l-3-1.72m-2.928 3.952L5.938 15.5l-1.866-1.232"/><path d="m3.34 17l5.629-3.25l-.01-3.458m-4.887-.56L5.938 8.5l.134-2.232"/><path d="m3.34 7l5.629 3.25l2.99-1.738"/></g>
+  </g>
+
+  <!-- droplet -->
+  <g transform="translate(361, 211)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0s3.262-5.708 1.566-8.546l-4.89-7.26c-.42-.625-1.287-.803-1.936-.397a1.4 1.4 0 0 0-.41.397l-4.893 7.26C4.24 13.715 4.9 17.318 7.502 19.423"/>
+  </g>
+
+  <!-- bike -->
+  <g transform="translate(11, 261)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 18a3 3 0 1 0 6 0a3 3 0 0 0-6 0m14 0a3 3 0 1 0 6 0a3 3 0 0 0-6 0m-4 1v-4l-3-3l5-4l2 3h3m-5.993-6a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/>
+  </g>
+
+  <!-- car -->
+  <g transform="translate(61, 261)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0-4 0m10 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M5 17H3v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0H9m-6-6h15m-6 0V6"/></g>
+  </g>
+
+  <!-- bus -->
+  <g transform="translate(111, 261)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 17a2 2 0 1 0 4 0a2 2 0 1 0-4 0m12 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M4 17H2V6a1 1 0 0 1 1-1h14a5 7 0 0 1 5 7v5h-2m-4 0H8"/><path d="m16 5l1.5 7H22M2 10h15M7 5v5m5-5v5"/></g>
+  </g>
+
+  <!-- plane -->
+  <g transform="translate(161, 261)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 10h4a2 2 0 0 1 0 4h-4l-4 7H9l2-7H7l-2 2H2l2-4l-2-4h3l2 2h4L9 3h3z"/>
+  </g>
+
+  <!-- rocket -->
+  <g transform="translate(211, 261)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3-5a9 9 0 0 0 6-8a3 3 0 0 0-3-3a9 9 0 0 0-8 6a6 6 0 0 0-5 3"/><path d="M7 14a6 6 0 0 0-3 6a6 6 0 0 0 6-3m4-8a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/></g>
+  </g>
+
+  <!-- anchor -->
+  <g transform="translate(261, 261)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v12m-8-8a8 8 0 0 0 16 0m1 0h-2M5 13H3m6-7a3 3 0 1 0 6 0a3 3 0 1 0-6 0"/>
+  </g>
+
+  <!-- compass -->
+  <g transform="translate(311, 261)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m8 16l2-6l6-2l-2 6z"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0m9-9v2m0 14v2m-9-9h2m14 0h2"/></g>
+  </g>
+
+  <!-- map -->
+  <g transform="translate(361, 261)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m3 7l6-3l6 3l6-3v13l-6 3l-6-3l-6 3zm6-3v13m6-10v13"/>
+  </g>
+
+  <!-- device-mobile -->
+  <g transform="translate(11, 311)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2zm5-1h2m-1 13v.01"/>
+  </g>
+
+  <!-- camera -->
+  <g transform="translate(61, 311)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M5 7h1a2 2 0 0 0 2-2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2"/><path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/></g>
+  </g>
+
+  <!-- headphones -->
+  <g transform="translate(111, 311)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 15a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm11 0a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2z"/><path d="M4 15v-3a8 8 0 0 1 16 0v3"/></g>
+  </g>
+
+  <!-- bulb -->
+  <g transform="translate(161, 311)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h1m8-9v1m8 8h1M5.6 5.6l.7.7m12.1-.7l-.7.7M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0-1 3a2 2 0 0 1-4 0a3.5 3.5 0 0 0-1-3m.7 1h4.6"/>
+  </g>
+
+  <!-- pencil -->
+  <g transform="translate(211, 311)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20h4L18.5 9.5a2.828 2.828 0 1 0-4-4L4 16zm9.5-13.5l4 4"/>
+  </g>
+
+  <!-- tool -->
+  <g transform="translate(261, 311)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 10h3V7L6.5 3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1-3 3l-6-6a6 6 0 0 1-8-8z"/>
+  </g>
+
+  <!-- key -->
+  <g transform="translate(311, 311)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1-4.069 0l-.301-.301l-6.558 6.558a2 2 0 0 1-1.239.578L5.172 21H4a1 1 0 0 1-.993-.883L3 20v-1.172a2 2 0 0 1 .467-1.284l.119-.13L4 17h2v-2h2v-2l2.144-2.144l-.301-.301a2.877 2.877 0 0 1 0-4.069l2.643-2.643a2.877 2.877 0 0 1 4.069 0M15 9h.01"/>
+  </g>
+
+  <!-- puzzle -->
+  <g transform="translate(361, 311)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h3a1 1 0 0 0 1-1V5a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-1a2 2 0 0 0-4 0v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a2 2 0 0 0 0-4H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1"/>
+  </g>
+
+  <!-- palette -->
+  <g transform="translate(11, 361)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 21a9 9 0 0 1 0-18c4.97 0 9 3.582 9 8c0 1.06-.474 2.078-1.318 2.828S17.693 15 16.5 15H14a2 2 0 0 0-1 3.75A1.3 1.3 0 0 1 12 21"/><path d="M7.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0-2 0m4-3a1 1 0 1 0 2 0a1 1 0 1 0-2 0m4 3a1 1 0 1 0 2 0a1 1 0 1 0-2 0"/></g>
+  </g>
+
+  <!-- music -->
+  <g transform="translate(61, 361)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 17a3 3 0 1 0 6 0a3 3 0 0 0-6 0m10 0a3 3 0 1 0 6 0a3 3 0 0 0-6 0"/><path d="M9 17V4h10v13M9 8h10"/></g>
+  </g>
+
+  <!-- book -->
+  <g transform="translate(111, 361)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0M3 6v13m9-13v13m9-13v13"/>
+  </g>
+
+  <!-- flag -->
+  <g transform="translate(161, 361)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1-7 0a5 5 0 0 0-7 0zm0 16v-7"/>
+  </g>
+
+  <!-- award -->
+  <g transform="translate(211, 361)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M6 9a6 6 0 1 0 12 0A6 6 0 1 0 6 9"/><path d="m12 15l3.4 5.89l1.598-3.233l3.598.232l-3.4-5.889M6.802 12l-3.4 5.89L7 17.657l1.598 3.232l3.4-5.889"/></g>
+  </g>
+
+  <!-- recycle -->
+  <g transform="translate(261, 361)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m12 17l-2 2l2 2"/><path d="M10 19h9a2 2 0 0 0 1.75-2.75l-.55-1M8.536 11l-.732-2.732L5.072 9"/><path d="m7.804 8.268l-4.5 7.794a2 2 0 0 0 1.506 2.89l1.141.024M15.464 11l2.732.732L18.928 9"/><path d="m18.196 11.732l-4.5-7.794a2 2 0 0 0-3.256-.14l-.591.976"/></g>
+  </g>
+
+  <!-- hourglass -->
+  <g transform="translate(311, 361)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M6.5 7h11m-11 10h11M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1"/><path d="M6 4v2a6 6 0 1 0 12 0V4a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1"/></g>
+  </g>
+
+  <!-- confetti -->
+  <g transform="translate(361, 361)"
+     fill="none"
+     stroke="#FF6000"
+     stroke-width="1.4"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     opacity="0.18">
+    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h2M5 4v2m6.5-2L11 6m7-1h2m-1-1v2m-4 3l-1 1m4 3l2-.5M18 19h2m-1-1v2m-5-3.482L7.482 10l-4.39 9.58a1 1 0 0 0 1.329 1.329z"/>
   </g>
-
-  <!-- Robot -->
-  <g class="d" transform="translate(202,352)">
-    <rect x="5" y="8" width="18" height="16" rx="2"/>
-    <rect x="8" y="12" width="5" height="5" rx="1"/>
-    <rect x="15" y="12" width="5" height="5" rx="1"/>
-    <path d="M14 8 L14 4 L12 2"/>
-    <circle cx="14" cy="2" r="2"/>
-    <path d="M5 14 L2 14"/>
-    <path d="M23 14 L26 14"/>
-    <path d="M9 24 L9 28"/>
-    <path d="M19 24 L19 28"/>
-    <path d="M10 20 L18 20"/>
-  </g>
-
-  <!-- Confettis -->
-  <g class="d" transform="translate(255,355)">
-    <rect x="4" y="4" width="5" height="5" rx="1" transform="rotate(20 6 6)"/>
-    <rect x="14" y="2" width="4" height="4" rx="1" transform="rotate(-15 16 4)"/>
-    <rect x="2" y="14" width="6" height="4" rx="1" transform="rotate(10 5 16)"/>
-    <rect x="16" y="14" width="5" height="5" rx="1" transform="rotate(-25 18 16)"/>
-    <rect x="10" y="18" width="4" height="6" rx="1" transform="rotate(15 12 21)"/>
-    <path d="M20 6 L22 2"/>
-    <path d="M8 22 L6 26"/>
-    <path d="M24 18 L26 22"/>
-  </g>
-
-  <!-- Megaphone -->
-  <g class="d" transform="translate(305,355)">
-    <path d="M4 9 L4 17 L8 17 L18 22 L18 4 L8 9 Z"/>
-    <path d="M4 9 L8 9 L8 17 L4 17"/>
-    <path d="M20 8 C22 10 22 16 20 18"/>
-    <path d="M6 17 L6 24"/>
-  </g>
-
-  <!-- Feuille -->
-  <g class="d" transform="translate(352,355)">
-    <path d="M12 24 C12 24 4 18 4 10 C4 5 8 2 12 2 C16 2 22 5 22 12 C22 18 12 24 12 24Z"/>
-    <path d="M12 24 L12 14"/>
-    <path d="M12 18 L8 14"/>
-    <path d="M12 16 L16 12"/>
-  </g>
-
 </svg>

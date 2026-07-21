@@ -41,7 +41,7 @@ function initDoodles() {
       background-color: #F8F9FA;
       background-image: url('${getSVGPath()}');
       background-repeat: repeat;
-      background-size: 200px 200px;
+      background-size: 400px 400px;
       opacity: 1;
     }
   `;
